@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!-- Flock -->
+<html lang="en">
+    <head>
+        <title>Flock</title>
+        <meta charset="utf-8">
+        <meta name="description" content="The start page of Flock.">
+        <meta name="keywords" content="online, event, planner, friends, HTML">
+        <link rel="stylesheet" type="text/css" href="css/header.css">
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+        <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+    </head>
+
+    
+
+    <body>
+        <header></header>
+
+        <main>
+            <section id="flockDescription">
+                <div id="aboutFlock">
+                    <h2>What is Flock?</h2>
+                    <p>
+                        Flock is both an android application as well as website designed around events.
+                        On the website you will be able to create events and invite your friends or groups to these events.
+                        Once you have created an event or have decided to attend a friends event, you will be able to keep track
+                        of these events with a list and calendar option. Once you create an account you can start right away.
+                    </p>
+                </div>
+
+                <div id="flockImage">
+                    <img src="img/FlockLogo1.png" alt="Flock Logo" title="Flock">
+                </div>
+            </section>
+
+            <section id="registration">
+                <form id = "signUpform" name="CreateAnAccount" action="#" method="post">
+                        <h2>Register Now!</h2>
+                        <input type="text" id="username" placeholder="Username" name="username" required title ="Enter your username.">
+                        <br>
+                        <input type="text" id="firstname" placeholder="First Name" name="firstname" required title ="Enter your first name.">
+                        <br>
+                        <input type="text" id="lastname" placeholder="Last Name" name="lastname" required title="Enter you last name.">
+                        <br>
+                        <input type="email" id="email" placeholder="Email"name="email" required title="Must be an email.">
+                        <br>
+                        <input type="password" id="password" placeholder="Password" name="password" title="Password must be 8 or more characters." required pattern=".{8,}">
+                        <br>
+                        <input type="password" id="confirmPassword" placeholder="Confirm Password" name="confirmPass" title="Password must be 8 or more characters." required pattern=".{8,}">
+                        <br>
+                        <input type="submit" class="button" id ="signUp" value="Sign Up">   
+                    </form>
+            </section>
+                
+        </main>
+    </body>
+</html>
