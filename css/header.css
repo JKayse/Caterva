@@ -17,7 +17,9 @@ body {
 
 main {
     height:84%;
-    background-color: rgb(255, 248, 238);
+    background-image: url("../img/birds.png");
+    background-size: contain;
+    background-color: rgb(216, 244, 255);
 }
 
 header img{
@@ -31,6 +33,8 @@ header h1{
     position: absolute;
     top: 4%;
     left: 20%;
+    width: 40%;
+    color: rgb(216, 244, 255);
 }
 
 
@@ -56,11 +60,11 @@ header h1{
 }
 
 button,  input[class=button] {
-    background: linear-gradient(rgb(87, 168, 255), rgb(251, 252, 245));
-    border-color: rgba(95, 54, 39, 0.54);
+    background: linear-gradient(rgb(173, 239, 255), rgb(153, 186, 255));
+    border-color: rgba(255, 255, 255, 0.86);
     border-width:2px;
 }
 
 button:hover, input[class=button]:hover {
-    background: linear-gradient(rgb(251, 252, 245), rgb(87, 168, 255));
+    background: linear-gradient(rgb(153, 186, 255), rgb(173, 239, 255));
 }
