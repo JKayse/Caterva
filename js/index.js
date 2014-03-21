@@ -28,6 +28,10 @@ function signUp(event){
                 password: $("#password").val()
             },
             success:function(json){
+                if(json === 'false'){
+                    alert("This email already exists.");
+                    return;
+                }
                 $.ajax({
                     type: "POST",
                     url: "api/Login",
