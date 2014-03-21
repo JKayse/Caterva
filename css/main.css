@@ -252,3 +252,27 @@ main div div div button:hover{
   #requests img{
         margin: 0px 5px;
   }
+
+  #blackScreenofDeath {
+    display: block;
+    width:100%;
+    height:100%;
+    background-color: rgba(0, 0, 0, 0.50);
+    position: fixed;
+    top:0px;
+    left:0px;
+    z-index: 50;
+}
+
+#popUp {
+    display: block;
+    position: fixed;
+    background: linear-gradient(rgb(173, 239, 255), rgb(153, 186, 255));
+    border-style: solid;
+    border-radius: 5px;
+    border-color: rgb(242, 249, 253);
+    width: 400px;
+    top:170px;
+    left:50%;
+    margin-left: -200px;
+}
