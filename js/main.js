@@ -149,10 +149,18 @@ function addFriendstoEvent(event){
     var friendsList = $(".friendList");
     for(var i = 0; i < friendsList.size(); i++){
         if($(".friendList").eq(i).prop('checked') === true){
-            friendstoAdd = friendstoAdd + " "+ $(".friendList").eq(i).next().html();
+            friendstoAdd = friendstoAdd + ", "+ $(".friendList").eq(i).next().html();
         }
     }
-    console.log(friendstoAdd);
+    friendstoAdd = friendstoAdd.substring(2);
+
+    if($("#eventGuestList").val() === ""){
+        $("#eventGuestList").val(friendstoAdd);
+    }
+    else{
+        $("#eventGuestList").val($("#eventGuestList").val() + ", " + friendstoAdd);
+    }
+    
     $("#addFriendsOptions").hide();
     $("#enterEvent").show();
     $(".friendList").prop('checked', false);
@@ -165,11 +173,20 @@ function addGroupstoEvent(event){
     var groupsList = $(".groupList");
     for(var i = 0; i < groupsList.size(); i++){
         if($(".groupList").eq(i).prop('checked') === true){
-            groupstoAdd = groupstoAdd + " "+ $(".groupList").eq(i).next().html();
+            groupstoAdd = groupstoAdd + ", "+ $(".groupList").eq(i).attr("friends");
         }
     }
-    console.log(groupstoAdd);
+    groupstoAdd = groupstoAdd.substring(2);
+
+    if($("#eventGuestList").val() === ""){
+        $("#eventGuestList").val(groupstoAdd);
+    }
+    else{
+        $("#eventGuestList").val($("#eventGuestList").val() + ", " + groupstoAdd);
+    }
+
     $("#addGroupsOptions").hide();
     $("#enterEvent").show();
     $(".groupList").prop('checked', false);
 }
+

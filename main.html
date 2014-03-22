@@ -6,10 +6,13 @@
         <meta charset="utf-8">
         <meta name="description" content="The main page of Flock.">
         <meta name="keywords" content="online, event, planner, friends, HTML">
+        <!--Add in 32 by 32 -->
+        <!--<link rel="icon" type="image/png" href="img/favicon.png">-->
         <link rel="stylesheet" type="text/css" href="css/main.css">
         <link rel="stylesheet" type="text/css" href="css/header.css">
         <script src="//code.jquery.com/jquery-1.9.1.js"></script>
         <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
         <script type="text/javascript" src="js/main.js"></script>
     </head>
     <body>
@@ -265,13 +268,13 @@
                     <div id="addGroupsOptions">
                         <h2>Add Groups:</h2>
                         <form id = "groupAdder" name="Create An Account" action="#" method="post">
-                            <input type="checkbox" class="groupList" id ="1Group" title="Share Events" name="invitedGroups">
+                            <input type="checkbox" class="groupList" id ="1Group" friends = "Maryssa Crews, Taylor Ellington" title="Share Events" name="invitedGroups">
                             <label for="1Group">GUI</label>
                             <br>
-                            <input type="checkbox"  class="groupList" id ="2Group" title="Share Events" name="invitedGroups">
+                            <input type="checkbox"  class="groupList" id ="2Group" friends = "Chris Hauser, Alex Cheng" title="Share Events" name="invitedGroups">
                             <label for="2Group">DB</label>
                             <br>
-                            <input type="checkbox" class="groupList" id ="3Group" title="Share Events" name="invitedGroups">
+                            <input type="checkbox" class="groupList" id ="3Group" friends = "Story Zanetti, Jessica Yeh, Jordan Kayse, Rebecca Ward" title="Share Events" name="invitedGroups">
                             <label for="3Group">Awesome People</label>
                             <br>
                             <input type="submit" class="button" id ="addTheseGroups" value="Add">   
