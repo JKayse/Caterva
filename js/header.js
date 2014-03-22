@@ -5,6 +5,7 @@ $(document).ready(function() {
     $(document).on('click', "header #signedIn a", signout);
     $(document).on('click', "header img", goToCorrectPage);
     $(document).on('click', "header h1", goToCorrectPage);
+    
 
     /*$.ajax({url:"api/LoginStatus", success: function(json){
         if(json !== 'null'){

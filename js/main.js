@@ -8,6 +8,8 @@ $(document).ready(function() {
     $(document).on('click', "#editFriends", goToEditPage);
     $(document).on('click', "#addFriend", addFriend);
     $(document).on('click', "#createEvent", addEvent);
+    $(document).on('click', "#cancelSearch", cancelFriendPopUp);
+    $(document).on('click', "#cancelEvent", cancelCreateEventPopUp);
 
 /*
     $.ajax({url:"api/LoginStatus", success: function(json){
@@ -35,6 +37,28 @@ $(document).ready(function() {
 */
 
 });
+
+function cancelFriendPopUp(){
+    $("#blackScreenofDeath").hide();
+    $("#popUp").hide();
+    $("#enterFriend").hide();
+    $("#friendsUsername").val("");
+}
+
+function cancelCreateEventPopUp(){
+    $("#blackScreenofDeath").hide();
+    $("#popUp").hide();
+    $("#enterEvent").hide();
+
+    $("#eventTitle").val("");
+    $("#eventDescription").val("");
+    $("#eventDate").val("");
+    $("#eventDateEnd").val("");
+    $("#eventTimeStart").val("");
+    $("#eventTimeEnd").val("");
+    $("#eventGuestList").val("");
+    $("#allowShareEvent").prop('checked', false);
+}
 
 
 function openList(){
