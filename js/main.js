@@ -17,6 +17,8 @@ $(document).ready(function() {
     $(document).on('click', "#addGroupsEvent", showAddGroupsPopUp);
 
     $(document).on('submit', "#friendSearch", searchForFriend);
+    $(document).on('submit', "#friendAdder", addFriendstoEvent);
+    $(document).on('submit', "#groupAdder", addGroupstoEvent);
 
 /*
     $.ajax({url:"api/LoginStatus", success: function(json){
@@ -134,4 +136,40 @@ function searchForFriend(event){
 
             }
     });*/
+
+    $("#friendsUsername").val("");
+    $("#blackScreenofDeath").hide();
+    $("#popUp").hide();
+    $("#enterFriend").hide();
+}
+
+function addFriendstoEvent(event){
+    event.preventDefault();
+    var friendstoAdd="";
+    var friendsList = $(".friendList");
+    for(var i = 0; i < friendsList.size(); i++){
+        if($(".friendList").eq(i).prop('checked') === true){
+            friendstoAdd = friendstoAdd + " "+ $(".friendList").eq(i).next().html();
+        }
+    }
+    console.log(friendstoAdd);
+    $("#addFriendsOptions").hide();
+    $("#enterEvent").show();
+    $(".friendList").prop('checked', false);
+}
+
+
+function addGroupstoEvent(event){
+    event.preventDefault();
+    var groupstoAdd="";
+    var groupsList = $(".groupList");
+    for(var i = 0; i < groupsList.size(); i++){
+        if($(".groupList").eq(i).prop('checked') === true){
+            groupstoAdd = groupstoAdd + " "+ $(".groupList").eq(i).next().html();
+        }
+    }
+    console.log(groupstoAdd);
+    $("#addGroupsOptions").hide();
+    $("#enterEvent").show();
+    $(".groupList").prop('checked', false);
 }
