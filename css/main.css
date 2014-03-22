@@ -119,13 +119,32 @@ main div div div button:hover{
 
   */
 
-  h4 {
+#yourFlock img{
+  margin: .6%;
+  position: absolute;
+}
+
+#calendarView{
+  float:right;
+}
+
+#enterFriend, #enterEvent {
+  display: none;
+}
+
+
+.eventRequest, .friendRequest {
     width:97%;
     margin: 1.5%;
     border-width: 2px;
     border-radius: 7px;
     background: linear-gradient(rgb(173, 239, 255), rgb(153, 186, 255));
   }
+
+  h4{
+    margin:0px 2px;
+  }
+
 
  #friendRequestList button{
     width: 47%;

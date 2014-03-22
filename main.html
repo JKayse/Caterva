@@ -25,6 +25,7 @@
                 <!-- Possible add friends or group to event with autocomplete multiple values with scrollable results. -->
                 <button class="button" id="addFriend" type="button">Add Friend</button>
                 <div id="flockList">
+                    <img src="img/gear.png" id="editFriends" alt="Edit Friends and Groups" title="Edit">
                     <h2>Your Flock</h2>
                     <div id="groups">
                         <h3>Groups</h3>
@@ -82,7 +83,9 @@
                 <!-- Or get database to hold it when you say you're attending and they return it in order by date. -->
                 <!-- Have a calendar button somewhere -->
                 <div id="events">
+                    <img src="img/calendar.png" id="calendarView" alt="Calendar" title="Calendar View">
                     <h2>Events</h2>
+
                     <div id="eventList">
                         <div class="event left">
                             <img src="img/FlockLogo1.png" alt="Flock Logo" title="Flock">
@@ -125,41 +128,36 @@
                         <!-- When accepted add to the list of attending events. -->
                         <!-- Can click on it for more info. -->
                         <div id="eventRequestList">
-                            <h4>
-                                Horseback Riding
-                                <br>
+                            <div class="eventRequest">
+                                <h4>Horseback Riding</h4>
                                 <img src="img/greenCheck.png" alt="Green Check" title="No">
                                 <img src="img/redX.png" alt="Red X" title="No">
                                 <button type="button">Details</button>
-                            </h4>
-                            <h4>
-                                Iteration One
-                                <br>
+                            </div>
+                            <div class="eventRequest">
+                                <h4>Iteration One</h4>
                                 <img src="img/greenCheck.png" alt="Green Check" title="No">
                                 <img src="img/redX.png" alt="Red X" title="No">
                                 <button type="button">Details</button>
-                            </h4>
-                            <h4>
-                                Movie Night
-                                <br>
+                            </div>
+                            <div class="eventRequest">
+                                <h4>Movie Night</h4>
                                 <img src="img/greenCheck.png" alt="Green Check" title="No">
                                 <img src="img/redX.png" alt="Red X" title="No">
                                 <button type="button">Details</button>
-                            </h4>
-                            <h4>
-                                Bored Day
-                                <br>
+                            </div>
+                            <div class="eventRequest">
+                                <h4>Bored Day</h4>
                                 <img src="img/greenCheck.png" alt="Green Check" title="No">
                                 <img src="img/redX.png" alt="Red X" title="No">
                                 <button type="button">Details</button>
-                            </h4>
-                            <h4>
-                                Testing
-                                <br>
+                            </div>
+                            <div class="eventRequest">
+                                <h4>Testing</h4>
                                 <img src="img/greenCheck.png" alt="Green Check" title="No">
                                 <img src="img/redX.png" alt="Red X" title="No">
                                 <button type="button">Details</button>
-                            </h4>
+                            </div>
                             
 
                         </div>
@@ -170,30 +168,26 @@
                         <!-- Add function to populate the friend requests. -->
                         <!-- When accepted add to friends. -->
                         <div id="friendRequestList">
-                            <h4>
-                                Add MystiqueMadge?
-                                <br>
+                            <div class="friendRequest">
+                                <h4>Add MysticMadge?</h4>
                                 <img src="img/greenCheck.png" alt="Green Check" title="No">
                                 <img src="img/redX.png" alt="Red X" title="No">
-                            </h4>
-                            <h4>
-                                Flock with BlueBird?
-                                <br>
+                            </div>
+                            <div class="friendRequest">
+                                <h4>Add BlueBird?</h4>
                                 <img src="img/greenCheck.png" alt="Green Check" title="No">
                                 <img src="img/redX.png" alt="Red X" title="No">
-                            </h4>
-                            <h4>
-                                Flock with GrayGoose?
-                                <br>
+                            </div>
+                            <div class="friendRequest">
+                                <h4>Add GreyGoose?</h4>
                                 <img src="img/greenCheck.png" alt="Green Check" title="No">
                                 <img src="img/redX.png" alt="Red X" title="No">
-                            </h4>
-                            <h4>
-                                Add Singingjay?
-                                <br>
+                            </div>
+                            <div class="friendRequest">
+                                <h4>Add Singingjay?</h4>
                                 <img src="img/greenCheck.png" alt="Green Check" title="No">
                                 <img src="img/redX.png" alt="Red X" title="No">
-                            </h4> 
+                            </div> 
 
                         </div>
                     </div>
@@ -202,12 +196,35 @@
         </main>
             <div id="blackScreenofDeath">
                 <div id="popUp">
-                    <div id="payInfo">
-                        <p>Add Friend//Add events will go here
-                        Testing
-                        Testing
-                        Testing
-                        Testing</p>
+                    <div id="enterFriend">
+                        <h2>Add a Friend</h2>
+                        <form id = "friendSearch" name="Add a Friend" action="#" method="post">
+                            <h3>Please enter the exact username.</h3>
+                            <input type="text" id="friendsUsername" placeholder="Username" name="username" title ="Enter the username of the person you want to add." required>
+                            <input type="button" class="button" id ="searchUsers" value="Search">   
+                        </form>
+                    </div>  
+                    <div id="enterEvent">
+                        <h2>Event Creator</h2>
+                        <form id = "eventCreator" name="Create An Account" action="#" method="post">
+                            <label for="eventTitle">Title:</label>
+                            <input type="text" id="eventTitle" name="title" title ="Enter the title of the event." required>
+                            <label for="eventDescription">Description:</label>
+                            <input type="text" id="eventDescription" name="description" title ="Enter the description of the event.">
+                            <label for="eventDate">Start Date:</label>
+                            <input type="date" id="eventDate" name="date" title ="Enter the start date of the event." required>
+                            <label for="eventDateEnd">End Date:</label>
+                            <input type="date" id="eventDateEnd" name="dateEnd" title ="Enter the end date of the event." required>
+                            <label for="eventTimeStart">Start Time:</label>
+                            <input type="time" id="eventTimeStart" name="timeStart" title ="Enter the start time of the event." required>
+                            <label for="eventTimeEnd">End Time:</label>
+                            <input type="time" id="eventTimeEnd" name="timeEnd" title ="Enter the end time of the event." required>
+                            <label for="eventGuestList">Invited:</label>
+                            <input type="text" id="eventGuestList" name="guestList" title ="Add people to the event.">
+                            <input type="submit" class="button" id ="createEvent" value="Create Event">   
+                            <input type="button" class="button" id ="cancelEvent" value="Cancel">  
+                        </form>
+
                     </div>          
             </div> 
     </body>
