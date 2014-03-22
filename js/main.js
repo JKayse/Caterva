@@ -16,6 +16,8 @@ $(document).ready(function() {
     $(document).on('click', "#addFriendsEvent", showAddFriendsPopUp);
     $(document).on('click', "#addGroupsEvent", showAddGroupsPopUp);
 
+    $(document).on('submit', "#friendSearch", searchForFriend);
+
 /*
     $.ajax({url:"api/LoginStatus", success: function(json){
         if(json !== 'null'){
@@ -108,4 +110,28 @@ function addEvent(){
     $("#blackScreenofDeath").show();
     $("#popUp").show();
     $("#enterEvent").show();
+}
+
+function searchForFriend(event){
+    event.preventDefault();
+    /*$.ajax({
+            type: "POST",
+            url: "api/SearchFriend",
+            data: {
+                username: $("#friendsUsername").val(),
+                userId: userId;
+            },
+            success: function(json){
+                if(json === "null"){
+                    alert("That username does not exist. Please try Again.");
+                }
+                else{
+                    $("#friendsUsername").val("");
+                    $("#blackScreenofDeath").hide();
+                    $("#popUp").hide();
+                    $("#enterFriend").hide();
+                }
+
+            }
+    });*/
 }
