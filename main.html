@@ -209,19 +209,29 @@
                         <form id = "eventCreator" name="Create An Account" action="#" method="post">
                             <label for="eventTitle">Title:</label>
                             <input type="text" id="eventTitle" name="title" title ="Enter the title of the event." required>
+                            <br>
                             <label for="eventDescription">Description:</label>
                             <input type="text" id="eventDescription" name="description" title ="Enter the description of the event.">
+                            <br>
                             <label for="eventDate">Start Date:</label>
                             <input type="date" id="eventDate" name="date" title ="Enter the start date of the event." required>
                             <label for="eventDateEnd">End Date:</label>
                             <input type="date" id="eventDateEnd" name="dateEnd" title ="Enter the end date of the event." required>
+                            <br>
                             <label for="eventTimeStart">Start Time:</label>
                             <input type="time" id="eventTimeStart" name="timeStart" title ="Enter the start time of the event." required>
                             <label for="eventTimeEnd">End Time:</label>
                             <input type="time" id="eventTimeEnd" name="timeEnd" title ="Enter the end time of the event." required>
+                            <br>
                             <label for="eventGuestList">Invited:</label>
                             <input type="text" id="eventGuestList" name="guestList" title ="Add people to the event.">
-                            <input type="submit" class="button" id ="createEvent" value="Create Event">   
+                            <br>
+                            <input type="button" class="button" id ="addFriendsEvent" value="Add Friends">   
+                            <input type="button" class="button" id ="addGroupsEvent" value="Add Groups">  
+                            <input type="checkbox" class="button" id ="allowShareEvent" title="Share Events">
+                            <label for="allowShareEvent">Allow friends to share event.</label>
+                            <br>
+                            <input type="submit" class="button" id ="createThisEvent" value="Create Event">   
                             <input type="button" class="button" id ="cancelEvent" value="Cancel">  
                         </form>
 
