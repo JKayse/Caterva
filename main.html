@@ -229,14 +229,56 @@
                             <br>
                             <input type="button" class="button" id ="addFriendsEvent" value="Add Friends">   
                             <input type="button" class="button" id ="addGroupsEvent" value="Add Groups">  
-                            <input type="checkbox" class="button" id ="allowShareEvent" title="Share Events">
+                            <input type="checkbox" id ="allowShareEvent" title="Share Events">
                             <label for="allowShareEvent">Allow friends to share event.</label>
                             <br>
                             <input type="submit" class="button" id ="createThisEvent" value="Create Event">   
                             <input type="button" class="button" id ="cancelEvent" value="Cancel">  
                         </form>
 
-                    </div>          
-            </div> 
+                    </div>   
+
+                    <!--Maybe use the auto complete instead of the pop ups. -->
+                    <div id="addFriendsOptions">
+                        <h2>Add Friends:</h2>
+                        <form id = "eventCreator" name="Create An Account" action="#" method="post">
+                            <input type="checkbox" class="friendList" id ="1Friend" title="Share Events" name="invitedFriends">
+                            <label for="1Friend">Jordan Kayse</label>
+                            <br>
+                            <input type="checkbox" class="friendList" id ="2Friend" title="Share Events" name="invitedFriends">
+                            <label for="2Friend">Jessica Yeh</label>
+                            <br>
+                            <input type="checkbox" class="friendList" id ="3Friend" title="Share Events" name="invitedFriends">
+                            <label for="3Friend">Story Zanetti</label>
+                            <br>
+                            <input type="checkbox" class="friendList" id ="4Friend" title="Share Events" name="invitedFriends">
+                            <label for="4Friend">Rebecca Ward</label>
+                            <br>
+                            <input type="submit" class="button" id ="addTheseFriends" value="Add">   
+                            <input type="button" class="button" id ="cancelFriends" value="Cancel">  
+                        </form>
+
+
+                        
+                    </div> 
+                    <div id="addGroupsOptions">
+                        <h2>Add Groups:</h2>
+                        <form id = "eventCreator" name="Create An Account" action="#" method="post">
+                            <input type="checkbox" class="groupList" id ="1Group" title="Share Events" name="invitedGroups">
+                            <label for="1Group">GUI</label>
+                            <br>
+                            <input type="checkbox"  class="groupList" id ="2Group" title="Share Events" name="invitedGroups">
+                            <label for="2Group">DB</label>
+                            <br>
+                            <input type="checkbox" class="groupList" id ="3Group" title="Share Events" name="invitedGroups">
+                            <label for="3Group">Awesome People</label>
+                            <br>
+                            <input type="submit" class="button" id ="addTheseGroups" value="Add">   
+                            <input type="button" class="button" id ="cancelGroups" value="Cancel">   
+                        </form>
+
+                    </div>                  
+                </div> 
+            </div>
     </body>
 </html>

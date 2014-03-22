@@ -128,7 +128,7 @@ main div div div button:hover{
   float:right;
 }
 
-#enterFriend, #enterEvent {
+#enterFriend, #enterEvent, #addFriendsOptions, #addGroupsOptions{
   display: none;
 }
 

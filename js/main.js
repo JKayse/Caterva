@@ -10,6 +10,11 @@ $(document).ready(function() {
     $(document).on('click', "#createEvent", addEvent);
     $(document).on('click', "#cancelSearch", cancelFriendPopUp);
     $(document).on('click', "#cancelEvent", cancelCreateEventPopUp);
+    $(document).on('click', "#cancelFriends", cancelAddFriendsPopUp);
+    $(document).on('click', "#cancelGroups", cancelAddGroupsPopUp);
+
+    $(document).on('click', "#addFriendsEvent", showAddFriendsPopUp);
+    $(document).on('click', "#addGroupsEvent", showAddGroupsPopUp);
 
 /*
     $.ajax({url:"api/LoginStatus", success: function(json){
@@ -37,6 +42,28 @@ $(document).ready(function() {
 */
 
 });
+
+function showAddFriendsPopUp(){
+    $("#addFriendsOptions").show();
+    $("#enterEvent").hide();
+}
+
+function showAddGroupsPopUp(){
+    $("#addGroupsOptions").show();
+    $("#enterEvent").hide();
+}
+
+function cancelAddFriendsPopUp(){
+    $("#addFriendsOptions").hide();
+    $("#enterEvent").show();
+    $(".friendList").prop('checked', false);
+}
+
+function cancelAddGroupsPopUp(){
+    $("#addGroupsOptions").hide();
+    $("#enterEvent").show();
+    $(".groupList").prop('checked', false);
+}
 
 function cancelFriendPopUp(){
     $("#blackScreenofDeath").hide();
