@@ -22,6 +22,7 @@ $(document).ready(function() {
     $(document).on('submit', "#eventCreator", addCreatedEvent);
 
     $(document).on('click', "#deleteInvitedGuest", deleteInvitedGuest);
+    $(document).on('click', ".friend", goToProfilePage);
 
 
 /*
@@ -104,6 +105,10 @@ function openList(){
 
 function goToEditPage(){
     window.location = "edit.html";
+}
+
+function goToProfilePage(){
+    window.location = "profile.html";
 }
 
 function addFriend(){

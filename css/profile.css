@@ -1,0 +1,14 @@
+main img{
+    height: 40%;
+    border-radius: 100%;
+    margin-top: 2%;
+    margin-left: 5%;
+    display: inline;
+    float: left;
+}
+
+main h1{
+    padding-top: 2%;
+    margin: 0px;
+    margin-left: 5%;
+}

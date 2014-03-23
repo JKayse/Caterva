@@ -68,3 +68,7 @@ button,  input[class=button] {
 button:hover, input[class=button]:hover {
     background: linear-gradient(rgb(153, 186, 255), rgb(173, 239, 255));
 }
+
+a {
+    /*margin-right:5px;*/
+}
