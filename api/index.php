@@ -123,6 +123,8 @@ function login() {
 		} else {
             		echo "null";
         	}
+
+		$db = null;
 	} catch(PDOException $e) {
 		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 	}
