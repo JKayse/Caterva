@@ -49,7 +49,7 @@ $app->run();
 */
 function getLoginStatus() {
 	if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
-		echo '{"Email": "' . $_SESSION['email'] . '", "ID": ' . $_SESSION['userId'] . '}';
+		echo '{"Username": "' . $_SESSION['username'] . '", "ID": ' . $_SESSION['userId'] . '}';
 	} else {
 		echo "null";
 	}
@@ -62,7 +62,33 @@ function getLoginStatus() {
 
 function addUser()
 {
+	$firstname = Slim::getInstance()->request()->post('firstname');
+	$lastname = Slim::getInstance()->request()->post('lastname');
+	$username = Slim::getInstance()->request()->post('username');
+	$email = Slim::getInstance()->request()->post('email');
+	$password = crypt(Slim::getInstance()->request()->post('password'));
 	
+	$sql = "INSERT INTO Users (Firstname, Lastname, Username, Email, Password) VALUES (:firstname, :lastname, :username, :email, :password)";
+
+	try
+	{
+		$db = getConnection();
+				
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam("firstname", $firstname);
+		$stmt->bindParam("lastname", $lastname);
+		$stmt->bindParam("username", $username);
+		$stmt->bindParam("email", $email);
+		$stmt->bindParam("password", $password);
+
+		$stmt->execute();
+		$db = null;
+
+	}
+	catch(PDOException $e) 
+	{
+		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+	}
 }
 
 /**
@@ -71,7 +97,35 @@ function addUser()
 * @return JSON The userid and email.
 */
 function login() {
-	
+	$email = Slim::getInstance()->request()->post('username');
+	$password = Slim::getInstance()->request()->post('password');
+
+	$sql = "SELECT Password FROM Users WHERE Username=:username";
+
+	try {
+		$db = getConnection();
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam("username", $username);
+		$stmt->execute();
+		$hashedPassword = $stmt->fetchObject();
+
+		if(empty($hashedPassword->Password)) {
+		    echo "null";
+		} else if(crypt($password) == $hashedPassword->Password) {
+			$_SESSION['loggedin'] = true;
+			$query = "SELECT UserID FROM Users WHERE Username=:username";
+			$stmt2 = $db->prepare($query);
+			$stmt2->bindParam("username", $username);
+			$stmt2->execute();
+			$_SESSION['userId'] = $stmt2->fetchObject()->UserId;
+			$_SESSION['username'] = $username;
+            		echo '{"Username": "' . $_SESSION['username'] . '", "ID": ' . $_SESSION['userId'] . '}'; 
+		} else {
+            		echo "null";
+        	}
+	} catch(PDOException $e) {
+		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+	}
 }
 
 /**
