@@ -18,7 +18,8 @@ $(document).ready(function() {
 
     $(document).on('submit', "#friendSearch", searchForFriend);
     $(document).on('submit', "#friendAdder", addFriendstoEvent);
-    $(document).on('submit', "#groupAdder", addGroupstoEvent);
+    $(document).on('submit', "#groupAdder", addGroupstoEvent);  
+    $(document).on('submit', "#eventCreator", addCreatedEvent);
 
     $(document).on('click', "#deleteInvitedGuest", deleteInvitedGuest);
 
@@ -182,4 +183,21 @@ function addGroupstoEvent(event){
 
 function deleteInvitedGuest(){
     $(this).parent().remove();
+}
+
+function addCreatedEvent(event){
+    event.preventDefault();
+    $("#friendsUsername").val("");
+    $("#blackScreenofDeath").hide();
+    $("#popUp").hide();
+    $("#enterEvent").hide();
+
+    $("#eventTitle").val("");
+    $("#eventDescription").val("");
+    $("#eventDate").val("");
+    $("#eventDateEnd").val("");
+    $("#eventTimeStart").val("");
+    $("#eventTimeEnd").val("");
+    $("#eventGuestList").empty();
+    $("#allowShareEvent").prop('checked', false);
 }
