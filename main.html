@@ -13,6 +13,8 @@
         <script src="//code.jquery.com/jquery-1.9.1.js"></script>
         <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
         <script type="text/javascript" src="js/main.js"></script>
+        <script type="text/javascript" src="js/header.js"></script>
+        <script type="text/javascript" src="js/scrollBar.js"></script>
     </head>
     <body>
 
@@ -35,7 +37,7 @@
                         <!-- Add function to populate the groups. -->
                         <!-- When clicked on a function will get the friensd of that group and add them below. -->
                         <!-- Or get them all before hand but keep them hidden. -->
-                        <div id="groupList">
+                        <div id="groupList" class="mouseover">
 
                             <button class="groupButton" type="button">GUI</button>
                             <div class="groupMembers">
@@ -63,7 +65,7 @@
                         <h3>Friends</h3>
                         <hr>
                         <!-- Add function to populate the friends. -->
-                        <div id="friendList">
+                        <div id="friendList" class="mouseover">
                             <button class="friend" type="button">Jessica Yeh</button>
                             <button class="friend" type="button">Story Zanetti</button>
                             <button class="friend" type="button">Rebecca Ward</button>
@@ -86,7 +88,7 @@
                 <!-- Have a calendar button somewhere -->
                 <div id="events">
                     <img src="img/calendar.png" id="calendarView" alt="Calendar" title="Calendar View">
-                    <h2>Events</h2>
+                    <h2>List of Upcoming Events</h2>
                     <img src="img/arrow3.png" id="prevEvents" alt="Up Arrow" title="Previous three events.">
                     <div id="eventList">
                         <div class="event left">
@@ -130,7 +132,7 @@
                         <!-- Add function to populate the event requests. -->
                         <!-- When accepted add to the list of attending events. -->
                         <!-- Can click on it for more info. -->
-                        <div id="eventRequestList">
+                        <div id="eventRequestList" class="mouseover">
                             <div class="eventRequest">
                                 <h4>Horseback Riding</h4>
                                 <img src="img/greenCheck.png" alt="Green Check" title="No">
@@ -165,12 +167,12 @@
 
                         </div>
                     </div>
-                    <div id="friendRequests">
+                    <div id="friendRequests" >
                         <h3>Friend Requests</h3>
                         <hr>
                         <!-- Add function to populate the friend requests. -->
                         <!-- When accepted add to friends. -->
-                        <div id="friendRequestList">
+                        <div id="friendRequestList" class="mouseover">
                             <div class="friendRequest">
                                 <h4>Add MysticMadge?</h4>
                                 <img src="img/greenCheck.png" alt="Green Check" title="No">
@@ -201,24 +203,22 @@
                 <div id="popUp">
                     <div id="enterFriend">
                         <h2>Add a Friend</h2>
+                        <hr>
                         <form id = "friendSearch" name="Add a Friend" action="#" method="post">
                             <h3>Please enter the exact username.</h3>
                             <input type="text" id="friendsUsername" placeholder="Username" name="username" title ="Enter the username of the person you want to add." required>
                             <input type="submit" class="button" id ="searchUsers" value="Search">   
                             <input type="button" class="button" id ="cancelSearch" value="Cancel">   
                         </form>
+                        <div id="foundFriend">
+                            <h3>BlueBird was found!</h3>
+                            <img src="img/FlockLogo1.png" alt="Flock Logo" title="Flock">
+                            <h3>Add BlueBird as a friend?</h3>
+                            <button id="sendFriendRequest">Yes</button>
+                            <button id="closeFriendRequest">No</button>                   
+                        </div> 
                     </div>  
-                    <!--
-                    <div id="foundFriend">
-                        <h2>Add a Friend</h2>
-                        <h3>BlueBird was found!</h3>
-                        <img src="img/FlockLogo1.png" alt="Flock Logo" title="Flock">
-                        <h3>Add BlueBird as a friend?</h3>
-                        <button id="sendFriendRequest">Yes</button>
-                        <button id="closeFriendRequest">No</button>
                     
-                    </div> 
-                    -->
                     <div id="enterEvent">
                         <h2>Event Creator</h2>
                         <form id = "eventCreator" name="Create An Account" action="#" method="post">

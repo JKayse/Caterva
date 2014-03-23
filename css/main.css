@@ -86,7 +86,6 @@ main h3{
 }
 
 #friendList, #groupList, #eventRequestList, #friendRequestList{
-    overflow-y: auto;
     height: 83%;
 }
 
@@ -140,6 +139,7 @@ main div div div button:hover{
 
 .eventRequest, .friendRequest {
     width:97%;
+    height: 26%;
     margin: 1.5%;
     border-width: 2px;
     border-radius: 7px;
@@ -157,6 +157,7 @@ main div div div button:hover{
 
 #eventRequestList button{
     width: 30%;
+    height: 40%;
   }
 
   .groupMembers {
@@ -345,4 +346,35 @@ textarea{
 
 #prevEvents{
   -webkit-transform: rotate(90deg);
+}
+
+div.mouseover:hover{
+  overflow-y:auto;
+}
+
+div.mouseover{
+  overflow-y:hidden;
+}
+
+.slimScrollDiv {
+    border-width: 1px;
+    border-color: #ccc;
+    border-style: solid;
+    margin:10px; 
+}
+
+#foundFriend{
+  display: none;
+  text-align: center;
+}
+
+#foundFriend img{
+  width:40%;
+  border-radius: 100%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+#enterFriend h2{
+  text-align: center;
 }

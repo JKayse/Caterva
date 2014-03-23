@@ -5,6 +5,7 @@ $(document).ready(function() {
     $("header").load("header.html");
     $(document).on('click', ".groupButton", openList);
     $(".event img").width($(".event img").height());
+
     $(document).on('click', "#editFriends", goToEditPage);
     $(document).on('click', "#addFriend", addFriend);
     $(document).on('click', "#createEvent", addEvent);
@@ -23,6 +24,9 @@ $(document).ready(function() {
 
     $(document).on('click', "#deleteInvitedGuest", deleteInvitedGuest);
     $(document).on('click', ".friend", goToProfilePage);
+
+    $(document).on('click', "#sendFriendRequest", sendFriendRequest);
+    $(document).on('click', "#closeFriendRequest", closeFriendRequest);
 
 
 /*
@@ -130,26 +134,33 @@ function searchForFriend(event){
             url: "api/SearchFriend",
             data: {
                 username: $("#friendsUsername").val(),
-                userId: userId;
             },
             success: function(json){
                 if(json === "null"){
                     alert("That username does not exist. Please try Again.");
                 }
                 else{
+                    json = JSON.parse(json);
+                    var username = json.username;
+                    var userId= json.userId;
+                    var values = $("#foundFriend h3");
+                    values.eq(0).html(username + " was found!")
+                    values.eq(0).attr("friendId", userId);
+                    values.eq(1).html("Add " + username +" as a friend?")
+                    $("#foundFriend img").attr("src", "img/" + userId + ".png");
+                    
+                    $("#foundFriend").show();
                     $("#friendsUsername").val("");
-                    $("#blackScreenofDeath").hide();
-                    $("#popUp").hide();
-                    $("#enterFriend").hide();
+                    $("#enterFriend form").hide();
                 }
 
             }
     });*/
 
     $("#friendsUsername").val("");
-    $("#blackScreenofDeath").hide();
-    $("#popUp").hide();
-    $("#enterFriend").hide();
+    $("#enterFriend form").hide();
+    $("#foundFriend").show();
+    $("#foundFriend img").height($("#foundFriend img").width());
 }
 
 function addFriendstoEvent(event){
@@ -205,4 +216,36 @@ function addCreatedEvent(event){
     $("#eventTimeEnd").val("");
     $("#eventGuestList").empty();
     $("#allowShareEvent").prop('checked', false);
+}
+
+function sendFriendRequest(){
+    /*$.ajax({
+            type: "POST",
+            url: "api/AddFriendRequest",
+            data: {
+                userId: userId,
+                friendId: $("#foundFriend h3").eq(0).attr("friendId"),
+            },
+            success: function(json){
+                $("#enterFriend form").show();
+                $("#enterFriend").hide(); 
+                $("#popUp").hide(); 
+                $("#blackScreenofDeath").hide(); 
+                $("#foundFriend").hide(); 
+
+            }
+    });*/
+    $("#enterFriend form").show();
+    $("#enterFriend").hide(); 
+    $("#popUp").hide(); 
+    $("#blackScreenofDeath").hide(); 
+    $("#foundFriend").hide(); 
+}
+
+function closeFriendRequest(){
+    $("#enterFriend form").show();
+    $("#enterFriend").hide(); 
+    $("#popUp").hide(); 
+    $("#blackScreenofDeath").hide(); 
+    $("#foundFriend").hide(); 
 }
