@@ -130,6 +130,11 @@ main div div div button:hover{
 
 #enterFriend, #enterEvent, #addFriendsOptions, #addGroupsOptions{
   display: none;
+  height: 100%;
+}
+
+#eventCreator{
+  height: 90%;
 }
 
 
@@ -298,4 +303,36 @@ main div div div button:hover{
 
 textarea{
   resize: none;
+}
+
+#eventGuestList{
+  background-color: white;
+  border-color: rgb(169, 169, 169);
+  border-style: solid;
+  border-width: 1px;
+  width: 95%;
+  margin-left: 2px;
+  padding-top: 3px;
+  overflow-y: auto;
+  height: 80px;
+
+}
+
+
+.invitedGuest h4{
+  display: inline;
+
+}
+
+.invitedGuest{
+  background: linear-gradient(rgb(173, 239, 255), rgb(153, 186, 255));
+  margin-left: 5px;
+  border-radius: 3px;
+  padding-right: 5px;
+  display: inline-block;
+  margin-bottom: 3px;
+}
+
+.invitedGuest img{
+  margin-left: 3px;
 }

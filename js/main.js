@@ -20,6 +20,9 @@ $(document).ready(function() {
     $(document).on('submit', "#friendAdder", addFriendstoEvent);
     $(document).on('submit', "#groupAdder", addGroupstoEvent);
 
+    $(document).on('click', "#deleteInvitedGuest", deleteInvitedGuest);
+
+
 /*
     $.ajax({url:"api/LoginStatus", success: function(json){
         if(json !== 'null'){
@@ -87,7 +90,7 @@ function cancelCreateEventPopUp(){
     $("#eventDateEnd").val("");
     $("#eventTimeStart").val("");
     $("#eventTimeEnd").val("");
-    $("#eventGuestList").val("");
+    $("#eventGuestList").empty()
     $("#allowShareEvent").prop('checked', false);
 }
 
@@ -149,18 +152,9 @@ function addFriendstoEvent(event){
     var friendsList = $(".friendList");
     for(var i = 0; i < friendsList.size(); i++){
         if($(".friendList").eq(i).prop('checked') === true){
-            friendstoAdd = friendstoAdd + ", "+ $(".friendList").eq(i).next().html();
+            $("#eventGuestList").append("<span class='invitedGuest'><img src='img/close.png' id='deleteInvitedGuest' alt='Uninvite this friend.' title='Uninvite friend.'><h4> "+ $(".friendList").eq(i).next().html() + "</h4></span>");
         }
-    }
-    friendstoAdd = friendstoAdd.substring(2);
-
-    if($("#eventGuestList").val() === ""){
-        $("#eventGuestList").val(friendstoAdd);
-    }
-    else{
-        $("#eventGuestList").val($("#eventGuestList").val() + ", " + friendstoAdd);
-    }
-    
+    }    
     $("#addFriendsOptions").hide();
     $("#enterEvent").show();
     $(".friendList").prop('checked', false);
@@ -170,23 +164,22 @@ function addFriendstoEvent(event){
 function addGroupstoEvent(event){
     event.preventDefault();
     var groupstoAdd="";
+    var groupFriends="";
     var groupsList = $(".groupList");
     for(var i = 0; i < groupsList.size(); i++){
         if($(".groupList").eq(i).prop('checked') === true){
-            groupstoAdd = groupstoAdd + ", "+ $(".groupList").eq(i).attr("friends");
+            groupFriends = $(".groupList").eq(i).attr("friends");
+            var friends = groupFriends.split(", ");
+                for(var k = 0; k < friends.length; k++){
+                    $("#eventGuestList").append("<span class='invitedGuest'><img src='img/close.png' id='deleteInvitedGuest' alt='Uninvite this friend.' title='Uninvite friend.'><h4> "+ friends[k] + "</h4></span>");
+                }
         }
     }
-    groupstoAdd = groupstoAdd.substring(2);
-
-    if($("#eventGuestList").val() === ""){
-        $("#eventGuestList").val(groupstoAdd);
-    }
-    else{
-        $("#eventGuestList").val($("#eventGuestList").val() + ", " + groupstoAdd);
-    }
-
     $("#addGroupsOptions").hide();
     $("#enterEvent").show();
     $(".groupList").prop('checked', false);
 }
 
+function deleteInvitedGuest(){
+    $(this).parent().remove();
+}

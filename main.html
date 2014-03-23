@@ -12,7 +12,6 @@
         <link rel="stylesheet" type="text/css" href="css/header.css">
         <script src="//code.jquery.com/jquery-1.9.1.js"></script>
         <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
         <script type="text/javascript" src="js/main.js"></script>
     </head>
     <body>
@@ -229,8 +228,9 @@
                             <input type="time" id="eventTimeEnd" name="timeEnd" title ="Enter the end time of the event." required>
                             <br>
                             <label for="eventGuestList">Invited:</label>
-                            <textarea wrap="hard" name="guestList" rows="5%" cols="45%" title ="Add people to the event." id="eventGuestList" form="eventCreator"></textarea>
-                            <br>
+                            <div id="eventGuestList" name="guestList" title="Add people to the event."></div>
+
+                            
                             <input type="button" class="button" id ="addFriendsEvent" value="Add Friends">   
                             <input type="button" class="button" id ="addGroupsEvent" value="Add Groups">  
                             <input type="checkbox" id ="allowShareEvent" title="Share Events">
