@@ -27,6 +27,9 @@ $(document).ready(function() {
 
     $(document).on('click', "#sendFriendRequest", sendFriendRequest);
     $(document).on('click', "#closeFriendRequest", closeFriendRequest);
+    
+    $(document).on('click', ".friendRequest img", updateFriendRequest);
+    $(document).on('click', ".eventRequest img", updateEventRequest);
 
 
 /*
@@ -248,4 +251,34 @@ function closeFriendRequest(){
     $("#popUp").hide(); 
     $("#blackScreenofDeath").hide(); 
     $("#foundFriend").hide(); 
+}
+
+function updateFriendRequest(){
+    var going;
+    if($(this).attr("title") === "Yes"){
+       going=1;
+    }
+    else{
+        going=0;
+    }
+    
+    //call ajax with the value of yes or no,the userid, and the friendid.
+    //call function to update friends list. (delete the div and get the friends in alphabetical order).
+
+    $(this).parent().remove();
+}
+
+function updateEventRequest(){
+    var going;
+    if($(this).attr("title") === "Yes"){
+        going=1;
+
+    }
+    else{
+        going=0;
+    }
+    //call ajax with the value of going or not,the userid, and the eventid.
+    //call function to update event list. (delete the div and get the events in time order).
+
+    $(this).parent().remove();
 }
