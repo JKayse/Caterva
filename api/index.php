@@ -97,7 +97,7 @@ function addUser()
 * @return JSON The userid and email.
 */
 function login() {
-	$email = Slim::getInstance()->request()->post('username');
+	$username = Slim::getInstance()->request()->post('username');
 	$password = Slim::getInstance()->request()->post('password');
 
 	$sql = "SELECT Password FROM Users WHERE Username=:username";
@@ -107,11 +107,11 @@ function login() {
 		$stmt = $db->prepare($sql);
 		$stmt->bindParam("username", $username);
 		$stmt->execute();
-		$hashedPassword = $stmt->fetchObject();
+		$hashedPassword = $stmt->fetchObject()->Password;
 
-		if(empty($hashedPassword->Password)) {
-		    echo "null";
-		} else if(crypt($password) == $hashedPassword->Password) {
+		if(empty($hashedPassword)) {
+		    	echo "null";
+		} else if(crypt($password) == $hashedPassword) {
 			$_SESSION['loggedin'] = true;
 			$query = "SELECT UserID FROM Users WHERE Username=:username";
 			$stmt2 = $db->prepare($query);
@@ -119,7 +119,7 @@ function login() {
 			$stmt2->execute();
 			$_SESSION['userId'] = $stmt2->fetchObject()->UserId;
 			$_SESSION['username'] = $username;
-            		echo '{"Username": "' . $_SESSION['username'] . '", "ID": ' . $_SESSION['userId'] . '}'; 
+	    		echo '{"Username": "' . $_SESSION['username'] . '", "ID": ' . $_SESSION['userId'] . '}'; 
 		} else {
             		echo "null";
         	}
