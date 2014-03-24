@@ -121,6 +121,7 @@ main div div div button:hover{
 #yourFlock img{
   margin: .6%;
   position: absolute;
+  cursor: pointer;
 }
 
 #calendarView{
@@ -244,12 +245,7 @@ main div div div button:hover{
     margin-left: 14%;
   }
 
-.left button{
-    width: 15%;
-    float:right;
-    margin-top: 13.5%;
-    border-radius: 3px;
-  }
+
   .right img{
     float:right;
   }
@@ -260,19 +256,13 @@ main div div div button:hover{
 
   #events h2{
     margin:0px;
+    text-align: left;
   }
 
   .right .eventInfo p{
     margin-left: 4%;
   }
 
-  .right button{
-    width: 15%;
-    float:right;
-    margin-right: 10%;
-    margin-top: 13.5%;
-    border-radius: 3px;
-  }
 
   #requests #requestList button{
     background: rgb(216, 244, 255);
@@ -374,19 +364,50 @@ textarea{
   text-align: center;
 }
 
-#foundFriend img{
+#foundFriend img:not([title="Close"]){
   width:40%;
   border-radius: 100%;
   margin-right: auto;
   margin-left: auto;
 }
 
-#enterFriend h2{
-  text-align: center;
-}
 
 .slimScrollDiv{
   margin:0px;
   border-style: none;
 }
 
+#eventInformation{
+    display: none;
+}
+
+#eventInformation h4, #eventInformation h3{
+    display: inline-block;
+}
+
+.closePopUp{
+    float:right;
+    background: rgb(242, 249, 253);
+    border-radius: 3px;
+    padding: 3px 3px 4px 4px;
+}
+
+#friendSearch{
+    display: none;
+}
+
+#friendSearchForm{
+    display: none;
+}
+
+.closePopUp:hover{
+    background: linear-gradient(rgb(96, 195, 252), rgb(99, 150, 240))
+}
+
+#events img{
+    cursor: pointer;
+}
+
+.eventInfo{
+    cursor: pointer;
+}

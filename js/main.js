@@ -9,15 +9,15 @@ $(document).ready(function() {
     $(document).on('click', "#editFriends", goToEditPage);
     $(document).on('click', "#addFriend", addFriend);
     $(document).on('click', "#createEvent", addEvent);
-    $(document).on('click', "#cancelSearch", cancelFriendPopUp);
-    $(document).on('click', "#cancelEvent", cancelCreateEventPopUp);
-    $(document).on('click', "#cancelFriends", cancelAddFriendsPopUp);
-    $(document).on('click', "#cancelGroups", cancelAddGroupsPopUp);
+    $(document).on('click', ".cancelSearch", cancelFriendPopUp);
+    $(document).on('click', ".cancelEvent", cancelCreateEventPopUp);
+    $(document).on('click', ".cancelFriends", cancelAddFriendsPopUp);
+    $(document).on('click', ".cancelGroups", cancelAddGroupsPopUp);
 
     $(document).on('click', "#addFriendsEvent", showAddFriendsPopUp);
     $(document).on('click', "#addGroupsEvent", showAddGroupsPopUp);
 
-    $(document).on('submit', "#friendSearch", searchForFriend);
+    $(document).on('submit', "#friendSearchForm", searchForFriend);
     $(document).on('submit', "#friendAdder", addFriendstoEvent);
     $(document).on('submit', "#groupAdder", addGroupstoEvent);  
     $(document).on('submit', "#eventCreator", addCreatedEvent);
@@ -26,12 +26,15 @@ $(document).ready(function() {
     $(document).on('click', ".friend", goToProfilePage);
 
     $(document).on('click', "#sendFriendRequest", sendFriendRequest);
-    $(document).on('click', "#closeFriendRequest", closeFriendRequest);
+    $(document).on('click', ".closeFriendRequest", closeFriendRequest);
     
     $(document).on('click', ".friendRequest img", updateFriendRequest);
     $(document).on('click', ".eventRequest img", updateEventRequest);
 
-    $(document).on('click', ".eventRequest h4", viewEventDescription);
+    $(document).on('click', ".eventRequest h4", viewEventInformation);
+    $(document).on('click', ".event", viewAttendingEventInformation);
+
+    $(document).on('click', ".closeEventInformation", closeEventInformation);
 
     $('.mouseover').slimScroll({
         height: '83%'
@@ -96,7 +99,8 @@ function cancelAddGroupsPopUp(){
 function cancelFriendPopUp(){
     $("#blackScreenofDeath").hide();
     $("#popUp").hide();
-    $("#enterFriend").hide();
+    $("#friendSearchForm").hide();
+    $("#friendSearch").hide();
     $("#friendsUsername").val("");
 }
 
@@ -133,7 +137,8 @@ function goToProfilePage(){
 function addFriend(){
     $("#blackScreenofDeath").show();
     $("#popUp").show();
-    $("#enterFriend").show();
+    $("#friendSearch").show();
+    $("#friendSearchForm").show();
 }
 
 function addEvent(){
@@ -173,9 +178,9 @@ function searchForFriend(event){
     });*/
 
     $("#friendsUsername").val("");
-    $("#enterFriend form").hide();
+    $("#friendSearchForm").hide();
     $("#foundFriend").show();
-    $("#foundFriend img").height($("#foundFriend img").width());
+    $("#foundFriend img:not([title='Close'])").height($("#foundFriend img:not([title='Close'])").width());
 }
 
 function addFriendstoEvent(event){
@@ -295,9 +300,22 @@ function updateEventRequest(){
     $(this).parent().remove();
 }
 
-function viewEventDescription(){
+function viewEventInformation(){
     $("#blackScreenofDeath").show();
     $("#popUp").show();
-    $("#eventDescription").show();
+    $("#eventInformation").show();
+        
+}
+
+function closeEventInformation(){
+    $("#blackScreenofDeath").hide();
+    $("#popUp").hide();
+    $("#eventInformation").hide();
+}
+
+function viewAttendingEventInformation(){
+    $("#blackScreenofDeath").show();
+    $("#popUp").show();
+    $("#eventInformation").show();
         
 }

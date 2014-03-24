@@ -59,13 +59,13 @@ header h1{
     margin-bottom: 0px;
 }
 
-button,  input[class=button] {
+button,  input[class~=button] {
     background: linear-gradient(rgb(173, 239, 255), rgb(153, 186, 255));
     border-color: rgba(255, 255, 255, 0.86);
     border-width:2px;
 }
 
-button:hover, input[class=button]:hover {
+button:hover, input[class~=button]:hover {
     background: linear-gradient(rgb(153, 186, 255), rgb(173, 239, 255));
 }
 
