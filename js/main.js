@@ -31,6 +31,16 @@ $(document).ready(function() {
     $(document).on('click', ".friendRequest img", updateFriendRequest);
     $(document).on('click', ".eventRequest img", updateEventRequest);
 
+    $('.mouseover').slimScroll({
+        height: '83%'
+    });
+    
+    $(".mouseover").height('100%');
+    $(".slimScrollRail").hide();
+    $(".slimScrollBar").hide();
+
+
+
 
 /*
     $.ajax({url:"api/LoginStatus", success: function(json){

@@ -86,7 +86,7 @@ main h3{
 }
 
 #friendList, #groupList, #eventRequestList, #friendRequestList{
-    height: 83%;
+    height: 100%;
 }
 
 main div div div button{
@@ -348,21 +348,6 @@ textarea{
   -webkit-transform: rotate(90deg);
 }
 
-div.mouseover:hover{
-  overflow-y:auto;
-}
-
-div.mouseover{
-  overflow-y:hidden;
-}
-
-.slimScrollDiv {
-    border-width: 1px;
-    border-color: #ccc;
-    border-style: solid;
-    margin:10px; 
-}
-
 #foundFriend{
   display: none;
   text-align: center;
@@ -377,4 +362,9 @@ div.mouseover{
 
 #enterFriend h2{
   text-align: center;
+}
+
+.slimScrollDiv{
+  margin:0px;
+  border-style: none;
 }
