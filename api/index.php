@@ -67,52 +67,7 @@ function addUser()
 	$username = Slim::getInstance()->request()->post('username');
 	$email = Slim::getInstance()->request()->post('email');
 	$password = crypt(Slim::getInstance()->request()->post('password'));
-
-	$sql = "SELECT Username FROM Users WHERE Username=:username";
 	
-	try
-	{
-		$db = getConnection();
-
-		$stmt = $db->prepare($sql);
-		$stmt->bindParam("username", $username);
-		$stmt->execute();
-		$db = null;
-		$username_test = $stmt->fetchObject()->username;
-		echo $username_test;
-		if(isset($username_test)) {
-			echo "error_username";
-			return;
-		}
-	}
-	catch(PDOException $e) 
-	{
-		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
-	}
-
-	$sql = "SELECT Email FROM Users WHERE Email=:email";
-	
-	try
-	{
-		$db = getConnection();
-
-		$stmt = $db->prepare($sql);
-		$stmt->bindParam("email", $email);
-		$stmt->execute();
-		$db = null;
-
-		$email_test = $stmt->fetchObject();
-
-		if(isset($email_test)) {
-			echo "error_email";
-			return;
-		}
-	}
-	catch(PDOException $e) 
-	{
-		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
-	}
-
 	$sql = "INSERT INTO Users (Firstname, Lastname, Username, Email, Password) VALUES (:firstname, :lastname, :username, :email, :password)";
 
 	try
@@ -142,7 +97,7 @@ function addUser()
 * @return JSON The userid and email.
 */
 function login() {
-	$username = Slim::getInstance()->request()->post('username');
+	$email = Slim::getInstance()->request()->post('username');
 	$password = Slim::getInstance()->request()->post('password');
 
 	$sql = "SELECT Password FROM Users WHERE Username=:username";
@@ -152,11 +107,11 @@ function login() {
 		$stmt = $db->prepare($sql);
 		$stmt->bindParam("username", $username);
 		$stmt->execute();
-		$hashedPassword = $stmt->fetchObject()->Password;
+		$hashedPassword = $stmt->fetchObject();
 
-		if(empty($hashedPassword)) {
-		    	echo "null";
-		} else if(crypt($password) == $hashedPassword) {
+		if(empty($hashedPassword->Password)) {
+		    echo "null";
+		} else if(crypt($password) == $hashedPassword->Password) {
 			$_SESSION['loggedin'] = true;
 			$query = "SELECT UserID FROM Users WHERE Username=:username";
 			$stmt2 = $db->prepare($query);
@@ -164,12 +119,10 @@ function login() {
 			$stmt2->execute();
 			$_SESSION['userId'] = $stmt2->fetchObject()->UserId;
 			$_SESSION['username'] = $username;
-	    		echo '{"Username": "' . $_SESSION['username'] . '", "ID": ' . $_SESSION['userId'] . '}'; 
+            		echo '{"Username": "' . $_SESSION['username'] . '", "ID": ' . $_SESSION['userId'] . '}'; 
 		} else {
             		echo "null";
         	}
-
-		$db = null;
 	} catch(PDOException $e) {
 		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 	}
