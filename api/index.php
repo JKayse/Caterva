@@ -78,11 +78,16 @@ function addUser()
 		$stmt->bindParam("username", $username);
 		$stmt->execute();
 		$db = null;
-		$username_test = $stmt->fetchObject()->Username;
-
+		$username_test = $stmt->fetchObject()->username;
+		echo $username_test;
 		if(isset($username_test)) {
-			return "error_username"
+			echo "error_username";
+			return;
 		}
+	}
+	catch(PDOException $e) 
+	{
+		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 	}
 
 	$sql = "SELECT Email FROM Users WHERE Email=:email";
@@ -96,13 +101,18 @@ function addUser()
 		$stmt->execute();
 		$db = null;
 
-		$email_test = $stmt->fetchObject()->Email;
+		$email_test = $stmt->fetchObject();
 
 		if(isset($email_test)) {
-			return "error_email"
+			echo "error_email";
+			return;
 		}
 	}
-	
+	catch(PDOException $e) 
+	{
+		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+	}
+
 	$sql = "INSERT INTO Users (Firstname, Lastname, Username, Email, Password) VALUES (:firstname, :lastname, :username, :email, :password)";
 
 	try
