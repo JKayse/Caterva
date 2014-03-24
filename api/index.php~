@@ -49,7 +49,7 @@ $app->get('/ViewFriends', 'viewFriends');
 /**
 * Get User info
 */
-$app->get('/UserInfo/:userId', 'getUserInfo');
+$app->get('/UserInfo/:user', 'getUserInfo');
 
 /**
 * Add friend
@@ -59,7 +59,7 @@ $app->post('/AddFriend/:friend', 'addFriend');
 /**
 * View Friend Request
 */
-$app->get('/ViewFriendRequest/', 'getFriendRequest');
+$app->get('/GetFriendRequest/', 'getFriendRequest');
 
 $app->run();
 
@@ -221,13 +221,13 @@ function viewFriends(){
 /*
 * a function that shows all the info for the user
 */
-function getUserInfo($userId)
+function getUserInfo($user)
 {
 	$sql = "SELECT UserName, F_Name, L_Name, Description, PictureName FROM Users WHERE userID =:userID";
 	try {
 		$db = getConnection();
 		$stmt = $db->prepare($sql);
-		$stmt->bindParam("userId",$userId);
+		$stmt->bindParam("userId",$user);
 		$stmt->execute();
 		$UserInfo = $stmt->fetchAll(PDO::FETCH_OBJ);
 		$db = null;
@@ -274,18 +274,7 @@ function addFriend($friend)
 */
 function getFriendRequest()
 {
-	$userID = $_SESSION['userId'];	
-	$sql = "SELECT UserID, FriendID FROM FriendRequest WHERE FriendID = ‘$userID’";
-	try {
-		$db = getConnection();
-		$stmt = $db->prepare($sql);
-		$stmt->execute();
-		$FriendRequest = $stmt->fetchAll(PDO::FETCH_OBJ);
-		$db = null;
-		echo '{' . json_encode($FriendRequest) . '}';
-	} catch(PDOException $e) {
-	echo '{"error":{"text":'. $e->getMessage() .'}}'; 
-	}
+	$sql = "SELECT"
 }
 
 /**
