@@ -67,6 +67,7 @@ function addUser()
 	$username = Slim::getInstance()->request()->post('username');
 	$email = Slim::getInstance()->request()->post('email');
 	$password = crypt(Slim::getInstance()->request()->post('password'));
+	echo  crypt(Slim::getInstance()->request()->post('password'));
 	
 	$sql = "INSERT INTO Users (Firstname, Lastname, Username, Email, Password) VALUES (:firstname, :lastname, :username, :email, :password)";
 
