@@ -97,7 +97,7 @@ function addUser()
 * @return JSON The userid and email.
 */
 function login() {
-	$email = Slim::getInstance()->request()->post('username');
+	$username = Slim::getInstance()->request()->post('username');
 	$password = Slim::getInstance()->request()->post('password');
 
 	$sql = "SELECT Password FROM Users WHERE Username=:username";
@@ -108,10 +108,15 @@ function login() {
 		$stmt->bindParam("username", $username);
 		$stmt->execute();
 		$hashedPassword = $stmt->fetchObject();
-
-		if(empty($hashedPassword->Password)) {
+		echo $hashedPassword->Password ."blahblah";
+		echo crypt($password);
+		if(empty($hashedPassword->Password))
+		{
 		    echo "null";
-		} else if(crypt($password) == $hashedPassword->Password) {
+		}
+		
+		else if(crypt($password) == $hashedPassword->Password)
+		{
 			$_SESSION['loggedin'] = true;
 			$query = "SELECT UserID FROM Users WHERE Username=:username";
 			$stmt2 = $db->prepare($query);
@@ -119,11 +124,15 @@ function login() {
 			$stmt2->execute();
 			$_SESSION['userId'] = $stmt2->fetchObject()->UserId;
 			$_SESSION['username'] = $username;
-            		echo '{"Username": "' . $_SESSION['username'] . '", "ID": ' . $_SESSION['userId'] . '}'; 
-		} else {
-            		echo "null";
-        	}
-	} catch(PDOException $e) {
+            echo '{"Username": "' . $_SESSION['username'] . '", "ID": ' . $_SESSION['userId'] . '}'; 
+		}
+		else
+		{
+            echo "null2";
+        }
+	} 
+	catch(PDOException $e)
+	{
 		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 	}
 }
