@@ -41,6 +41,16 @@ $app->post('/Login', 'login');
 */
 $app->post('/Logout', 'logout');
 
+/**
+* View Friends
+*/
+$app->get('/ViewFriends', 'viewFriends');
+
+/**
+* Get User info
+*/
+$app->get('/UserInfo/:user', 'getUserInfo');
+
 $app->run();
 
 /**
@@ -81,8 +91,12 @@ function addUser()
 		$username_test = $stmt->fetchObject()->Username;
 
 		if(isset($username_test)) {
-			return "error_username"
+			return "error_username";
 		}
+	}
+	catch(PDOException $e) 
+	{
+		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 	}
 
 	$sql = "SELECT Email FROM Users WHERE Email=:email";
@@ -99,8 +113,12 @@ function addUser()
 		$email_test = $stmt->fetchObject()->Email;
 
 		if(isset($email_test)) {
-			return "error_email"
+			return "error_email";
 		}
+	}
+	catch(PDOException $e) 
+	{
+		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 	}
 	
 	$sql = "INSERT INTO Users (Firstname, Lastname, Username, Email, Password) VALUES (:firstname, :lastname, :username, :email, :password)";
@@ -170,6 +188,43 @@ function login() {
 */
 function logout() {
 	session_destroy();
+}
+
+/**
+* A function that shows all the user's friends
+*/
+function viewFriends(){
+	$userId = $_SESSION['userId'];
+	$sql = "SELECT UserFriendID FROM Friends WHERE UserID = '$userId'";
+	try {
+			$db = getConnection();
+			$stmt = $db->prepare($sql);
+			$stmt->execute();
+			$Friends = $stmt->fetchAll(PDO::FETCH_OBJ);
+			$db = null;
+			echo '{"' . $Friends. '": ' . json_encode($Items) . '}';
+		} catch(PDOException $e) {
+		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+		}
+}
+
+/*
+* a function that shows all the info for the user
+*/
+function getUserInfo($user)
+{
+	$sql = "SELECT UserName, F_Name, L_Name, Description, PictureName FROM Users WHERE userID =:userID";
+	try {
+		$db = getConnection();
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam("userId",$user);
+		$stmt->execute();
+		$UserInfo = $stmt->fetchAll(PDO::FETCH_OBJ);
+		$db = null;
+		echo '{"' . $user. '": ' . json_encode($UserInfo) . '}';
+	} catch(PDOException $e) {
+	echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+	}
 }
 
 /**
