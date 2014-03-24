@@ -31,6 +31,8 @@ $(document).ready(function() {
     $(document).on('click', ".friendRequest img", updateFriendRequest);
     $(document).on('click', ".eventRequest img", updateEventRequest);
 
+    $(document).on('click', ".eventRequest h4", viewEventDescription);
+
     $('.mouseover').slimScroll({
         height: '83%'
     });
@@ -291,4 +293,11 @@ function updateEventRequest(){
     //call function to update event list. (delete the div and get the events in time order).
 
     $(this).parent().remove();
+}
+
+function viewEventDescription(){
+    $("#blackScreenofDeath").show();
+    $("#popUp").show();
+    $("#eventDescription").show();
+        
 }

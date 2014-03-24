@@ -49,12 +49,17 @@ $app->get('/ViewFriends', 'viewFriends');
 /**
 * Get User info
 */
-$app->get('/UserInfo/:user', 'getUserInfo');
+$app->get('/UserInfo/:userId', 'getUserInfo');
 
 /**
 * Add friend
 */
 $app->post('/AddFriend/:friend', 'addFriend');
+
+/**
+* View Friend Request
+*/
+$app->get('/ViewFriendRequest/', 'getFriendRequest');
 
 $app->run();
 
@@ -216,13 +221,13 @@ function viewFriends(){
 /*
 * a function that shows all the info for the user
 */
-function getUserInfo($user)
+function getUserInfo($userId)
 {
 	$sql = "SELECT UserName, F_Name, L_Name, Description, PictureName FROM Users WHERE userID =:userID";
 	try {
 		$db = getConnection();
 		$stmt = $db->prepare($sql);
-		$stmt->bindParam("userId",$user);
+		$stmt->bindParam("userId",$userId);
 		$stmt->execute();
 		$UserInfo = $stmt->fetchAll(PDO::FETCH_OBJ);
 		$db = null;
@@ -237,6 +242,7 @@ function getUserInfo($user)
 */
 function addFriend($friend)
 {
+	$results;	
 	$FindFriendQuery = "SELECT userID FROM USERS WHERE username =:username";
 	try {
 		$db = getConnection();
@@ -246,15 +252,37 @@ function addFriend($friend)
 		$FriendId = $stmt->fetchAll(PDO::FETCH_OBJ);
 		$db = null;
 		echo '{"' . $friend. '": ' . json_encode($FriendId) . '}';
+		$results = mysql_num_rows($FriendId);
 	} catch(PDOException $e) {
 	echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 	}
-	$userId = $_SESSION['userId'];
-	$InserFriendQuery = "INSERT INTO FriendRequests(userID, friendID) VALUE('$FriendId', '$userId')";
+	if($results > 0){
+		$userId = $_SESSION['userId'];
+		$InserFriendQuery = "INSERT INTO FriendRequests(userID, friendID) VALUE('$FriendId', 			'$userId')";
+		try {
+			$db = getConnection();
+			$stmt = $db->prepare($FindFriendQuery);
+			$stmt->execute();
+		} catch(PDOException $e) {
+		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+		}
+	}
+}
+
+/**
+* A function that gets the friend request of the user
+*/
+function getFriendRequest()
+{
+	$userID = $_SESSION['userId'];	
+	$sql = "SELECT UserID, FriendID FROM FriendRequest WHERE FriendID = ‘$userID’";
 	try {
 		$db = getConnection();
-		$stmt = $db->prepare($FindFriendQuery);
+		$stmt = $db->prepare($sql);
 		$stmt->execute();
+		$FriendRequest = $stmt->fetchAll(PDO::FETCH_OBJ);
+		$db = null;
+		echo '{' . json_encode($FriendRequest) . '}';
 	} catch(PDOException $e) {
 	echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 	}
@@ -266,7 +294,7 @@ function addFriend($friend)
 function getConnection() {
 	$dbhost="localhost";
 	$dbuser="root";
-	$dbpass="";
+	$dbpass="halomasterchief";
 	$dbname="Flock";
 	$dbh = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);	
 	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
