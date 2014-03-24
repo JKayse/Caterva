@@ -54,6 +54,7 @@ $(document).ready(function() {
             userId = json.ID;    
         }
         else{
+            userId = "null";
             return;
         }
     }});   
@@ -70,7 +71,23 @@ $(document).ready(function() {
         }
 
     }}); 
+
+    $.ajax({url:"api/ViewFriends/" + userId, success: function(json2){
+        json2 = JSON.parse(json2);
+        var friends = json2.friends;
+        for(var i = 0; i < friends.length ; i++){
+            var firstName = friends[i].firstName;
+            var lastName = friends[i].lastName;
+            var friendId = friends[i].friendId;
+            var friend = "<button class='friend' type='button' friendId=" + friendId + ">"+ firstName +" "+ lastName+ "</button>";
+            $("#friendList").append(friend);
+            var friendAdder = "<input type='checkbox' class='friendList' id=" + friendId + " title='Invite' name='invitedFriends'><label for=" + friendId + ">"+ firstName +" "+ lastName + "</label><br>";
+            $("friendAdderList").append(friendAdder);
+        }
+
+    }}); 
 */
+
 
 });
 
@@ -115,7 +132,7 @@ function cancelCreateEventPopUp(){
     $("#eventDateEnd").val("");
     $("#eventTimeStart").val("");
     $("#eventTimeEnd").val("");
-    $("#eventGuestList").empty()
+    $("#eventGuestList").empty();
     $("#allowShareEvent").prop('checked', false);
 }
 
@@ -318,4 +335,25 @@ function viewAttendingEventInformation(){
     $("#popUp").show();
     $("#eventInformation").show();
         
+}
+
+function updateFriendsList(){
+    $("#friendList").empty();
+    $("friendAdderList").empty();
+
+    $.ajax({url:"api/ViewFriends/" + userId, success: function(json2){
+        json2 = JSON.parse(json2);
+        var friends = json2.friends;
+        for(var i = 0; i < friends.length ; i++){
+            var firstName = friends[i].firstName;
+            var lastName = friends[i].lastName;
+            var friendId = friends[i].friendId;
+            var friend = "<button class='friend' type='button' friendId=" + friendId + ">"+ firstName +" "+ lastName+ "</button>";
+            $("#friendList").append(friend);
+            var friendAdder = "<input type='checkbox' class='friendList' id=" + friendId + " title='Invite' name='invitedFriends'><label for=" + friendId + ">"+ firstName +" "+ lastName + "</label><br>";
+            $("friendAdderList").append(friendAdder);
+        }
+
+    }}); 
+
 }

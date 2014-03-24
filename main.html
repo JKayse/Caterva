@@ -265,20 +265,22 @@
                         
                         <hr>
                         <form id = "friendAdder" name="Create An Account" action="#" method="post">
-                            <input type="checkbox" class="friendList" id ="1Friend" title="Share Events" name="invitedFriends">
-                            <label for="1Friend">Jordan Kayse</label>
-                            <br>
-                            <input type="checkbox" class="friendList" id ="2Friend" title="Share Events" name="invitedFriends">
-                            <label for="2Friend">Jessica Yeh</label>
-                            <br>
-                            <input type="checkbox" class="friendList" id ="3Friend" title="Share Events" name="invitedFriends">
-                            <label for="3Friend">Story Zanetti</label>
-                            <br>
-                            <input type="checkbox" class="friendList" id ="4Friend" title="Share Events" name="invitedFriends">
-                            <label for="4Friend">Rebecca Ward</label>
-                            <br>
+                            <div id="friendAdderList">
+                                <input type="checkbox" class="friendList" id ="1Friend" title="Share Events" name="invitedFriends">
+                                <label for="1Friend">Jordan Kayse</label>
+                                <br>
+                                <input type="checkbox" class="friendList" id ="2Friend" title="Share Events" name="invitedFriends">
+                                <label for="2Friend">Jessica Yeh</label>
+                                <br>
+                                <input type="checkbox" class="friendList" id ="3Friend" title="Share Events" name="invitedFriends">
+                                <label for="3Friend">Story Zanetti</label>
+                                <br>
+                                <input type="checkbox" class="friendList" id ="4Friend" title="Share Events" name="invitedFriends">
+                                <label for="4Friend">Rebecca Ward</label>
+                                <br>
+                            </div> 
                             <input type="submit" class="button" id ="addTheseFriends" value="Add">   
-                            <input type="button" class="button cancelFriends" value="Cancel">  
+                            <input type="button" class="button cancelFriends" value="Cancel"> 
                         </form>
 
 
@@ -289,15 +291,17 @@
                         <h2>Add Groups</h2>
                         <hr>
                         <form id = "groupAdder" name="Create An Account" action="#" method="post">
-                            <input type="checkbox" class="groupList" id ="1Group" friends = "Maryssa Crews, Taylor Ellington" title="Share Events" name="invitedGroups">
-                            <label for="1Group">GUI</label>
-                            <br>
-                            <input type="checkbox"  class="groupList" id ="2Group" friends = "Chris Hauser, Alex Cheng" title="Share Events" name="invitedGroups">
-                            <label for="2Group">DB</label>
-                            <br>
-                            <input type="checkbox" class="groupList" id ="3Group" friends = "Story Zanetti, Jessica Yeh, Jordan Kayse, Rebecca Ward" title="Share Events" name="invitedGroups">
-                            <label for="3Group">Awesome People</label>
-                            <br>
+                            <div id="groupAdderList">
+                                <input type="checkbox" class="groupList" id ="1Group" friends = "Maryssa Crews, Taylor Ellington" title="Share Events" name="invitedGroups">
+                                <label for="1Group">GUI</label>
+                                <br>
+                                <input type="checkbox"  class="groupList" id ="2Group" friends = "Chris Hauser, Alex Cheng" title="Share Events" name="invitedGroups">
+                                <label for="2Group">DB</label>
+                                <br>
+                                <input type="checkbox" class="groupList" id ="3Group" friends = "Story Zanetti, Jessica Yeh, Jordan Kayse, Rebecca Ward" title="Share Events" name="invitedGroups">
+                                <label for="3Group">Awesome People</label>
+                                <br>
+                            </div>
                             <input type="submit" class="button" id ="addTheseGroups" value="Add">   
                             <input type="button" class="button cancelGroups" value="Cancel">   
                         </form>

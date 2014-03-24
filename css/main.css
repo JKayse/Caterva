@@ -256,7 +256,6 @@ main div div div button:hover{
 
   #events h2{
     margin:0px;
-    text-align: left;
   }
 
   .right .eventInfo p{
@@ -410,4 +409,8 @@ textarea{
 
 .eventInfo{
     cursor: pointer;
+}
+
+#groupAdderList, #friendAdderList{
+    background-color: rgb(255, 255, 255);
 }
