@@ -67,6 +67,41 @@ function addUser()
 	$username = Slim::getInstance()->request()->post('username');
 	$email = Slim::getInstance()->request()->post('email');
 	$password = crypt(Slim::getInstance()->request()->post('password'));
+
+	$sql = "SELECT Username FROM Users WHERE Username=:username";
+	
+	try
+	{
+		$db = getConnection();
+
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam("username", $username);
+		$stmt->execute();
+		$db = null;
+		$username_test = $stmt->fetchObject()->Username;
+
+		if(isset($username_test)) {
+			return "error_username"
+		}
+	}
+
+	$sql = "SELECT Email FROM Users WHERE Email=:email";
+	
+	try
+	{
+		$db = getConnection();
+
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam("email", $email);
+		$stmt->execute();
+		$db = null;
+
+		$email_test = $stmt->fetchObject()->Email;
+
+		if(isset($email_test)) {
+			return "error_email"
+		}
+	}
 	
 	$sql = "INSERT INTO Users (Firstname, Lastname, Username, Email, Password) VALUES (:firstname, :lastname, :username, :email, :password)";
 
