@@ -49,7 +49,7 @@ $app->get('/ViewFriends', 'viewFriends');
 /**
 * Get User info
 */
-$app->get('/UserInfo/:userId', 'getUserInfo');
+$app->get('/UserInfo/:user', 'getUserInfo');
 
 /**
 * Add friend
@@ -59,7 +59,7 @@ $app->post('/AddFriend/:friend', 'addFriend');
 /**
 * View Friend Request
 */
-$app->get('/ViewFriendRequest/', 'getFriendRequest');
+$app->get('/GetFriendRequest/', 'getFriendRequest');
 
 $app->run();
 
@@ -89,7 +89,7 @@ function addUser()
 	$password = crypt(Slim::getInstance()->request()->post('password'));
 
 	$sql = "SELECT Username FROM Users WHERE Username=:username";
-
+	
 	try
 	{
 		$db = getConnection();
@@ -110,7 +110,7 @@ function addUser()
 	}
 
 	$sql = "SELECT Email FROM Users WHERE Email=:email";
-
+	
 	try
 	{
 		$db = getConnection();
@@ -130,13 +130,13 @@ function addUser()
 	{
 		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 	}
-
+	
 	$sql = "INSERT INTO Users (Firstname, Lastname, Username, Email, Password) VALUES (:firstname, :lastname, :username, :email, :password)";
 
 	try
 	{
 		$db = getConnection();
-
+				
 		$stmt = $db->prepare($sql);
 		$stmt->bindParam("firstname", $firstname);
 		$stmt->bindParam("lastname", $lastname);
@@ -221,13 +221,13 @@ function viewFriends(){
 /*
 * a function that shows all the info for the user
 */
-function getUserInfo($userId)
+function getUserInfo($user)
 {
 	$sql = "SELECT UserName, F_Name, L_Name, Description, PictureName FROM Users WHERE userID =:userID";
 	try {
 		$db = getConnection();
 		$stmt = $db->prepare($sql);
-		$stmt->bindParam("userId",$userId);
+		$stmt->bindParam("userId",$user);
 		$stmt->execute();
 		$UserInfo = $stmt->fetchAll(PDO::FETCH_OBJ);
 		$db = null;
@@ -274,18 +274,7 @@ function addFriend($friend)
 */
 function getFriendRequest()
 {
-	$userID = $_SESSION['userId'];	
-	$sql = "SELECT UserID, FriendID FROM FriendRequest WHERE FriendID = ‘$userID’";
-	try {
-		$db = getConnection();
-		$stmt = $db->prepare($sql);
-		$stmt->execute();
-		$FriendRequest = $stmt->fetchAll(PDO::FETCH_OBJ);
-		$db = null;
-		echo '{' . json_encode($FriendRequest) . '}';
-	} catch(PDOException $e) {
-	echo '{"error":{"text":'. $e->getMessage() .'}}'; 
-	}
+	$sql = "SELECT"
 }
 
 /**
