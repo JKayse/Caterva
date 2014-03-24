@@ -41,6 +41,21 @@ $app->post('/Login', 'login');
 */
 $app->post('/Logout', 'logout');
 
+/**
+* View Friends
+*/
+$app->get('/ViewFriends', 'viewFriends');
+
+/**
+* Get User info
+*/
+$app->get('/UserInfo/:user', 'getUserInfo');
+
+/**
+* Add friend
+*/
+$app->post('/AddFriend/:friend', 'addFriend');
+
 $app->run();
 
 /**
@@ -67,6 +82,49 @@ function addUser()
 	$username = Slim::getInstance()->request()->post('username');
 	$email = Slim::getInstance()->request()->post('email');
 	$password = crypt(Slim::getInstance()->request()->post('password'));
+
+	$sql = "SELECT Username FROM Users WHERE Username=:username";
+	
+	try
+	{
+		$db = getConnection();
+
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam("username", $username);
+		$stmt->execute();
+		$db = null;
+		$username_test = $stmt->fetchObject()->Username;
+
+		if(isset($username_test)) {
+			return "error_username";
+		}
+	}
+	catch(PDOException $e) 
+	{
+		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+	}
+
+	$sql = "SELECT Email FROM Users WHERE Email=:email";
+	
+	try
+	{
+		$db = getConnection();
+
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam("email", $email);
+		$stmt->execute();
+		$db = null;
+
+		$email_test = $stmt->fetchObject()->Email;
+
+		if(isset($email_test)) {
+			return "error_email";
+		}
+	}
+	catch(PDOException $e) 
+	{
+		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+	}
 	
 	$sql = "INSERT INTO Users (Firstname, Lastname, Username, Email, Password) VALUES (:firstname, :lastname, :username, :email, :password)";
 
@@ -107,16 +165,11 @@ function login() {
 		$stmt = $db->prepare($sql);
 		$stmt->bindParam("username", $username);
 		$stmt->execute();
-		$hashedPassword = $stmt->fetchObject();
-		echo $hashedPassword->Password ."blahblah";
-		echo crypt($password);
-		if(empty($hashedPassword->Password))
-		{
-		    echo "null";
-		}
-		
-		else if(crypt($password) == $hashedPassword->Password)
-		{
+		$hashedPassword = $stmt->fetchObject()->Password;
+
+		if(empty($hashedPassword)) {
+		    	echo "null";
+		} else if(crypt($password) == $hashedPassword) {
 			$_SESSION['loggedin'] = true;
 			$query = "SELECT UserID FROM Users WHERE Username=:username";
 			$stmt2 = $db->prepare($query);
@@ -124,15 +177,13 @@ function login() {
 			$stmt2->execute();
 			$_SESSION['userId'] = $stmt2->fetchObject()->UserId;
 			$_SESSION['username'] = $username;
-            echo '{"Username": "' . $_SESSION['username'] . '", "ID": ' . $_SESSION['userId'] . '}'; 
-		}
-		else
-		{
-            echo "null2";
-        }
-	} 
-	catch(PDOException $e)
-	{
+	    		echo '{"Username": "' . $_SESSION['username'] . '", "ID": ' . $_SESSION['userId'] . '}'; 
+		} else {
+            		echo "null";
+        	}
+
+		$db = null;
+	} catch(PDOException $e) {
 		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 	}
 }
@@ -142,6 +193,71 @@ function login() {
 */
 function logout() {
 	session_destroy();
+}
+
+/**
+* A function that shows all the user's friends
+*/
+function viewFriends(){
+	$userId = $_SESSION['userId'];
+	$sql = "SELECT UserFriendID FROM Friends WHERE UserID = '$userId'";
+	try {
+			$db = getConnection();
+			$stmt = $db->prepare($sql);
+			$stmt->execute();
+			$Friends = $stmt->fetchAll(PDO::FETCH_OBJ);
+			$db = null;
+			echo '{"' . $Friends. '": ' . json_encode($Items) . '}';
+		} catch(PDOException $e) {
+		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+		}
+}
+
+/*
+* a function that shows all the info for the user
+*/
+function getUserInfo($user)
+{
+	$sql = "SELECT UserName, F_Name, L_Name, Description, PictureName FROM Users WHERE userID =:userID";
+	try {
+		$db = getConnection();
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam("userId",$user);
+		$stmt->execute();
+		$UserInfo = $stmt->fetchAll(PDO::FETCH_OBJ);
+		$db = null;
+		echo '{"' . $user. '": ' . json_encode($UserInfo) . '}';
+	} catch(PDOException $e) {
+	echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+	}
+}
+
+/**
+* A function that adds a friend to the user's friend list
+*/
+function addFriend($friend)
+{
+	$FindFriendQuery = "SELECT userID FROM USERS WHERE username =:username";
+	try {
+		$db = getConnection();
+		$stmt = $db->prepare($FindFriendQuery);
+		$stmt->bindParam("username",$friend);
+		$stmt->execute();
+		$FriendId = $stmt->fetchAll(PDO::FETCH_OBJ);
+		$db = null;
+		echo '{"' . $friend. '": ' . json_encode($FriendId) . '}';
+	} catch(PDOException $e) {
+	echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+	}
+	$userId = $_SESSION['userId'];
+	$InserFriendQuery = "INSERT INTO FriendRequests(userID, friendID) VALUE('$FriendId', '$userId')";
+	try {
+		$db = getConnection();
+		$stmt = $db->prepare($FindFriendQuery);
+		$stmt->execute();
+	} catch(PDOException $e) {
+	echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+	}
 }
 
 /**
