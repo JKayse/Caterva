@@ -47,8 +47,8 @@ $(document).ready(function() {
 
 
 
-/*
-    $.ajax({url:"api/LoginStatus", success: function(json){
+
+    /*$.ajax({url:"api/LoginStatus", success: function(json){
         if(json !== 'null'){
             json = JSON.parse(json);
             userId = json.ID;    
@@ -86,7 +86,46 @@ $(document).ready(function() {
         }
 
     }}); 
-*/
+
+    $.ajax({url:"api/ViewGroups/" + userId, success: function(json2){
+        json2 = JSON.parse(json2);
+        var groups = json2.groups;
+        for(var i = 0; i < groups.length ; i++){
+            var groupName = groups[i].groupName;
+            var groupId = groups[i].groupName;
+            var groupList = groups[i].groupList;
+            var friendList = "";
+            var friendIdList = "";
+
+            var group = "<button class='groupButton' type='button' groupId =" + groupId + ">" + groupName + " </button><div class='groupMembers' groupId =" + groupId + ">" ;
+
+            var groupAdder = "<input type='checkbox' class='groupList' id=" + groupId + "friends='";
+
+            for(var j = 0; j < groupList.length; j++){
+                var firstName = groupList[j].firstName;
+                var lastName = groupList[j].lastName;
+                var friendId = groupsList[j].friendId;
+
+                group = group + "<button class='friend' type='button' friendId =" + friendId + ">" + firstName + " " + lastName + "</button>";
+
+                friendList = friendList + ", " + firstName + " " + lastName;
+                friendIdList = friendIdList + ", " + friendId;
+            }
+
+            friendList = friendList.substring(2);
+            friendIdList = friendIdList.substring(2);
+
+            group = group + "</div>";
+            $("#groupList").append(group);
+
+            groupAdder = groupAdder + friendList + "' friendIds = '" + friendIdList + "' title ='Invite' name='invitedGroups'><label for=" + groupId + ">" + groupName + "</label><br>";
+             $("groupAdderList").append(groupAdder);
+        }
+
+
+
+    }}); */
+
 
 
 });

@@ -28,10 +28,15 @@ function signUp(event){
                 password: $("#password").val()
             },
             success:function(json){
-                if(json === 'false'){
+                if(json === "error_username"){
+                    alert("This username already exists.");
+                    return;
+                }
+                if(json === "error_email"){
                     alert("This email already exists.");
                     return;
                 }
+
                 $.ajax({
                     type: "POST",
                     url: "api/Login",
@@ -43,13 +48,13 @@ function signUp(event){
                        window.location = "main.html";                       
                     }
             });
-
-                $("#firstName").val("");
-                $("#lastName").val("");
-                $("#username").val("");
-                $("#email").val("");
-                $("#password").val("");
-                $("#confirmPassword").val("");                
-        }});*/
+            $("#firstName").val("");
+            $("#lastName").val("");
+            $("#username").val("");
+            $("#email").val("");
+            $("#password").val("");
+            $("#confirmPassword").val(""); 
+           
+        }});
     }
 }
