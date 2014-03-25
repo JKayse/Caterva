@@ -57,21 +57,27 @@ $(document).ready(function() {
             userId = "null";
             return;
         }
-    }});   
+    }});  */
 
 
-    $.ajax({url:"api/FriendRequests/" + userId, success: function(json2){
+    $.ajax({url:"api/ViewFriendRequest", success: function(json2){
         json2 = JSON.parse(json2);
-        var friendRequests = json2.friendRequests;
+        var friendId="0";
+        var friendRequests = json2.FriendRequest;
         for(var i = 0; i < friendRequests.length ; i++){
-            var username = friendRequests[i].username;
-            var friendId = friendRequests[i].friendId;
-            var friend = "<div class='friendRequest' friendId=" + friendId + "><h4>Add "+ username +"?</h4><img src='img/greenCheck.png' alt='Green Check' title='No'><img src='img/redX.png' alt='Red X' title='No'></div>";
-            $("#friendRequestList").append(friend);
+            //var username = friendRequests[i].username;
+            friendId = friendRequests[i].UserId;
+            $.ajax({url:"api/UserInfo/" + friendId, success: function(json){
+                json = JSON.parse(json);
+                var friendInfo = json.User;
+                var username = friendInfo[0].Username;
+
+                var friend = "<div class='friendRequest' friendId=" + friendId + "><h4>Add "+ username +"?</h4><img src='img/redX.png' alt='Red X' title='No'><img src='img/greenCheck.png' alt='Green Check' title='Yes'></div>";
+                $("#friendRequestList").append(friend);
+            }});
         }
-
     }}); 
-
+/*
     $.ajax({url:"api/ViewFriends/" + userId, success: function(json2){
         json2 = JSON.parse(json2);
         var friends = json2.friends;

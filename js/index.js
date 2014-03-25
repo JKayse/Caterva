@@ -55,6 +55,6 @@ function signUp(event){
             $("#password").val("");
             $("#confirmPassword").val(""); 
            
-        }});
+        }});*/
     }
 }

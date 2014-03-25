@@ -54,7 +54,7 @@ $app->get('/UserInfo/:userId', 'getUserInfo');
 /**
 * Add Friend Request
 */
-$app->post('/AddFriendRequest/:friend', 'addFriendRequest');
+$app->post('/AddFriendRequest', 'addFriendRequest');
 
 /**
 * Search Friend
@@ -268,9 +268,9 @@ function searchFriend()
 */
 function addFriendRequest()
 {
-	$userId = $_SESSION['userId'];
+	$userId = 2;
 	$friendId = Slim::getInstance()->request()->post('friendId');
-	$insertFriendQuery2 = "INSERT INTO FriendRequests(userId, friendId) VALUE('$userId', '$friendId')";
+	$insertFriendQuery2 = "INSERT INTO FriendRequest(userId, friendId) VALUE('$userId', '$friendId')";
 		try {
 			$db = getConnection();
 			$stmt = $db->prepare($insertFriendQuery2);
@@ -346,7 +346,7 @@ function getFriendRequest()
 function getConnection() {
 	$dbhost="localhost";
 	$dbuser="root";
-	$dbpass="halomasterchief";
+	$dbpass="halomastercheif";
 	$dbname="Flock";
 	$dbh = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);	
 	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
