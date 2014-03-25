@@ -57,7 +57,7 @@ $app->get('/UserInfo/:userId', 'getUserInfo');
 $app->post('/AddFriendRequest/:friend', 'addFriendRequest');
 
 /**
-*
+* Search Friend
 */
 $app->post('/SearchFriend', 'searchFriend');
 
@@ -69,7 +69,7 @@ $app->get('/ViewFriendRequest', 'getFriendRequest');
 /*
 * Accept and Deny Friend Request
 */
-$app->post('/ADFriendRequest', 'adFriendRequest');
+$app->post('/ADFriendRequest/:response', 'adFriendRequest');
 
 $app->run();
 
@@ -259,7 +259,7 @@ function searchFriend()
 	try {
 		$db = getConnection();
 		$stmt = $db->prepare($findFriendQuery);
-		$stmt->bindParam("username",$friend);
+		$stmt->bindParam("username",$username);
 		$stmt->execute();
 		$friendId = $stmt->fetchAll(PDO::FETCH_OBJ);
 		$db = null;
@@ -297,7 +297,7 @@ function getFriendRequest()
 		$stmt->execute();
 		$friendRequest = $stmt->fetchAll(PDO::FETCH_OBJ);
 		$db = null;
-		echo '{' . json_encode($friendRequest) . '}';
+		echo '{"Friend Request": ' . json_encode($friendRequest) . '}';
 	} catch(PDOException $e) {
 	echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 	}
