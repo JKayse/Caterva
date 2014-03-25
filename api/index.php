@@ -59,7 +59,11 @@ $app->post('/AddFriend/:friend', 'addFriend');
 /**
 * View Friend Request
 */
+<<<<<<< HEAD
 $app->get('/ViewFriendRequest/', 'getFriendRequest');
+=======
+$app->get('/ViewFriendRequest', 'getFriendRequest');
+>>>>>>> c262fa388436f39644fbffa74c7ff27e59cff5e7
 
 $app->run();
 
@@ -267,7 +271,20 @@ function addFriend($friend)
 		} catch(PDOException $e) {
 		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 		}
+<<<<<<< HEAD
 	}
+=======
+}
+
+/**
+* A function that adds or denies friends.  The friend request is deleted
+* after the user makes a response
+*/
+function addFriend()
+{
+	$userId = $_SESSION['userId'];
+	$	
+>>>>>>> c262fa388436f39644fbffa74c7ff27e59cff5e7
 }
 
 /**
@@ -276,7 +293,7 @@ function addFriend($friend)
 function getFriendRequest()
 {
 	$userId = $_SESSION['userId'];	
-	$sql = "SELECT UserId, FriendId FROM FriendRequest WHERE FriendId = ‘$userId’";
+	$sql = "SELECT UserId, FriendId FROM FriendRequest WHERE FriendId = '$userId'";
 	try {
 		$db = getConnection();
 		$stmt = $db->prepare($sql);
