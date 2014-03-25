@@ -216,14 +216,14 @@ function logout() {
 */
 function viewFriends(){
 	$userId = $_SESSION['userId'];
-	$sql = "SELECT UserFriendId FROM Friends WHERE UserId = '$userId'";
+	$sql = "SELECT UserFriendId FROM FriendsList WHERE UserId = '$userId'";
 	try {
 			$db = getConnection();
 			$stmt = $db->prepare($sql);
 			$stmt->execute();
 			$Friends = $stmt->fetchAll(PDO::FETCH_OBJ);
 			$db = null;
-			echo '{"' . $Friends. '": ' . json_encode($Friends) . '}';
+			echo '{"Friends List": ' . json_encode($Friends) . '}';
 		} catch(PDOException $e) {
 		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 		}
@@ -282,6 +282,15 @@ function addFriendRequest($friendId)
 		} catch(PDOException $e) {
 		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 		}
+}
+
+/**
+* A function that adds or denies friends.  The friend request is deleted
+* after the user makes a response
+*/
+function addFriend($response)
+{
+	
 }
 
 /**
