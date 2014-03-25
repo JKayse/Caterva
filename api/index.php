@@ -225,15 +225,15 @@ function viewFriends(){
 */
 function getUserInfo($userId)
 {
-	$sql = "SELECT UserName, F_Name, L_Name, Description, PictureName FROM Users WHERE userID =:userID";
+	$sql = "SELECT UserName, firstname, lastname, Description, PictureName FROM Users WHERE UserID =:userID";
 	try {
 		$db = getConnection();
 		$stmt = $db->prepare($sql);
-		$stmt->bindParam("userId",$userId);
+		$stmt->bindParam("userID",$userID);
 		$stmt->execute();
 		$UserInfo = $stmt->fetchAll(PDO::FETCH_OBJ);
 		$db = null;
-		echo '{"' . $user. '": ' . json_encode($UserInfo) . '}';
+		echo '{"User": ' . json_encode($UserInfo) . '}';
 	} catch(PDOException $e) {
 	echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 	}
