@@ -214,7 +214,7 @@ function viewFriends(){
 			$stmt->execute();
 			$Friends = $stmt->fetchAll(PDO::FETCH_OBJ);
 			$db = null;
-			echo '{"' . $Friends. '": ' . json_encode($Items) . '}';
+			echo '{"' . $Friends. '": ' . json_encode($Friends) . '}';
 		} catch(PDOException $e) {
 		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 		}
