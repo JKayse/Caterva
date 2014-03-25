@@ -273,7 +273,7 @@ function searchFriend()
 */
 function addFriendRequest()
 {
-	$userId = 2;
+	$userId = 3;
 	$friendId = Slim::getInstance()->request()->post('friendId');
 	$insertFriendQuery2 = "INSERT INTO FriendRequest(userId, friendId) VALUE('$userId', '$friendId')";
 		try {
@@ -291,7 +291,7 @@ function addFriendRequest()
 */
 function addFriend()
 {
-	$userId = 2;
+	$userId = 1;
 	$friendId = Slim::getInstance()->request()->post('FriendId');
 	$response = Slim::getInstance()->request()->post('response');
 	if($response == 1){

@@ -94,13 +94,7 @@ $(document).ready(function() {
                 $("#friendList").append(friend);
                 var friendAdder = "<input type='checkbox' class='friendList' friendId=" + userId + " id='" + userId + "friend' title='Invite' name='invitedFriends'><label for='" + userId + "friend'>"+ firstname +" "+ lastname + "</label><br>";
                 $("#friendAdderList").append(friendAdder);
-            }});
-
-
-
-
-
-            
+            }});    
         }
 
     }}); 
@@ -223,38 +217,41 @@ function addEvent(){
 
 function searchForFriend(event){
     event.preventDefault();
-    /*$.ajax({
+    $.ajax({
             type: "POST",
             url: "api/SearchFriend",
             data: {
                 username: $("#friendsUsername").val(),
             },
             success: function(json){
-                if(json === "null"){
+                json = JSON.parse(json);
+                var friend = json.Friend;
+                if(friend.length === 0){
                     alert("That username does not exist. Please try Again.");
                 }
                 else{
-                    json = JSON.parse(json);
-                    var username = json.username;
-                    var userId= json.userId;
-                    var values = $("#foundFriend h3");
-                    values.eq(0).html(username + " was found!")
-                    values.eq(0).attr("friendId", userId);
-                    values.eq(1).html("Add " + username +" as a friend?")
-                    $("#foundFriend img").attr("src", "img/" + userId + ".png");
-                    
-                    $("#foundFriend").show();
-                    $("#friendsUsername").val("");
-                    $("#enterFriend form").hide();
+                    var friendId = friend[0].userId;
+                    $.ajax({url:"api/UserInfo/" + friendId, success: function(json2){
+                        json2 = JSON.parse(json2);
+                        var friendInfo = json2.User;
+                        var username = friendInfo[0].Username;
+                        var userId = friendInfo[0].UserId;
+
+                        var values = $("#foundFriend h3");
+                        values.eq(0).html(username + " was found!")
+                        values.eq(0).attr("friendId", userId);
+                        values.eq(1).html("Add " + username +" as a friend?")
+                        //$("#foundFriend img").attr("src", "img/" + userId + ".png");
+                        $("#friendsUsername").val("");
+                        $("#friendSearchForm").hide();
+                        $("#foundFriend").show();
+                        $("#foundFriend img:not([title='Close'])").height($("#foundFriend img:not([title='Close'])").width());
+
+                    }});   
                 }
 
             }
-    });*/
-
-    $("#friendsUsername").val("");
-    $("#friendSearchForm").hide();
-    $("#foundFriend").show();
-    $("#foundFriend img:not([title='Close'])").height($("#foundFriend img:not([title='Close'])").width());
+    });
 }
 
 function addFriendstoEvent(event){
@@ -313,11 +310,11 @@ function addCreatedEvent(event){
 }
 
 function sendFriendRequest(){
-    /*$.ajax({
+    console.log($("#foundFriend h3").eq(0).attr("friendId"));
+    $.ajax({
             type: "POST",
             url: "api/AddFriendRequest",
             data: {
-                userId: userId,
                 friendId: $("#foundFriend h3").eq(0).attr("friendId"),
             },
             success: function(json){
@@ -328,12 +325,7 @@ function sendFriendRequest(){
                 $("#foundFriend").hide(); 
 
             }
-    });*/
-    $("#enterFriend form").show();
-    $("#enterFriend").hide(); 
-    $("#popUp").hide(); 
-    $("#blackScreenofDeath").hide(); 
-    $("#foundFriend").hide(); 
+    });
 }
 
 function closeFriendRequest(){
@@ -345,14 +337,32 @@ function closeFriendRequest(){
 }
 
 function updateFriendRequest(){
-    var going;
+    var response;
+    var friendId;
     if($(this).attr("title") === "Yes"){
-       going=1;
+       response=1;
     }
     else{
-        going=0;
+        response=0;
     }
-    
+    $.ajax({
+            type: "POST",
+            url: "api/AddFriend",
+            data: {
+                FriendId: $(this).parent().attr("friendId"),
+                response: response
+            },
+            success: function(json){
+                $("#enterFriend form").show();
+                $("#enterFriend").hide(); 
+                $("#popUp").hide(); 
+                $("#blackScreenofDeath").hide(); 
+                $("#foundFriend").hide(); 
+                updateFriendsList();
+            }
+    });
+
+
     //call ajax with the value of yes or no,the userid, and the friendid.
     //call function to update friends list. (delete the div and get the friends in alphabetical order).
 
@@ -398,19 +408,25 @@ function updateFriendsList(){
     $("#friendList").empty();
     $("friendAdderList").empty();
 
-    $.ajax({url:"api/ViewFriends/" + userId, success: function(json2){
+    $.ajax({url:"api/ViewFriends", success: function(json2){
         json2 = JSON.parse(json2);
-        var friends = json2.friends;
+        var friends = json2.FriendsList;
         for(var i = 0; i < friends.length ; i++){
-            var firstName = friends[i].firstName;
-            var lastName = friends[i].lastName;
-            var friendId = friends[i].friendId;
-            var friend = "<button class='friend' type='button' friendId=" + friendId + ">"+ firstName +" "+ lastName+ "</button>";
-            $("#friendList").append(friend);
-            var friendAdder = "<input type='checkbox' class='friendList' id=" + friendId + " title='Invite' name='invitedFriends'><label for=" + friendId + ">"+ firstName +" "+ lastName + "</label><br>";
-            $("friendAdderList").append(friendAdder);
+            var friendId = friends[i].UserFriendId;
+            $.ajax({url:"api/UserInfo/" + friendId, success: function(json){
+                json = JSON.parse(json);
+                var friendInfo = json.User;
+                console.log(friendInfo);
+                var firstname = friendInfo[0].Firstname;
+                var lastname = friendInfo[0].Lastname;
+                var userId = friendInfo[0].UserId;
+                var friend = "<button class='friend' type='button' friendId=" + userId + ">"+ firstname +" "+ lastname+ "</button>";
+                $("#friendList").append(friend);
+                var friendAdder = "<input type='checkbox' class='friendList' friendId=" + userId + " id='" + userId + "friend' title='Invite' name='invitedFriends'><label for='" + userId + "friend'>"+ firstname +" "+ lastname + "</label><br>";
+                $("#friendAdderList").append(friendAdder);
+            }});    
         }
 
-    }}); 
+    }});
 
 }
