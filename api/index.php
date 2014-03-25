@@ -101,7 +101,8 @@ function addUser()
 		$username_test = $stmt->fetchObject()->Username;
 
 		if(isset($username_test)) {
-			return "error_username";
+			echo "error_username";
+			return;
 		}
 	}
 	catch(PDOException $e) 
@@ -123,7 +124,8 @@ function addUser()
 		$email_test = $stmt->fetchObject()->Email;
 
 		if(isset($email_test)) {
-			return "error_email";
+			echo "error_email";
+			return;
 		}
 	}
 	catch(PDOException $e) 
