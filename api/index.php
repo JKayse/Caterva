@@ -69,7 +69,7 @@ $app->get('/ViewFriendRequest', 'getFriendRequest');
 /**
 * Add Friend
 */
-$app->get('/AddFriend', 'addFriend');
+$app->post('/AddFriend', 'addFriend');
 
 $app->run();
 
@@ -291,18 +291,18 @@ function addFriendRequest()
 */
 function addFriend()
 {
-	$userId = $_SESSION['userId'];
+	$userId = 1;
 	$friendId = Slim::getInstance()->request()->post('FriendId');
 	$response = Slim::getInstance()->request()->post('response');
 	if($response == 1){
 		$insertFriend1 = "INSERT INTO FriendsList(UserId, UserFriendId) VALUE('$friendId', '$userId')";
 		$insertFriend2 = "INSERT INTO FriendsList(UserId, UserFriendId) VALUE('$userId', '$friendId')";
-		$deleteFriendRequest = "DELETE FROM FriendRequest WHERE UserId = '$userId' AND FriendId = '$friendId'";		
+		$deleteFriendRequest = "DELETE FROM FriendRequest WHERE UserId = '$friendId' AND FriendId = '$userId'";		
 		try {
 			$db = getConnection();
 			$stmt = $db->prepare($insertFriend1);
 			$stmt->execute();
-			$stmt = $db->prepare($inserFriend2);
+			$stmt = $db->prepare($insertFriend2);
 			$stmt->execute();
 			$stmt = $db->prepare($deleteFriendRequest);
 			$stmt->execute();
@@ -311,13 +311,9 @@ function addFriend()
 		}
 	}
 	else{
-		$deleteFriendRequest = "DELETE FROM FriendRequest WHERE UserId = '$userId' AND FriendId = '$friendId'";		
+		$deleteFriendRequest = "DELETE FROM FriendRequest WHERE UserId = '$friendId' AND FriendId = '$userId'";		
 		try {
 			$db = getConnection();
-			$stmt = $db->prepare($insertFriend1);
-			$stmt->execute();
-			$stmt = $db->prepare($inserFriend2);
-			$stmt->execute();
 			$stmt = $db->prepare($deleteFriendRequest);
 			$stmt->execute();
 		} catch(PDOException $e) {
