@@ -271,10 +271,12 @@ function addFriendRequest()
 	$userId = $_SESSION['userId'];
 	$friendId = Slim::getInstance()->request()->post('friendId');
 	$insertFriendQuery1 = "INSERT INTO FriendRequests(userId, friendId) VALUE('$friendId', '$userId')";
-	$insertFriendQuery2 = "INSERT INTO FriendRequests(userId, friendId) VALUE('$friendId', '$userId')";
+	$insertFriendQuery2 = "INSERT INTO FriendRequests(userId, friendId) VALUE('$userId', '$friendId')";
 		try {
 			$db = getConnection();
-			$stmt = $db->prepare($insertFriendQuery);
+			$stmt = $db->prepare($insertFriendQuery1);
+			$stmt->execute();
+			$stmt = $db->prepare($insertFriendQuery2);
 			$stmt->execute();
 		} catch(PDOException $e) {
 		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
