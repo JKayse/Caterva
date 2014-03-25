@@ -52,24 +52,14 @@ $app->get('/ViewFriends', 'viewFriends');
 $app->get('/UserInfo/:userId', 'getUserInfo');
 
 /**
-* Add Friend Request
+* Add friend
 */
-$app->post('/AddFriendRequest/:friend', 'addFriendRequest');
-
-/**
-* Search Friend
-*/
-$app->post('/SearchFriend', 'searchFriend');
+$app->post('/AddFriend/:friend', 'addFriend');
 
 /**
 * View Friend Request
 */
-$app->get('/ViewFriendRequest', 'getFriendRequest');
-
-/*
-* Accept and Deny Friend Request
-*/
-$app->post('/ADFriendRequest/:response', 'adFriendRequest');
+$app->get('/ViewFriendRequest/', 'getFriendRequest');
 
 $app->run();
 
@@ -216,14 +206,14 @@ function logout() {
 */
 function viewFriends(){
 	$userId = $_SESSION['userId'];
-	$sql = "SELECT UserFriendId FROM FriendsList WHERE UserId = '$userId'";
+	$sql = "SELECT UserFriendId FROM Friends WHERE UserId = '$userId'";
 	try {
 			$db = getConnection();
 			$stmt = $db->prepare($sql);
 			$stmt->execute();
 			$Friends = $stmt->fetchAll(PDO::FETCH_OBJ);
 			$db = null;
-			echo '{"Friends List": ' . json_encode($Friends) . '}';
+			echo '{"' . $Friends. '": ' . json_encode($Friends) . '}';
 		} catch(PDOException $e) {
 		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 		}
@@ -249,30 +239,25 @@ function getUserInfo($userId)
 }
 
 /**
-* A function that searches for the user
+* A function that adds a friend to the user's friend list
 */
-function searchFriend()
+function addFriend($friend)
 {
-	$username = Slim::getInstance()->request()->post('username');	
-	$findFriendQuery = "SELECT userId FROM Users WHERE username =:username";
-	$friendId;
+	$results;	
+	$findFriendQuery = "SELECT userId FROM USERS WHERE username =:username";
 	try {
 		$db = getConnection();
 		$stmt = $db->prepare($findFriendQuery);
-		$stmt->bindParam("username",$username);
+		$stmt->bindParam("username",$friend);
 		$stmt->execute();
 		$friendId = $stmt->fetchAll(PDO::FETCH_OBJ);
 		$db = null;
-		echo '{"Friend": ' . json_encode($friendId) . '}';
+		echo '{"' . $friend. '": ' . json_encode($friendId) . '}';
+		$results = mysql_num_rows($friendId);
 	} catch(PDOException $e) {
 	echo '{"error":{"text":'. $e->getMessage() .'}}'; 
-	}	
-}
-/**
-* A function that adds a friend request
-*/
-function addFriendRequest($friendId)
-{
+	}
+	if($results > 0){
 		$userId = $_SESSION['userId'];
 		$insertFriendQuery = "INSERT INTO FriendRequests(userId, friendId) VALUE('$friendId', '$userId')";
 		try {
@@ -282,15 +267,7 @@ function addFriendRequest($friendId)
 		} catch(PDOException $e) {
 		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 		}
-}
-
-/**
-* A function that adds or denies friends.  The friend request is deleted
-* after the user makes a response
-*/
-function addFriend($response)
-{
-	
+	}
 }
 
 /**
@@ -306,7 +283,7 @@ function getFriendRequest()
 		$stmt->execute();
 		$friendRequest = $stmt->fetchAll(PDO::FETCH_OBJ);
 		$db = null;
-		echo '{"Friend Request": ' . json_encode($friendRequest) . '}';
+		echo '{' . json_encode($friendRequest) . '}';
 	} catch(PDOException $e) {
 	echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 	}
