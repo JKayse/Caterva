@@ -62,37 +62,49 @@ $(document).ready(function() {
 
     $.ajax({url:"api/ViewFriendRequest", success: function(json2){
         json2 = JSON.parse(json2);
-        var friendId="0";
         var friendRequests = json2.FriendRequest;
         for(var i = 0; i < friendRequests.length ; i++){
             //var username = friendRequests[i].username;
-            friendId = friendRequests[i].UserId;
+            var friendId = friendRequests[i].UserId;
             $.ajax({url:"api/UserInfo/" + friendId, success: function(json){
                 json = JSON.parse(json);
                 var friendInfo = json.User;
                 var username = friendInfo[0].Username;
+                var userId = friendInfo[0].UserId;
 
-                var friend = "<div class='friendRequest' friendId=" + friendId + "><h4>Add "+ username +"?</h4><img src='img/redX.png' alt='Red X' title='No'><img src='img/greenCheck.png' alt='Green Check' title='Yes'></div>";
+                var friend = "<div class='friendRequest' friendId=" + userId + "><h4>Add "+ username +"?</h4><img src='img/redX.png' alt='Red X' title='No'><img src='img/greenCheck.png' alt='Green Check' title='Yes'></div>";
                 $("#friendRequestList").append(friend);
             }});
         }
     }}); 
-/*
-    $.ajax({url:"api/ViewFriends/" + userId, success: function(json2){
+
+    $.ajax({url:"api/ViewFriends", success: function(json2){
         json2 = JSON.parse(json2);
-        var friends = json2.friends;
+        var friends = json2.FriendsList;
         for(var i = 0; i < friends.length ; i++){
-            var firstName = friends[i].firstName;
-            var lastName = friends[i].lastName;
-            var friendId = friends[i].friendId;
-            var friend = "<button class='friend' type='button' friendId=" + friendId + ">"+ firstName +" "+ lastName+ "</button>";
-            $("#friendList").append(friend);
-            var friendAdder = "<input type='checkbox' class='friendList' id=" + friendId + " title='Invite' name='invitedFriends'><label for=" + friendId + ">"+ firstName +" "+ lastName + "</label><br>";
-            $("friendAdderList").append(friendAdder);
+            var friendId = friends[i].UserFriendId;
+            $.ajax({url:"api/UserInfo/" + friendId, success: function(json){
+                json = JSON.parse(json);
+                var friendInfo = json.User;
+                console.log(friendInfo);
+                var firstname = friendInfo[0].Firstname;
+                var lastname = friendInfo[0].Lastname;
+                var userId = friendInfo[0].UserId;
+                var friend = "<button class='friend' type='button' friendId=" + userId + ">"+ firstname +" "+ lastname+ "</button>";
+                $("#friendList").append(friend);
+                var friendAdder = "<input type='checkbox' class='friendList' friendId=" + userId + " id='" + userId + "friend' title='Invite' name='invitedFriends'><label for='" + userId + "friend'>"+ firstname +" "+ lastname + "</label><br>";
+                $("#friendAdderList").append(friendAdder);
+            }});
+
+
+
+
+
+            
         }
 
     }}); 
-
+/*
     $.ajax({url:"api/ViewGroups/" + userId, success: function(json2){
         json2 = JSON.parse(json2);
         var groups = json2.groups;
@@ -251,7 +263,7 @@ function addFriendstoEvent(event){
     var friendsList = $(".friendList");
     for(var i = 0; i < friendsList.size(); i++){
         if($(".friendList").eq(i).prop('checked') === true){
-            $("#eventGuestList").append("<span class='invitedGuest'><img src='img/close.png' id='deleteInvitedGuest' alt='Uninvite this friend.' title='Uninvite friend.'><h4> "+ $(".friendList").eq(i).next().html() + "</h4></span>");
+            $("#eventGuestList").append("<span class='invitedGuest' friendId=" + $(".friendList").eq(i).attr("friendId") + "><img src='img/close.png' id='deleteInvitedGuest' alt='Uninvite this friend.' title='Uninvite friend.'><h4> "+ $(".friendList").eq(i).next().html() + "</h4></span>");
         }
     }    
     $("#addFriendsOptions").hide();

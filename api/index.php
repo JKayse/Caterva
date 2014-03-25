@@ -215,7 +215,7 @@ function logout() {
 * A function that shows all the user's friends
 */
 function viewFriends(){
-	$userId = $_SESSION['userId'];
+	$userId = 1;
 	$sql = "SELECT UserFriendId FROM FriendsList WHERE UserId = '$userId'";
 	try {
 			$db = getConnection();
@@ -291,7 +291,7 @@ function addFriendRequest()
 */
 function addFriend()
 {
-	$userId = 1;
+	$userId = 2;
 	$friendId = Slim::getInstance()->request()->post('FriendId');
 	$response = Slim::getInstance()->request()->post('response');
 	if($response == 1){
@@ -327,7 +327,7 @@ function addFriend()
 */
 function getFriendRequest()
 {
-	$userId = $_SESSION['userId'];	
+	$userId = 1;	
 	$sql = "SELECT UserId, FriendId FROM FriendRequest WHERE FriendId = '$userId'";
 	try {
 		$db = getConnection();
@@ -347,7 +347,7 @@ function getFriendRequest()
 function getConnection() {
 	$dbhost="localhost";
 	$dbuser="root";
-	$dbpass="halomastercheif";
+	$dbpass="";
 	$dbname="Flock";
 	$dbh = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);	
 	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
