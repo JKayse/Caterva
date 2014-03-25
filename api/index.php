@@ -66,11 +66,6 @@ $app->post('/SearchFriend', 'searchFriend');
 */
 $app->get('/ViewFriendRequest', 'getFriendRequest');
 
-/*
-* Accept and Deny Friend Request
-*/
-$app->post('/ADFriendRequest/:response', 'adFriendRequest');
-
 $app->run();
 
 /**
@@ -288,9 +283,10 @@ function addFriendRequest($friendId)
 * A function that adds or denies friends.  The friend request is deleted
 * after the user makes a response
 */
-function addFriend($response)
+function addFriend()
 {
-	
+	$userId = $_SESSION['userId'];
+	$	
 }
 
 /**
@@ -299,7 +295,7 @@ function addFriend($response)
 function getFriendRequest()
 {
 	$userId = $_SESSION['userId'];	
-	$sql = "SELECT UserId, FriendId FROM FriendRequest WHERE FriendId = ‘$userId’";
+	$sql = "SELECT UserId, FriendId FROM FriendRequest WHERE FriendId = '$userId'";
 	try {
 		$db = getConnection();
 		$stmt = $db->prepare($sql);
