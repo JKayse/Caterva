@@ -52,14 +52,24 @@ $app->get('/ViewFriends', 'viewFriends');
 $app->get('/UserInfo/:userId', 'getUserInfo');
 
 /**
-* Add friend
+* Add Friend Request
 */
-$app->post('/AddFriend/:friend', 'addFriend');
+$app->post('/AddFriendRequest/:friend', 'addFriend');
+
+/**
+*
+*/
+$app->post('/SearchFriend', 'searchFriend');
 
 /**
 * View Friend Request
 */
-$app->get('/ViewFriendRequest/', 'getFriendRequest');
+$app->get('/ViewFriendRequest', 'getFriendRequest');
+
+/*
+* Accept and Deny Friend Request
+*/
+$app->post('/ADFriendRequest', 'adFriendRequest');
 
 $app->run();
 
@@ -239,12 +249,13 @@ function getUserInfo($userId)
 }
 
 /**
-* A function that adds a friend to the user's friend list
+* A function that searches for the user
 */
-function addFriend($friend)
+function searchFriend()
 {
-	$results;	
-	$findFriendQuery = "SELECT userId FROM USERS WHERE username =:username";
+	$username = Slim::getInstance()->request()->post('username');	
+	$findFriendQuery = "SELECT userId FROM Users WHERE username =:username";
+	$friendId;
 	try {
 		$db = getConnection();
 		$stmt = $db->prepare($findFriendQuery);
@@ -253,11 +264,15 @@ function addFriend($friend)
 		$friendId = $stmt->fetchAll(PDO::FETCH_OBJ);
 		$db = null;
 		echo '{"' . $friend. '": ' . json_encode($friendId) . '}';
-		$results = mysql_num_rows($friendId);
 	} catch(PDOException $e) {
 	echo '{"error":{"text":'. $e->getMessage() .'}}'; 
-	}
-	if($results > 0){
+	}	
+}
+/**
+* A function that adds a friend to the user's friend list
+*/
+function addFriend($friend)
+{
 		$userId = $_SESSION['userId'];
 		$insertFriendQuery = "INSERT INTO FriendRequests(userId, friendId) VALUE('$friendId', '$userId')";
 		try {
@@ -267,7 +282,6 @@ function addFriend($friend)
 		} catch(PDOException $e) {
 		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 		}
-	}
 }
 
 /**
