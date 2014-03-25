@@ -54,7 +54,7 @@ $app->get('/UserInfo/:userId', 'getUserInfo');
 /**
 * Add Friend Request
 */
-$app->post('/AddFriendRequest/:friend', 'addFriend');
+$app->post('/AddFriendRequest/:friend', 'addFriendRequest');
 
 /**
 *
@@ -263,15 +263,15 @@ function searchFriend()
 		$stmt->execute();
 		$friendId = $stmt->fetchAll(PDO::FETCH_OBJ);
 		$db = null;
-		echo '{"' . $friend. '": ' . json_encode($friendId) . '}';
+		echo '{"Friend": ' . json_encode($friendId) . '}';
 	} catch(PDOException $e) {
 	echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 	}	
 }
 /**
-* A function that adds a friend to the user's friend list
+* A function that adds a friend request
 */
-function addFriend($friend)
+function addFriendRequest($friendId)
 {
 		$userId = $_SESSION['userId'];
 		$insertFriendQuery = "INSERT INTO FriendRequests(userId, friendId) VALUE('$friendId', '$userId')";
