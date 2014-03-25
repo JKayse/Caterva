@@ -66,6 +66,11 @@ $app->post('/SearchFriend', 'searchFriend');
 */
 $app->get('/ViewFriendRequest', 'getFriendRequest');
 
+/**
+* Add Friend
+*/
+$app->get('/AddFriend', 'addFriend');
+
 $app->run();
 
 /**
