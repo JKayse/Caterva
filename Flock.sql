@@ -124,15 +124,16 @@ CREATE TABLE IF NOT EXISTS `GuestList` (
 
 CREATE TABLE IF NOT EXISTS `Users` (
   `UserId` int(11) NOT NULL AUTO_INCREMENT,
-  `UserName` varchar(100) NOT NULL,
-  `Name` varchar(100) NOT NULL,
+  `Username` varchar(100) NOT NULL,
+  `Firstname` varchar(100) NOT NULL,
+  `Lastname` varchar(100) NOT NULL,
   `Email` varchar(100) NOT NULL,
   `Password` varchar(100) NOT NULL,
   `PasswordSalt` varchar(100) NOT NULL,
   `Description` varchar(500) DEFAULT NULL,
   `PictureName` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`UserId`),
-  UNIQUE KEY `UserName` (`UserName`,`Email`)
+  UNIQUE KEY `Username` (`Username`,`Email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
