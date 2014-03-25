@@ -79,14 +79,13 @@ function getLoginStatus() {
 * A funtion that takes the information inputed by a user and creates
 * an account for them by inserting them into the database
 */
-
 function addUser()
 {
 	$firstname = Slim::getInstance()->request()->post('firstname');
 	$lastname = Slim::getInstance()->request()->post('lastname');
 	$username = Slim::getInstance()->request()->post('username');
 	$email = Slim::getInstance()->request()->post('email');
-	$password = crypt(Slim::getInstance()->request()->post('password'));
+	$password = password_hash(Slim::getInstance()->request()->post('password'), PASSWORD_DEFAULT);
 
 	$sql = "SELECT Username FROM Users WHERE Username=:username";
 
@@ -98,9 +97,9 @@ function addUser()
 		$stmt->bindParam("username", $username);
 		$stmt->execute();
 		$db = null;
-		$username_test = $stmt->fetchObject()->Username;
+		$username_test = $stmt->fetchObject();
 
-		if(isset($username_test)) {
+		if(!empty($username_test)) {
 			echo "error_username";
 			return;
 		}
@@ -121,9 +120,9 @@ function addUser()
 		$stmt->execute();
 		$db = null;
 
-		$email_test = $stmt->fetchObject()->Email;
+		$email_test = $stmt->fetchObject();
 
-		if(isset($email_test)) {
+		if(!empty($email_test)) {
 			echo "error_email";
 			return;
 		}
@@ -176,7 +175,7 @@ function login() {
 
 		if(empty($hashedPassword)) {
 		    	echo "null";
-		} else if(crypt($password) == $hashedPassword) {
+		} else if(password_verify($password, $hashedPassword)) {
 			$_SESSION['loggedin'] = true;
 			$query = "SELECT UserId FROM Users WHERE Username=:username";
 			$stmt2 = $db->prepare($query);
