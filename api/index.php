@@ -218,7 +218,7 @@ function viewFriends(){
 			$stmt->execute();
 			$Friends = $stmt->fetchAll(PDO::FETCH_OBJ);
 			$db = null;
-			echo '{"Friends List": ' . json_encode($Friends) . '}';
+			echo '{"FriendsList": ' . json_encode($Friends) . '}';
 		} catch(PDOException $e) {
 		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 		}
@@ -266,10 +266,12 @@ function searchFriend()
 /**
 * A function that adds a friend request
 */
-function addFriendRequest($friendId)
+function addFriendRequest()
 {
-		$userId = $_SESSION['userId'];
-		$insertFriendQuery = "INSERT INTO FriendRequests(userId, friendId) VALUE('$friendId', '$userId')";
+	$userId = $_SESSION['userId'];
+	$friendId = Slim::getInstance()->request()->post('friendId');
+	$insertFriendQuery1 = "INSERT INTO FriendRequests(userId, friendId) VALUE('$friendId', '$userId')";
+	$insertFriendQuery2 = "INSERT INTO FriendRequests(userId, friendId) VALUE('$friendId', '$userId')";
 		try {
 			$db = getConnection();
 			$stmt = $db->prepare($insertFriendQuery);
@@ -286,7 +288,18 @@ function addFriendRequest($friendId)
 function addFriend()
 {
 	$userId = $_SESSION['userId'];
-	$	
+	$FriendId = Slim::getInstance()->request()->post('FriendId');
+	$response = Slim::getInstance()->request()->post('response');
+	if($response == 1){
+		$insertFriendQuery = "INSERT INTO FriendRequests(userId, friendId) VALUE('$friendId', '$userId')";
+		try {
+			$db = getConnection();
+			$stmt = $db->prepare($insertFriendQuery);
+			$stmt->execute();
+		} catch(PDOException $e) {
+		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+		}
+	}	
 }
 
 /**
@@ -302,7 +315,7 @@ function getFriendRequest()
 		$stmt->execute();
 		$friendRequest = $stmt->fetchAll(PDO::FETCH_OBJ);
 		$db = null;
-		echo '{"Friend Request": ' . json_encode($friendRequest) . '}';
+		echo '{"FriendRequest": ' . json_encode($friendRequest) . '}';
 	} catch(PDOException $e) {
 	echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 	}
