@@ -71,6 +71,21 @@ $app->get('/ViewFriendRequest', 'getFriendRequest');
 */
 $app->post('/AddFriend', 'addFriend');
 
+/**
+* Create Event
+*/
+$app->post('/CreateEvent', 'createEvent');
+
+/**
+* Create Group
+*/
+$app->post('/CreateGroup', 'createGroup');
+
+/**
+* View Groups
+*/
+$app->get('/Groups', 'viewGroups');
+
 $app->run();
 
 /**
@@ -359,6 +374,116 @@ function getFriendRequest()
 		echo '{"FriendRequest": ' . json_encode($friendRequest) . '}';
 	} catch(PDOException $e) {
 	echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+	}
+}
+
+/**
+* A funtion to create an event
+*/
+function createEvent() {
+	$event = json_decode(Slim::getInstance()->request()->post('event'), true);
+
+	try {
+		$db = getConnection();
+
+		$sql = "INSERT INTO Events (EventName, UserId, StartTime, EndTime, EventDescription) VALUES (:eventName, :userId, :startTime, :endTime, :description)";
+		$startTime = $event['startDate'] . ' ' . $event['startTime'];
+		$endTime = $event['endDate'] . ' ' . $event['endTime'];
+
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam("eventName", $event['title']);
+		$stmt->bindParam("userId", $_SESSION['userId']);
+		$stmt->bindParam("startTime", $startTime);
+		$stmt->bindParam("endTime", $endTime);
+		$stmt->bindParam("description", $event['description']);
+		$stmt->execute();
+
+		$sql = "SELECT EventId FROM Events WHERE EventName=:eventName AND UserId=:userId AND StartTime=:startTime AND EndTime=:endTime";
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam("eventName", $event['title']);
+		$stmt->bindParam("userId", $_SESSION['userId']);
+		$stmt->bindParam("startTime", $startTime);
+		$stmt->bindParam("endTime", $endTime);
+		$stmt->execute();
+		$eventId = $stmt->fetchObject()->EventId;
+
+		$sql = "INSERT INTO EventRequest (EventId, UserId) VALUES (:eventId, :userId)";
+		$stmt = $db->prepare($sql);
+		foreach($event['invited'] as $friend) {
+			$stmt->bindParam("eventId", $eventId);
+			$stmt->bindParam("userId", $friend['friendId']);
+			$stmt->execute();
+		}
+
+		$db = null;
+	} catch(PDOException $e) {
+		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+	}
+}
+
+/**
+* A function to create a group
+*/
+function createGroup() {
+	$group = json_decode(Slim::getInstance()->request()->post('group'), true);
+	
+	try {
+		$db = getConnection();
+
+		$sql = "SELECT GroupId FROM Groups WHERE GroupName=:groupName AND UserId=:userId";
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam("groupName", $group['name']);
+		$stmt->bindParam("userId", $_SESSION['userId']);
+		$stmt->execute();
+		if(!empty($stmt->fetchObject())) {
+			echo "error_groupName";
+			return;
+		}
+	
+		$sql = "INSERT INTO Groups (GroupName, UserId) VALUES (:groupName, :userId)";
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam("groupName", $group['name']);
+		$stmt->bindParam("userId", $_SESSION['userId']);
+		$stmt->execute();
+
+		$sql = "SELECT GroupId FROM Groups WHERE GroupName=:groupName AND UserId=:userId";
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam("groupName", $group['name']);
+		$stmt->bindParam("userId", $_SESSION['userId']);
+		$stmt->execute();
+		$groupId = $stmt->fetchObject()->GroupId;
+
+		$sql = "INSERT INTO GroupList (GroupId, UserId) VALUES (:groupId, :userId)";
+		$stmt = $db->prepare($sql);
+		foreach($group['friends'] as $friend) {
+			$stmt->bindParam("groupId", $groupId);
+			$stmt->bindParam("userId", $friend['friendId']);
+			$stmt->execute();
+		}
+
+		$db = null;
+	} catch(PDOException $e) {
+		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+	}
+}
+
+/**
+* A function to view all of the user's groups
+*/
+function viewGroups() {
+	$userId = $_SESSION['userId'];
+	$sql = "SELECT GroupId, GroupName FROM Groups WHERE UserId=:userId";
+	
+	try {
+		$db = getConnection();
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam('userId', $userId);
+		$stmt->execute();
+		$groups = $stmt->fetchAll(PDO::FETCH_OBJ);
+		$db = null;
+		echo '{"Groups": ' . json_encode($groups) . '}';
+	} catch(PDOExection $e) {
+		echo '{"error":{"text":'. $e->getMessage() .'}}';
 	}
 }
 
