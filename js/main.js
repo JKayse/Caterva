@@ -44,6 +44,7 @@ $(document).ready(function() {
     $(".slimScrollRail").hide();
     $(".slimScrollBar").hide();
 
+    $("#flockList button").css("font-size", $(".friendRequest").css("font-size"));
 
 
 
@@ -299,6 +300,46 @@ function addCreatedEvent(event){
     $("#popUp").hide();
     $("#enterEvent").hide();
 
+    var invitedList = [];
+    var event = {};
+    var friend = {};
+
+    event.title = $("#eventTitle").val();
+    event.description = $("#eventDescription").val();
+    event.startDate = $("#eventDate").val();
+    event.startTime = $("#eventTimeStart").val();
+    event.endDate = $("#eventDateEnd").val();
+    event.endTime = $("#eventTimeEnd").val();
+    
+    var invited = $(".invitedGuest");
+    for(var i = 0; i < invited.size(); i++){
+        friend.friendId = invited.eq(i).attr("friendId");
+        invitedList.push(friend);
+    }   
+    event.invited = invitedList; 
+
+    if($("#allowShareEvent").prop('checked') === false)
+    {
+        event.share = 0;
+    }
+    else{
+        event.share = 1;
+    }
+
+
+    event = JSON.stringify(event);
+    console.log(event);
+
+    /*$.ajax({
+            type: "POST",
+            url: "api/CreateEvent",
+            data: {
+                Event: event;
+            }
+    });*/
+
+    //When function is there, add it to the event list.
+
     $("#eventTitle").val("");
     $("#eventDescription").val("");
     $("#eventDate").val("");
@@ -406,7 +447,7 @@ function viewAttendingEventInformation(){
 
 function updateFriendsList(){
     $("#friendList").empty();
-    $("friendAdderList").empty();
+    $("#friendAdderList").empty();
 
     $.ajax({url:"api/ViewFriends", success: function(json2){
         json2 = JSON.parse(json2);

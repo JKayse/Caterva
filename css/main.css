@@ -150,7 +150,7 @@ main div div div button:hover{
     box-shadow: 2px 2px 2px rgba(95, 93, 83, 0.5);
   }
 
-  .eventRequest:hover {
+  .eventRequest:hover , .friendRequest:hover {
     background: linear-gradient(rgb(96, 195, 252), rgb(99, 150, 240));
   }
   
