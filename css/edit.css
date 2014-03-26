@@ -86,7 +86,7 @@ img, .groupie, .friendie{
 }
 
 #blackScreenofDeath {
-    display: block;
+    display: none;
     width:100%;
     height:100%;
     background-color: rgba(0, 0, 0, 0.50);
@@ -97,7 +97,7 @@ img, .groupie, .friendie{
 }
 
 #popUp {
-    display: block;
+    display: none;
     position: fixed;
     background: linear-gradient(rgb(173, 239, 255), rgb(153, 186, 255));
     border-style: solid;
@@ -122,4 +122,14 @@ img, .groupie, .friendie{
 
 h4{
     margin: 0px;
+}
+
+.slimScrollDiv{
+  margin:0px;
+  border-style: none;
+}
+
+
+.slimScrollRail, .slimScrollBar{
+right: 15px;
 }

@@ -295,7 +295,6 @@ function deleteInvitedGuest(){
 
 function addCreatedEvent(event){
     event.preventDefault();
-    $("#friendsUsername").val("");
     $("#blackScreenofDeath").hide();
     $("#popUp").hide();
     $("#enterEvent").hide();
