@@ -19,68 +19,80 @@
         <header></header>
 
         <main>
-            <section id="editGroup">
-                <h3>Groups</h3>
-                <hr>
+            <section id="editGroups">
+                <img src="img/add.png" id="addGroup" alt="Add Group" title="Add Group">
+                <h2>Edit Groups</h2>
                 <div id="groupList" class="mouseover">
                     <div class="groupie" >
-                        <img src="img/close.png" class="deleteGroup" alt="Delete" title="Delete">
-                        <h4>GUI</h4>
+                        <img src="img/close2.png" class="deleteGroup" alt="Delete" title="Delete">
+                        <h3>GUI</h3>
                     </div>
                     <div class="groupie">
-                        <img src="img/close.png" class="deleteGroup" alt="Delete" title="Delete">
-                        <h4>Database</h4>
+                        <img src="img/close2.png" class="deleteGroup" alt="Delete" title="Delete">
+                        <h3>Database</h3>
                     </div>
                     <div class="groupie" >
-                        <img src="img/close.png" class="deleteGroup" alt="Delete" title="Delete">
-                        <h4>Awesome People</h4> 
+                        <img src="img/close2.png" class="deleteGroup" alt="Delete" title="Delete">
+                        <h3>Awesome People</h3> 
                     </div>
                 </div>
             </section>
 
             <section id="editFriends">
-                <div class="friendie" >
-                    <img src="img/close.png" class="deleteFriend" alt="Delete" title="Delete">
-                    <h4>Taylor Ellington</h4>
-                </div>
-                <div class="friendie">
-                    <img src="img/close.png" class="deleteFriend" alt="Delete" title="Delete">
-                    <h4>Maryssa Crews</h4>
-                </div>
-                <div class="friendie" >
-                    <img src="img/close.png" class="deleteFriend" alt="Delete" title="Delete">
-                    <h4>Chris Hauser</h4> 
-                </div>
-                <div class="friendie" >
-                    <img src="img/close.png" class="deleteFriend" alt="Delete" title="Delete">
-                    <h4>Alex Cheng</h4> 
-                </div>
-                <div class="friendie" >
-                    <img src="img/close.png" class="deleteFriend" alt="Delete" title="Delete">
-                    <h4>Jordan Kayse</h4> 
+                <h2>Edit Friends</h2>
+                <div id="friendList" class="mouseover">
+                    <div class="friendie" >
+                        <img src="img/close2.png" class="deleteFriend" alt="Delete" title="Delete">
+                        <h3>Taylor Ellington</h3>
+                    </div>
+                    <div class="friendie">
+                        <img src="img/close2.png" class="deleteFriend" alt="Delete" title="Delete">
+                        <h3>Maryssa Crews</h3>
+                    </div>
+                    <div class="friendie" >
+                        <img src="img/close2.png" class="deleteFriend" alt="Delete" title="Delete">
+                        <h3>Chris Hauser</h3> 
+                    </div>
+                    <div class="friendie" >
+                        <img src="img/close2.png" class="deleteFriend" alt="Delete" title="Delete">
+                        <h3>Alex Cheng</h3> 
+                    </div>
+                    <div class="friendie" >
+                        <img src="img/close2.png" class="deleteFriend" alt="Delete" title="Delete">
+                        <h3>Jordan Kayse</h3> 
+                    </div>
                 </div>
 
             </section>     
         </main>
         <div id="blackScreenofDeath">
-                <div id="popUp">
-                    <div id="friendSearch">
-
-                    </div>  
-                    
-                    <div id="enterEvent">
-
-                    </div>   
-                    <div id="addFriendsOptions">
-
-                        
-                    </div> 
-                    <div id="addGroupsOptions">
-
-
-                    </div>
-                    <div id="eventInformation">
-
+                <div id="popUp">    
+                    <div id="editAndCreateGroups">
+                        <form id = "groupForm" name="Create a Group" action="#" method="post">
+                            <img src="img/close.png" class="closePopUp cancelSearch"alt="Close" title="Close">
+                            <h2>Create a Group</h2>
+                            <hr>
+                            <label for="groupName">Name:</label>
+                            <input type="text" id="groupName" name="groupName" title ="Enter the name of the group." required>
+                            <br>
+                            <h4>Friends:</h4>
+                            <div id="listOfFriends">
+                                <input type="checkbox" class="friendList" id ="1Friend" title="Share Events" name="invitedFriends">
+                                <label for="1Friend">Jordan Kayse</label>
+                                <br>
+                                <input type="checkbox" class="friendList" id ="2Friend" title="Share Events" name="invitedFriends">
+                                <label for="2Friend">Jessica Yeh</label>
+                                <br>
+                                <input type="checkbox" class="friendList" id ="3Friend" title="Share Events" name="invitedFriends">
+                                <label for="3Friend">Story Zanetti</label>
+                                <br>
+                                <input type="checkbox" class="friendList" id ="4Friend" title="Share Events" name="invitedFriends">
+                                <label for="4Friend">Rebecca Ward</label>
+                                <br>
+                            </div>
+                            <input type="submit" class="button" id ="searchUsers" value="Search">   
+                            <input type="button" class="button cancelSearch" value="Cancel">   
+                        </form> 
                     </div>                                    
                 </div> 
             </div>

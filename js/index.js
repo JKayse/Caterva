@@ -17,12 +17,12 @@ function signUp(event){
         return;
     }
     else{
-        /*$.ajax({
+        $.ajax({
             type: "POST",
             url: "api/Users",
             data: {
-                firstname: $("#firstName").val(),
-                lastname: $("#lastName").val(),
+                firstname: $("#firstname").val(),
+                lastname: $("#lastname").val(),
                 username: $("#username").val(),
                 email: $("#email").val(),
                 password: $("#password").val()
@@ -41,20 +41,20 @@ function signUp(event){
                     type: "POST",
                     url: "api/Login",
                     data: {
-                        email: $("#username").val(),
+                        username: $("#username").val(),
                         password: $("#password").val()
                     },
                     success: function(json){
                        window.location = "main.html";                       
                     }
             });
-            $("#firstName").val("");
-            $("#lastName").val("");
+            $("#firstname").val("");
+            $("#lastname").val("");
             $("#username").val("");
             $("#email").val("");
             $("#password").val("");
             $("#confirmPassword").val(""); 
            
-        }});*/
+        }});
     }
 }

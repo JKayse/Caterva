@@ -7,7 +7,7 @@ $(document).ready(function() {
     $(document).on('click', "header h1", goToCorrectPage);
     
 
-    /*$.ajax({url:"api/LoginStatus", success: function(json){
+    $.ajax({url:"api/LoginStatus", success: function(json){
         if(json !== 'null'){
             json = JSON.parse(json);
             $("#signedIn h2").html("Welcome!");
@@ -19,13 +19,14 @@ $(document).ready(function() {
         else{
             return;
         }
-    }}); */  
+    }});
 
 });
 
 
 function goToCorrectPage(){
-    /*$.ajax({url:"api/LoginStatus", success: function(json){
+    $.ajax({url:"api/LoginStatus", success: function(json){
+        //Check what login status returns if not logged in.
         if(json !== 'null'){
              window.location = "main.html";
         }
@@ -33,25 +34,24 @@ function goToCorrectPage(){
             window.location = "index.html";
         }
     }});  
-*/
+
 }
 
 
 function signout(){
-    /*$.ajax({
+    //Doesn't properly destroy session.
+    $.ajax({
             type: "POST",
             url: "api/Logout",
             success: function(){
                 $("#signIn").css("display", "block");
                 $("#signedIn").css("display", "none");
     }});
-*/
-
 }
 
 function signIn(){
     event.preventDefault();
-    /*$.ajax({
+    $.ajax({
             type: "POST",
             url: "api/Login",
             data: {
@@ -62,15 +62,15 @@ function signIn(){
                 if(json === 'null'){
                     alert("The information entered was not correct. Try Again.");
                 }
+                //Doesn't work if username doesn't exist in database. Look at that.
                 else{
                     $("#signInUsername").val("");
                     $("#signInPass").val("");
-
                     window.location = "main.html";
 
                 }
 
             }
     });
-*/
+
 }
