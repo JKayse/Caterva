@@ -386,7 +386,7 @@ function createEvent() {
 	try {
 		$db = getConnection();
 
-		$sql = "INSERT INTO Events (EventName, UserId, StartTime, EndTime, EventDescription) VALUES (:eventName, :userId, :startTime, :endTime, :description)";
+		$sql = "INSERT INTO Events (EventName, UserId, StartTime, EndTime, EventDescription, Share) VALUES (:eventName, :userId, :startTime, :endTime, :description, :share)";
 		$startTime = $event['startDate'] . ' ' . $event['startTime'];
 		$endTime = $event['endDate'] . ' ' . $event['endTime'];
 
@@ -396,14 +396,16 @@ function createEvent() {
 		$stmt->bindParam("startTime", $startTime);
 		$stmt->bindParam("endTime", $endTime);
 		$stmt->bindParam("description", $event['description']);
+		$stmt->bindParam("share", $event['share']);
 		$stmt->execute();
 
-		$sql = "SELECT EventId FROM Events WHERE EventName=:eventName AND UserId=:userId AND StartTime=:startTime AND EndTime=:endTime";
+		$sql = "SELECT EventId FROM Events WHERE EventName=:eventName AND UserId=:userId AND StartTime=:startTime AND EndTime=:endTime AND Share=:share";
 		$stmt = $db->prepare($sql);
 		$stmt->bindParam("eventName", $event['title']);
 		$stmt->bindParam("userId", $_SESSION['userId']);
 		$stmt->bindParam("startTime", $startTime);
 		$stmt->bindParam("endTime", $endTime);
+		$stmt->bindParam("share", $event['share']);
 		$stmt->execute();
 		$eventId = $stmt->fetchObject()->EventId;
 

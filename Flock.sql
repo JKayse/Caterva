@@ -47,6 +47,7 @@ CREATE TABLE IF NOT EXISTS `Events` (
   `StartTime` datetime NOT NULL,
   `EndTime` datetime NOT NULL,
   `EventDescription` varchar(500) NOT NULL,
+  `Share` tinyint NOT NULL,
   PRIMARY KEY (`EventId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
