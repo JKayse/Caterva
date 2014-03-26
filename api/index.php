@@ -215,11 +215,13 @@ function logout() {
 * A function that shows all the user's friends
 */
 function viewFriends(){
-	$userId = 1;
-	$sql = "SELECT UserFriendId FROM FriendsList WHERE UserId = '$userId'";
+	//$userId = 1;
+	$userId = $_SESSION['userId'];
+	$sql = "SELECT UserFriendId FROM FriendsList WHERE UserId = :userId";
 	try {
 			$db = getConnection();
 			$stmt = $db->prepare($sql);
+			$stmt->bindParam("userId", $userId);
 			$stmt->execute();
 			$Friends = $stmt->fetchAll(PDO::FETCH_OBJ);
 			$db = null;
@@ -273,13 +275,17 @@ function searchFriend()
 */
 function addFriendRequest()
 {
-	$userId = 1;
+	//$userId = 1;
+	$userId = $_SESSION['userId'];
 	$friendId = Slim::getInstance()->request()->post('friendId');
-	$insertFriendQuery2 = "INSERT INTO FriendRequest(userId, friendId) VALUE('$userId', '$friendId')";
+	$insertFriendQuery2 = "INSERT INTO FriendRequest(userId, friendId) VALUE(:userId, :friendId)";
 		try {
 			$db = getConnection();
 			$stmt = $db->prepare($insertFriendQuery2);
+			$stmt->bindParam("userId",$userId);
+			$stmt->bindParam("friendId",$friendId);
 			$stmt->execute();
+			$db = null;
 		} catch(PDOException $e) {
 		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 		}
@@ -291,31 +297,44 @@ function addFriendRequest()
 */
 function addFriend()
 {
-	$userId = 1;
-	$friendId = Slim::getInstance()->request()->post('FriendId');
+	//$userId = 1;
+	$userId = $_SESSION['userId'];
+	$friendId = Slim::getInstance()->request()->post('friendId');
 	$response = Slim::getInstance()->request()->post('response');
 	if($response == 1){
-		$insertFriend1 = "INSERT INTO FriendsList(UserId, UserFriendId) VALUE('$friendId', '$userId')";
-		$insertFriend2 = "INSERT INTO FriendsList(UserId, UserFriendId) VALUE('$userId', '$friendId')";
-		$deleteFriendRequest = "DELETE FROM FriendRequest WHERE UserId = '$friendId' AND FriendId = '$userId'";		
+		$insertFriend1 = "INSERT INTO FriendsList(UserId, UserFriendId) VALUE(:friendId, :userId)";
+		$insertFriend2 = "INSERT INTO FriendsList(UserId, UserFriendId) VALUE(:userId, :friendId)";
+		$deleteFriendRequest = "DELETE FROM FriendRequest WHERE UserId = :friendId AND FriendId = :userId";		
 		try {
 			$db = getConnection();
 			$stmt = $db->prepare($insertFriend1);
+			$stmt->bindParam("friendId", $friendId);
+			$stmt->bindParam("userId", $userId);
 			$stmt->execute();
-			$stmt = $db->prepare($insertFriend2);
-			$stmt->execute();
-			$stmt = $db->prepare($deleteFriendRequest);
-			$stmt->execute();
+
+			$stmt2 = $db->prepare($insertFriend2);
+			$stmt2->bindParam("userId", $userId);
+			$stmt2->bindParam("friendId", $friendId);
+			$stmt2->execute();
+	
+			$stmt3 = $db->prepare($deleteFriendRequest);
+			$stmt3->bindParam("friendId", $friendId);
+			$stmt3->bindParam("userId", $userId);
+			$stmt3->execute();
+			$db = null;
 		} catch(PDOException $e) {
 		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 		}
 	}
 	else{
-		$deleteFriendRequest = "DELETE FROM FriendRequest WHERE UserId = '$friendId' AND FriendId = '$userId'";		
+		$deleteFriendRequest = "DELETE FROM FriendRequest WHERE UserId = :friendId AND FriendId = :userId";		
 		try {
 			$db = getConnection();
 			$stmt = $db->prepare($deleteFriendRequest);
+			$stmt->bindParam("friendId", $friendId);
+			$stmt->bindParam("userId", $userId);
 			$stmt->execute();
+			$db = null;
 		} catch(PDOException $e) {
 		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 		}
@@ -327,11 +346,13 @@ function addFriend()
 */
 function getFriendRequest()
 {
-	$userId = 1;	
-	$sql = "SELECT UserId, FriendId FROM FriendRequest WHERE FriendId = '$userId'";
+	//$userId = 1;	
+	$userId = $_SESSION['userId'];
+	$sql = "SELECT UserId, FriendId FROM FriendRequest WHERE FriendId = :userId";
 	try {
 		$db = getConnection();
 		$stmt = $db->prepare($sql);
+		$stmt->bindParam("userId", $userId);
 		$stmt->execute();
 		$friendRequest = $stmt->fetchAll(PDO::FETCH_OBJ);
 		$db = null;
@@ -347,7 +368,7 @@ function getFriendRequest()
 function getConnection() {
 	$dbhost="localhost";
 	$dbuser="root";
-	$dbpass="halomastercheif";
+	$dbpass="halomasterchief";
 	$dbname="Flock";
 	$dbh = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);	
 	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

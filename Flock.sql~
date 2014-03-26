@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `Events` (
 -- Table structure for table `FriendList`
 --
 
-CREATE TABLE IF NOT EXISTS `FriendsList` (
+CREATE TABLE IF NOT EXISTS `FriendList` (
   `FriendListId` int(11) NOT NULL AUTO_INCREMENT,
   `UserId` int(11) NOT NULL,
   `FriendId` int(11) NOT NULL,
