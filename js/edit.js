@@ -38,6 +38,19 @@ $(document).ready(function() {
 
     }});
 
+
+    $.ajax({url:"api/Groups", async: false, success: function(json2){
+        json2 = JSON.parse(json2);
+        var groups = json2.Groups;
+        for(var i = 0; i < groups.length ; i++){
+            var groupName = groups[i].GroupName;
+            var groupId = groups[i].GroupId;
+            var group = "<div class='groupie' groupId=" + groupId + "><img src='img/close2.png' class='deleteGroup' alt='Delete' title='Delete'><h3>" + groupName + "</h3></div>";
+            $("#groupList").append(group);    
+        }
+    }}); 
+
+
 });
 
 
@@ -89,7 +102,7 @@ function addCreatedGroup(){
     group = JSON.stringify(group);
     console.log(group);
 
-    /*$.ajax({
+    $.ajax({
             type: "POST",
             url: "api/CreateGroup",
             data: {
@@ -108,7 +121,7 @@ function addCreatedGroup(){
                     updateGroupList();
                 }
             }
-    });*/
+    });
 }
 
 function updateGroupList(){
@@ -119,7 +132,7 @@ function updateGroupList(){
 
 function fixClosure(i) {
     return function(e){
-        console.log("hiya");
-        console.log($(".friendList").eq(i).attr("friendId"));
+        console.log("test");
+        return $(".friendList").eq(i).attr("friendId"));
     }
 }
