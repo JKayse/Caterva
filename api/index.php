@@ -385,11 +385,24 @@ function createEvent() {
 
 	try {
 		$db = getConnection();
-
-		$sql = "INSERT INTO Events (EventName, UserId, StartTime, EndTime, EventDescription, Share) VALUES (:eventName, :userId, :startTime, :endTime, :description, :share)";
 		$startTime = $event['startDate'] . ' ' . $event['startTime'];
 		$endTime = $event['endDate'] . ' ' . $event['endTime'];
 
+
+		$sql = "SELECT EventId FROM Events WHERE EventName=:eventName AND UserId=:userId AND StartTime=:startTime AND EndTime=:endTime AND Share=:share";
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam("eventName", $event['title']);
+		$stmt->bindParam("userId", $_SESSION['userId']);
+		$stmt->bindParam("startTime", $startTime);
+		$stmt->bindParam("endTime", $endTime);
+		$stmt->bindParam("share", $event['share']);
+		$stmt->execute();
+		if($stmt->fetchObject()) {
+			echo "error_event_already_exists";
+		}
+
+		$sql = "INSERT INTO Events (EventName, UserId, StartTime, EndTime, EventDescription, Share) VALUES (:eventName, :userId, :startTime, :endTime, :description, :share)";
+		
 		$stmt = $db->prepare($sql);
 		$stmt->bindParam("eventName", $event['title']);
 		$stmt->bindParam("userId", $_SESSION['userId']);
@@ -437,7 +450,7 @@ function createGroup() {
 		$stmt->bindParam("groupName", $group['name']);
 		$stmt->bindParam("userId", $_SESSION['userId']);
 		$stmt->execute();
-		if(!empty($stmt->fetchObject())) {
+		if($stmt->fetchObject()) {
 			echo "error_groupName";
 			return;
 		}
@@ -474,16 +487,28 @@ function createGroup() {
 */
 function viewGroups() {
 	$userId = $_SESSION['userId'];
-	$sql = "SELECT GroupId, GroupName FROM Groups WHERE UserId=:userId";
 	
 	try {
 		$db = getConnection();
+
+		$sql = "SELECT GroupId, GroupName FROM Groups WHERE UserId=:userId";
 		$stmt = $db->prepare($sql);
 		$stmt->bindParam('userId', $userId);
 		$stmt->execute();
 		$groups = $stmt->fetchAll(PDO::FETCH_OBJ);
-		$db = null;
+		
 		echo '{"Groups": ' . json_encode($groups) . '}';
+
+		$sql = "SELECT UserId FROM GroupList WHERE GroupId=:groupId";
+		$stmt = $db->prepare($sql);
+		foreach($groups as $group) {
+			$stmt->bindParam('groupId', $group->GroupId);
+			$stmt->execute();
+			$users = $stmt->fetchAll(PDO::FETCH_OBJ);
+			echo '{"Users": ' . json_encode($users) . '}';
+		}
+
+		$db = null;
 	} catch(PDOExection $e) {
 		echo '{"error":{"text":'. $e->getMessage() .'}}';
 	}
