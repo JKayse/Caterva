@@ -501,10 +501,18 @@ function viewGroups() {
         $stmt->execute();
         $groups = $stmt->fetchAll(PDO::FETCH_OBJ);
 
+        echo '{"Groups": [ ';
+	$i = 0;
 	foreach($groups as $group) {
+		if($i != 0) {
+			echo ',';
+		} else {
+			$i++;
+		}
 		echo '{"Group": ' . json_encode($group) . ',';
 		viewGroupMembers($group->GroupId);
 	}
+	echo ']}';
 
         $db = null;
 
