@@ -85,6 +85,10 @@ $app->post('/CreateGroup', 'createGroup');
 * View Groups
 */
 $app->get('/Groups', 'viewGroups');
+/**
+* View Group Memebers
+*/
+$app->get('/GroupMembers/:groupId', 'viewGroupMembers');
 
 $app->run();
 
@@ -230,8 +234,8 @@ function logout() {
 * A function that shows all the user's friends
 */
 function viewFriends(){
-    $userId = 1;
-    //$userId = $_SESSION['userId'];
+    //$userId = 1;
+    $userId = $_SESSION['userId'];
     $sql = "SELECT FriendId FROM FriendsList WHERE UserId = :userId";
     try {
             $db = getConnection();
@@ -498,16 +502,26 @@ function viewGroups() {
         $groups = $stmt->fetchAll(PDO::FETCH_OBJ);
 
         echo '{"Groups": ' . json_encode($groups) . '}';
+        $db = null;
 
+    } catch(PDOExection $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+}
+
+/**
+* A function to view the group members within a user's specific group
+*/
+function viewGroupMembers($groupId) {
+    $userId = $_SESSION['userId'];
+    try {
+        $db = getConnection();      
         $sql = "SELECT UserId FROM GroupList WHERE GroupId=:groupId";
         $stmt = $db->prepare($sql);
-        foreach($groups as $group) {
-            $stmt->bindParam('groupId', $group->GroupId);
-            $stmt->execute();
-            $users = $stmt->fetchAll(PDO::FETCH_OBJ);
-            echo '{"Users": ' . json_encode($users) . '}';
-        }
-
+        $stmt->bindParam('groupId', $groupId);
+        $stmt->execute();
+        $users = $stmt->fetchAll(PDO::FETCH_OBJ);
+        echo '{"Users": ' . json_encode($users) . '}';
         $db = null;
     } catch(PDOExection $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
