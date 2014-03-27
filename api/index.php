@@ -124,7 +124,7 @@ function addUser()
 		$db = null;
 		$username_test = $stmt->fetchObject();
 
-		if(!empty($username_test)) {
+		if($username_test) {
 			echo "error_username";
 			return;
 		}
@@ -147,7 +147,7 @@ function addUser()
 
 		$email_test = $stmt->fetchObject();
 
-		if(!empty($email_test)) {
+		if($email_test) {
 			echo "error_email";
 			return;
 		}
