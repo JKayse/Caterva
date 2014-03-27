@@ -323,6 +323,7 @@ function addCreatedEvent(event){
     
     var invited = $(".invitedGuest");
     for(var i = 0; i < invited.size(); i++){
+        var friend = {};
         friend.friendId = invited.eq(i).attr("friendId");
         invitedList.push(friend);
     }   

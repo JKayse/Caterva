@@ -74,7 +74,7 @@ function addCreatedGroup(){
     event.preventDefault();
     var friendsList = [];
     var group = {};
-    var friend = {};
+    
 
     group.name = $("#groupName").val();
 
@@ -84,9 +84,9 @@ function addCreatedGroup(){
 
 
     for(var i = 0; i < friends.size(); i++){
+        var friend = {};
         if(friends.eq(i).prop('checked') === true){
-            console.log(friends.eq(i).attr("friendId"));
-            friend.friendId = fixClosure(i);
+            friend.friendId = $(".friendList").eq(i).attr("friendId"); 
             friendsList.push(friend);
             numFriends++;
         }
@@ -127,12 +127,4 @@ function addCreatedGroup(){
 function updateGroupList(){
     $("#groupList").empty();
     //call view groups;
-}
-
-
-function fixClosure(i) {
-    return function(e){
-        console.log("test");
-        return $(".friendList").eq(i).attr("friendId"));
-    }
 }
