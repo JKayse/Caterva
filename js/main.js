@@ -1,4 +1,3 @@
-var userId;
 
 
 $(document).ready(function() {
@@ -44,24 +43,20 @@ $(document).ready(function() {
     $(".slimScrollRail").hide();
     $(".slimScrollBar").hide();
 
-    $("#flockList button").css("font-size", $(".friendRequest").css("font-size"));
-
 
 
 
     /*$.ajax({url:"api/LoginStatus", success: function(json){
         if(json !== 'null'){
-            json = JSON.parse(json);
-            userId = json.ID;    
+            json = JSON.parse(json);  
         }
         else{
-            userId = "null";
             return;
         }
     }});  */
 
 
-    $.ajax({url:"api/ViewFriendRequest", success: function(json2){
+ /*   $.ajax({url:"api/ViewFriendRequest", success: function(json2){
         json2 = JSON.parse(json2);
         var friendRequests = json2.FriendRequest;
         for(var i = 0; i < friendRequests.length ; i++){
@@ -78,12 +73,12 @@ $(document).ready(function() {
             }});
         }
     }}); 
-
+*/
     $.ajax({url:"api/ViewFriends", success: function(json2){
         json2 = JSON.parse(json2);
         var friends = json2.FriendsList;
         for(var i = 0; i < friends.length ; i++){
-            var friendId = friends[i].UserFriendId;
+            var friendId = friends[i].FriendId;
             $.ajax({url:"api/UserInfo/" + friendId, success: function(json){
                 json = JSON.parse(json);
                 var friendInfo = json.User;
@@ -95,6 +90,7 @@ $(document).ready(function() {
                 $("#friendList").append(friend);
                 var friendAdder = "<input type='checkbox' class='friendList' friendId=" + userId + " id='" + userId + "friend' title='Invite' name='invitedFriends'><label for='" + userId + "friend'>"+ firstname +" "+ lastname + "</label><br>";
                 $("#friendAdderList").append(friendAdder);
+                $("#flockList button").css("font-size", $(".friendRequest").css("font-size"));
             }});    
         }
 
@@ -133,12 +129,12 @@ $(document).ready(function() {
 
             groupAdder = groupAdder + friendList + "' friendIds = '" + friendIdList + "' title ='Invite' name='invitedGroups'><label for=" + groupId + ">" + groupName + "</label><br>";
              $("groupAdderList").append(groupAdder);
+             $("#flockList button").css("font-size", $(".friendRequest").css("font-size"));
         }
 
 
 
     }}); */
-
 
 
 });
@@ -329,24 +325,33 @@ function addCreatedEvent(event){
     event = JSON.stringify(event);
     console.log(event);
 
-    /*$.ajax({
+    $.ajax({
             type: "POST",
             url: "api/CreateEvent",
             data: {
-                Event: event;
+                event: event
+            },
+            success: function(json){
+                /*if(json === "error_groupName"){
+                    alert("That name already exists. Please enter a new name.");
+                }*/
+                //else{          
+                        $("#eventTitle").val("");
+                        $("#eventDescription").val("");
+                        $("#eventDate").val("");
+                        $("#eventDateEnd").val("");
+                        $("#eventTimeStart").val("");
+                        $("#eventTimeEnd").val("");
+                        $("#eventGuestList").empty();
+                        $("#allowShareEvent").prop('checked', false);
+                        //updateGroupList();
+                //}
             }
-    });*/
+    });
 
     //When function is there, add it to the event list.
 
-    $("#eventTitle").val("");
-    $("#eventDescription").val("");
-    $("#eventDate").val("");
-    $("#eventDateEnd").val("");
-    $("#eventTimeStart").val("");
-    $("#eventTimeEnd").val("");
-    $("#eventGuestList").empty();
-    $("#allowShareEvent").prop('checked', false);
+
 }
 
 function sendFriendRequest(){

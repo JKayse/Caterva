@@ -124,7 +124,7 @@ function addUser()
         $db = null;
         $username_test = $stmt->fetchObject();
 
-        if(!empty($username_test)) {
+        if($username_test) {
             echo "error_username";
             return;
         }
@@ -147,7 +147,7 @@ function addUser()
 
         $email_test = $stmt->fetchObject();
 
-        if(!empty($email_test)) {
+        if($email_test) {
             echo "error_email";
             return;
         }
@@ -232,7 +232,7 @@ function logout() {
 function viewFriends(){
     //$userId = 1;
     $userId = $_SESSION['userId'];
-    $sql = "SELECT UserFriendId FROM FriendsList WHERE UserId = :userId";
+    $sql = "SELECT FriendId FROM FriendsList WHERE UserId = :userId";
     try {
             $db = getConnection();
             $stmt = $db->prepare($sql);

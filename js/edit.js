@@ -62,7 +62,7 @@ function addCreatedGroup(){
     var group = {};
     var friend = {};
 
-    group.title = $("#groupName").val();
+    group.name = $("#groupName").val();
 
     var numFriends =0;
     var friends = $(".friendList");
@@ -83,20 +83,29 @@ function addCreatedGroup(){
     group = JSON.stringify(group);
     console.log(group);
 
-    /*$.ajax({
+    $.ajax({
             type: "POST",
-            url: "api/CreateEvent",
+            url: "api/CreateGroup",
             data: {
-                Group: group;
+                group: group
+            },
+            success: function(json){
+                if(json === "error_groupName"){
+                    alert("That name already exists. Please enter a new name.");
+                }
+                else{          
+                    $("#blackScreenofDeath").hide();
+                    $("#popUp").hide();
+                    
+                    $("#groupName").val("");
+                    $(".friendList").prop('checked', false);
+                    updateGroupList();
+                }
             }
-    });*/
+    });
+}
 
-    //When function is there, add it to the event list.
-
-    
-    $("#blackScreenofDeath").hide();
-    $("#popUp").hide();
-    
-    $("#groupName").val("");
-    $(".friendList").prop('checked', false);
+function updateGroupList(){
+    $("#groupList").empty();
+    //call view groups;
 }
