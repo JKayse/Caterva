@@ -501,7 +501,11 @@ function viewGroups() {
         $stmt->execute();
         $groups = $stmt->fetchAll(PDO::FETCH_OBJ);
 
-        echo '{"Groups": ' . json_encode($groups) . '}';
+	foreach($groups as $group) {
+		echo '{"Group": ' . json_encode($group) . ',';
+		viewGroupMembers($group->GroupId);
+	}
+
         $db = null;
 
     } catch(PDOExection $e) {
@@ -516,12 +520,15 @@ function viewGroupMembers($groupId) {
     $userId = $_SESSION['userId'];
     try {
         $db = getConnection();      
+
         $sql = "SELECT UserId FROM GroupList WHERE GroupId=:groupId";
         $stmt = $db->prepare($sql);
         $stmt->bindParam('groupId', $groupId);
         $stmt->execute();
+
         $users = $stmt->fetchAll(PDO::FETCH_OBJ);
-        echo '{"Users": ' . json_encode($users) . '}';
+        echo '"Users": ' . json_encode($users) . '}';
+
         $db = null;
     } catch(PDOExection $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
