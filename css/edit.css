@@ -116,6 +116,10 @@ img, .groupie, .friendie{
     padding: 3px 3px 4px 4px;
 }
 
+.closePopUp:hover{
+    background: linear-gradient(rgb(96, 195, 252), rgb(99, 150, 240))
+}
+
 #popUp h2{
     margin: 0px;
 }

@@ -18,10 +18,11 @@ $(document).ready(function() {
 
 
     $.ajax({url:"api/ViewFriends", success: function(json2){
+        console.log(json2);
         json2 = JSON.parse(json2);
         var friends = json2.FriendsList;
         for(var i = 0; i < friends.length ; i++){
-            var friendId = friends[i].UserFriendId;
+            var friendId = friends[i].FriendId;
             $.ajax({url:"api/UserInfo/" + friendId, success: function(json){
                 json = JSON.parse(json);
                 var friendInfo = json.User;
@@ -66,13 +67,18 @@ function addCreatedGroup(){
 
     var numFriends =0;
     var friends = $(".friendList");
+
+
+
     for(var i = 0; i < friends.size(); i++){
         if(friends.eq(i).prop('checked') === true){
-            friend.friendId = friends.eq(i).attr("friendId");
+            console.log(friends.eq(i).attr("friendId"));
+            friend.friendId = fixClosure(i);
             friendsList.push(friend);
             numFriends++;
         }
-    }
+    } 
+
     if(numFriends === 0){
         alert("Please add at least one friend.");
         return;
@@ -83,7 +89,7 @@ function addCreatedGroup(){
     group = JSON.stringify(group);
     console.log(group);
 
-    $.ajax({
+    /*$.ajax({
             type: "POST",
             url: "api/CreateGroup",
             data: {
@@ -102,10 +108,18 @@ function addCreatedGroup(){
                     updateGroupList();
                 }
             }
-    });
+    });*/
 }
 
 function updateGroupList(){
     $("#groupList").empty();
     //call view groups;
+}
+
+
+function fixClosure(i) {
+    return function(e){
+        console.log("hiya");
+        console.log($(".friendList").eq(i).attr("friendId"));
+    }
 }

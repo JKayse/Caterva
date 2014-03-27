@@ -407,10 +407,6 @@ function updateFriendRequest(){
             }
     });
 
-
-    //call ajax with the value of yes or no,the userid, and the friendid.
-    //call function to update friends list. (delete the div and get the friends in alphabetical order).
-
     $(this).parent().remove();
 }
 
