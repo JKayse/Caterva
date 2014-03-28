@@ -2,7 +2,7 @@
 $(document).ready(function() {
 
     $(document).on('submit', "#signInArea", signIn);
-    $(document).on('click', "header #signedIn a", signout);
+    $(document).on('click', "#signOut", signout);
     $(document).on('click', "header img", goToCorrectPage);
     $(document).on('click', "header h1", goToCorrectPage);
     
@@ -46,6 +46,7 @@ function signout(){
             success: function(){
                 $("#signIn").css("display", "block");
                 $("#signedIn").css("display", "none");
+                goToCorrectPage();
     }});
 }
 
