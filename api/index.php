@@ -6,7 +6,7 @@
 */
 
 session_cache_limiter(false);
-
+session_start();
 
 require 'Slim/Slim.php';
 
@@ -210,7 +210,6 @@ function login() {
             $stmt2 = $db->prepare($query);
             $stmt2->bindParam("username", $username);
             $stmt2->execute();
-            session_start();
             $_SESSION['userId'] = $stmt2->fetchObject()->UserId;
             $_SESSION['username'] = $username;
                 echo '{"Username": "' . $_SESSION['username'] . '", "ID": ' . $_SESSION['userId'] . '}'; 
