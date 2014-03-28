@@ -551,7 +551,7 @@ function viewGroupMembers($groupId) {
 function getConnection() {
     $dbhost="localhost";
     $dbuser="root";
-    $dbpass="halomasterchief";
+    $dbpass="";
     $dbname="Flock";
     $dbh = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);  
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

@@ -146,5 +146,30 @@ function addCreatedGroup(){
 
 function updateGroupList(){
     $("#groupList").empty();
-    //call view groups;
+
+    $.ajax({url:"api/Groups", success: function(json2){
+        json2 = JSON.parse(json2);
+        var groups = json2.Groups;
+        for(var i = 0; i < groups.length ; i++){
+            var groupItem = groups[i].Group;
+            var friends = groups[i].Users;
+
+            var groupName = groupItem.GroupName;
+            var groupId = groupItem.GroupId;
+
+            friendIdList="";
+
+            for(var j = 0; j < friends.length ; j++){
+                friendId = friends[j].UserId;
+                friendIdList = friendIdList + ", " + friendId;
+            }
+
+            friendIdList = friendIdList.substring(2);
+            var group = "<div class='groupie' groupId=" + groupId + " friendIds= '" + friendIdList + "'><img src='img/close2.png' class='deleteGroup' alt='Delete' title='Delete'><h3>" + groupName + "</h3></div>";
+            console.log(group)
+            $("#groupList").append(group);    
+        }
+    }}); 
+
+
 }
