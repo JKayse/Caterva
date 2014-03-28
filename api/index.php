@@ -227,6 +227,8 @@ function login() {
 * A function to log the user out
 */
 function logout() {
+    $_SESSION = array(); 
+    session_unset();
     session_destroy();
 }
 
