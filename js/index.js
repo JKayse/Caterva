@@ -39,6 +39,17 @@ function signUp(event){
                     alert("This email already exists.");
                     return;
                 }
+
+                $.ajax({
+                    type: "POST",
+                    url: "api/Login",
+                    data: {
+                        username: $("#username").val(),
+                        password: $("#password").val()
+                    },
+                    success: function(json){
+                       window.location = "main.html";                       
+                    }
             });
             $("#firstname").val("");
             $("#lastname").val("");
