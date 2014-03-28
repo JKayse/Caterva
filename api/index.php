@@ -490,7 +490,7 @@ function createGroup() {
 * A function to view all of the user's groups
 */
 function viewGroups() {
-    $userId = 1;
+    $userId = $_SESSION['userId'];
 
     try {
         $db = getConnection();
