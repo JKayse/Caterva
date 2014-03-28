@@ -263,7 +263,7 @@ function getUserInfo($userId)
         $stmt = $db->prepare($sql);
         $stmt->bindParam("userId",$userId);
         $stmt->execute();
-        $userInfo = $stmt->fetchObject();
+        $userInfo = $stmt->fetchAll(PDO::FETCH_OBJ);
         $db = null;
         echo '{"User": ' . json_encode($userInfo) . '}';
     } catch(PDOException $e) {
