@@ -46,21 +46,20 @@ $(document).ready(function() {
 
 
 
-    /*$.ajax({url:"api/LoginStatus", success: function(json){
+    $.ajax({url:"api/LoginStatus", success: function(json){
         if(json !== 'null'){
-            json = JSON.parse(json);  
+            
         }
         else{
-            return;
+            window.location = "index.html";
         }
-    }});  */
+    }});
 
 
     $.ajax({url:"api/ViewFriendRequest", success: function(json2){
         json2 = JSON.parse(json2);
         var friendRequests = json2.FriendRequest;
         for(var i = 0; i < friendRequests.length ; i++){
-            //var username = friendRequests[i].username;
             var friendId = friendRequests[i].UserId;
             $.ajax({url:"api/UserInfo/" + friendId, success: function(json){
                 json = JSON.parse(json);

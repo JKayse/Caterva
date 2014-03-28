@@ -17,6 +17,15 @@ $(document).ready(function() {
     $(".slimScrollBar").css("right", '15px');
 
 
+    $.ajax({url:"api/LoginStatus", success: function(json){
+        if(json !== 'null'){
+            
+        }
+        else{
+            window.location = "index.html";
+        }
+    }});
+    
     $.ajax({url:"api/ViewFriends", success: function(json2){
         json2 = JSON.parse(json2);
         var friends = json2.FriendsList;
