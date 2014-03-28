@@ -490,7 +490,7 @@ function createGroup() {
 * A function to view all of the user's groups
 */
 function viewGroups() {
-    $userId = $_SESSION['userId'];
+    $userId = 1;
 
     try {
         $db = getConnection();
@@ -549,7 +549,7 @@ function viewGroupMembers($groupId) {
 function getConnection() {
     $dbhost="localhost";
     $dbuser="root";
-    $dbpass="halomasterchief";
+    $dbpass="";
     $dbname="Flock";
     $dbh = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);  
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

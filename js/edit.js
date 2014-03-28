@@ -18,7 +18,6 @@ $(document).ready(function() {
 
 
     $.ajax({url:"api/ViewFriends", success: function(json2){
-        console.log(json2);
         json2 = JSON.parse(json2);
         var friends = json2.FriendsList;
         for(var i = 0; i < friends.length ; i++){
@@ -39,13 +38,26 @@ $(document).ready(function() {
     }});
 
 
-    $.ajax({url:"api/Groups", async: false, success: function(json2){
+    $.ajax({url:"api/Groups", success: function(json2){
         json2 = JSON.parse(json2);
         var groups = json2.Groups;
         for(var i = 0; i < groups.length ; i++){
-            var groupName = groups[i].GroupName;
-            var groupId = groups[i].GroupId;
-            var group = "<div class='groupie' groupId=" + groupId + "><img src='img/close2.png' class='deleteGroup' alt='Delete' title='Delete'><h3>" + groupName + "</h3></div>";
+            var groupItem = groups[i].Group;
+            var friends = groups[i].Users;
+
+            var groupName = groupItem.GroupName;
+            var groupId = groupItem.GroupId;
+
+            friendIdList="";
+
+            for(var j = 0; j < friends.length ; j++){
+                friendId = friends[j].UserId;
+                friendIdList = friendIdList + ", " + friendId;
+            }
+
+            friendIdList = friendIdList.substring(2);
+            var group = "<div class='groupie' groupId=" + groupId + " friendIds= '" + friendIdList + "'><img src='img/close2.png' class='deleteGroup' alt='Delete' title='Delete'><h3>" + groupName + "</h3></div>";
+            console.log(group)
             $("#groupList").append(group);    
         }
     }}); 
@@ -100,7 +112,6 @@ function addCreatedGroup(){
     group.friends = friendsList;
 
     group = JSON.stringify(group);
-    console.log(group);
 
     $.ajax({
             type: "POST",

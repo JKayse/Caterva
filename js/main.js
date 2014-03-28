@@ -96,56 +96,52 @@ $(document).ready(function() {
 
     }}); 
 
-    $.ajax({url:"api/Groups", async: false, success: function(json2){
+    $.ajax({url:"api/Groups", async:false, success: function(json2){
         json2 = JSON.parse(json2);
         var groups = json2.Groups;
         var friendList;
         var friendIdList;
         for(var i = 0; i < groups.length ; i++){
-            var groupName = groups[i].GroupName;
-            var groupId = groups[i].GroupId;
+            var groupItem = groups[i].Group;
+            var friends = groups[i].Users;
+
+
+            var groupName = groupItem.GroupName;
+            var groupId = groupItem.GroupId;
             var friendId;
-            
 
-
-
-            var group = "<button class='groupButton' type='button' groupId =" + groupId + ">" + groupName + " </button><div class='groupMembers' groupId=" + groupId + ">";
+            var group = "<button class='groupButton' type='button' groupId=" + groupId + ">" + groupName + " </button><div class='groupMembers' groupId=" + groupId + ">";
             var groupAdder = "<input type='checkbox' class='groupList' id='" + groupId + "Group' friends='";
-            
+            friendList = "";
+            friendIdList = "";
+            for(var j = 0; j < friends.length ; j++){
+                
+                friendId = friends[j].UserId;
+                $.ajax({url:"api/UserInfo/" + friendId, async:false, success: function(json3){
+                    json3 = JSON.parse(json3);
+                    var friendInfo = json3.User;
+                    var firstname = friendInfo[0].Firstname;
+                    var lastname = friendInfo[0].Lastname;
+                    var userId = friendInfo[0].UserId;
 
-            $.ajax({url:"api/GroupMembers/" + groupId, async: false, success: function(json){
-                json = JSON.parse(json);
-                var users = json.Users;
-                friendList = "";
-                friendIdList = "";
-                for(var j = 0; j < users.length ; j++){
-                    friendId = users[j].UserId;
-                    $.ajax({url:"api/UserInfo/" + friendId, async: false, success: function(json3){
-                        json3 = JSON.parse(json3);
-                        var friendInfo = json3.User;
-                        var firstname = friendInfo[0].Firstname;
-                        var lastname = friendInfo[0].Lastname;
-                        var userId = friendInfo[0].UserId;
-
-                        group = group + "<button class='friend' type='button' friendId=" + userId + ">" + firstname + " " + lastname + "</button>";
-                        friendList = friendList + ", " + firstname + " " + lastname;
-                        friendIdList = friendIdList + ", " + userId;
+                    group = group + "<button class='friend' type='button' friendId=" + userId + ">" + firstname + " " + lastname + "</button>";
+                    friendList = friendList + ", " + firstname + " " + lastname;
+                    friendIdList = friendIdList + ", " + userId;
 
 
-                    }});    
-                }
-                group = group + "</div>";
-                friendList = friendList.substring(2);
-                friendIdList = friendIdList.substring(2);
+                }});    
+            }
+            group = group + "</div>";
+            friendList = friendList.substring(2);
+            friendIdList = friendIdList.substring(2);
 
-                groupAdder = groupAdder + friendList + "' friendIds= '" + friendIdList + "' title ='Invite' name='invitedGroups'><label for=" + groupId + "Group'>" + groupName + "</label><br>";
+            groupAdder = groupAdder + friendList + "' friendIds= '" + friendIdList + "' title ='Invite' name='invitedGroups'><label for=" + groupId + "Group'>" + groupName + "</label><br>";
 
-
-                $("#groupAdderList").append(groupAdder);
-                $("#groupList").append(group);
-                $("#flockList button").css("font-size", $(".friendRequest").css("font-size"));
-            }});      
+            $("#groupAdderList").append(groupAdder);
+            $("#groupList").append(group);
+            $("#flockList button").css("font-size", $(".friendRequest").css("font-size"));   
         }
+
     }}); 
 
 
