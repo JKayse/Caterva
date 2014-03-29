@@ -268,6 +268,7 @@ function getUserInfo($userId)
         echo '{"User": ' . json_encode($userInfo) . '}';
     } catch(PDOException $e) {
     echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+    
     }
 }
 
