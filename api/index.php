@@ -284,9 +284,9 @@ function searchFriend()
         $stmt = $db->prepare($findFriendQuery);
         $stmt->bindParam("username",$username);
         $stmt->execute();
-        $friendId = $stmt->fetchObject();
-        $db = null;
-        echo '{"Friend": ' . json_encode($friendId) . '}';
+        $friendId = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;	
+	echo '{"Friend": ' . json_encode($friendId) . '}';
     } catch(PDOException $e) {
     echo '{"error":{"text":'. $e->getMessage() .'}}'; 
     }   
