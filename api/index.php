@@ -193,10 +193,20 @@ function login() {
     $username = Slim::getInstance()->request()->post('username');
     $password = Slim::getInstance()->request()->post('password');
 
-    $sql = "SELECT Password FROM Users WHERE Username=:username";
-
     try {
         $db = getConnection();
+
+	$sql = "SELECT UserId FROM Users WHERE Username=:username";
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("username", $username);
+	$stmt->execute();
+	$username_test = $stmt->fetchObject();
+	if(empty($username_test)) {
+		echo "error_username_doesnt_exists";
+		return;
+	}
+
+	$sql = "SELECT Password FROM Users WHERE Username=:username";
         $stmt = $db->prepare($sql);
         $stmt->bindParam("username", $username);
         $stmt->execute();
@@ -205,17 +215,17 @@ function login() {
         if(empty($hashedPassword)) {
                 echo "null";
         } else if(password_verify($password, $hashedPassword)) {
-            $_SESSION['loggedin'] = true;
-            $query = "SELECT UserId FROM Users WHERE Username=:username";
-            $stmt2 = $db->prepare($query);
-            $stmt2->bindParam("username", $username);
-            $stmt2->execute();
-            $_SESSION['userId'] = $stmt2->fetchObject()->UserId;
-            $_SESSION['username'] = $username;
-                echo '{"Username": "' . $_SESSION['username'] . '", "ID": ' . $_SESSION['userId'] . '}'; 
+		$_SESSION['loggedin'] = true;
+		$query = "SELECT UserId FROM Users WHERE Username=:username";
+		$stmt2 = $db->prepare($query);
+		$stmt2->bindParam("username", $username);
+		$stmt2->execute();
+		$_SESSION['userId'] = $stmt2->fetchObject()->UserId;
+		$_SESSION['username'] = $username;
+         	echo '{"Username": "' . $_SESSION['username'] . '", "ID": ' . $_SESSION['userId'] . '}'; 
         } else {
-                    echo "null";
-            }
+		echo "null";
+	}
 
         $db = null;
     } catch(PDOException $e) {
