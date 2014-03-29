@@ -62,10 +62,12 @@ function signIn(){
                 
                 if(json === 'error_username_doesnt_exists'){
                     alert("The username entered does not exist. Try Again.");
+                    return;
                 }
 
                 if(json === 'null'){
                     alert("The password entered was not correct. Try Again.");
+                    return;
                 }
 
                 else{
