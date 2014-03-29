@@ -398,7 +398,7 @@ function updateFriendRequest(){
             type: "POST",
             url: "api/AddFriend",
             data: {
-                FriendId: $(this).parent().attr("friendId"),
+                friendId: $(this).parent().attr("friendId"),
                 response: response
             },
             success: function(json){
