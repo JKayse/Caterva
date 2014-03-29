@@ -285,7 +285,7 @@ function searchFriend()
         $stmt = $db->prepare($findFriendQuery);
         $stmt->bindParam("username",$username);
         $stmt->execute();
-        $friendId = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $friendId = $stmt->fetchObject();
         $db = null;
         echo '{"Friend": ' . json_encode($friendId) . '}';
     } catch(PDOException $e) {
@@ -324,8 +324,8 @@ function addFriend()
     $friendId = Slim::getInstance()->request()->post('friendId');
     $response = Slim::getInstance()->request()->post('response');
     if($response == 1){
-        $insertFriend1 = "INSERT INTO FriendsList(UserId, UserFriendId) VALUE(:friendId, :userId)";
-        $insertFriend2 = "INSERT INTO FriendsList(UserId, UserFriendId) VALUE(:userId, :friendId)";
+        $insertFriend1 = "INSERT INTO FriendsList(UserId, FriendId) VALUE(:friendId, :userId)";
+        $insertFriend2 = "INSERT INTO FriendsList(UserId, FriendId) VALUE(:userId, :friendId)";
         $deleteFriendRequest = "DELETE FROM FriendRequest WHERE UserId = :friendId AND FriendId = :userId";     
         try {
             $db = getConnection();
@@ -552,7 +552,7 @@ function viewGroupMembers($groupId) {
 function getConnection() {
     $dbhost="localhost";
     $dbuser="root";
-    $dbpass="";
+    $dbpass="halomasterchief";
     $dbname="Flock";
     $dbh = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);  
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
