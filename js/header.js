@@ -39,7 +39,6 @@ function goToCorrectPage(){
 
 
 function signout(){
-    //Doesn't properly destroy session.
     $.ajax({
             type: "POST",
             url: "api/Logout",
@@ -60,10 +59,15 @@ function signIn(){
                 password: $("#signInPass").val()
             },
             success: function(json){
-                if(json === 'null'){
-                    alert("The information entered was not correct. Try Again.");
+                
+                if(json === 'error_username_doesnt_exists'){
+                    alert("The username entered does not exist. Try Again.");
                 }
-                //Doesn't work if username doesn't exist in database. Look at that.
+
+                if(json === 'null'){
+                    alert("The password entered was not correct. Try Again.");
+                }
+
                 else{
                     $("#signInUsername").val("");
                     $("#signInPass").val("");
