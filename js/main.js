@@ -81,7 +81,6 @@ $(document).ready(function() {
             $.ajax({url:"api/UserInfo/" + friendId, success: function(json){
                 json = JSON.parse(json);
                 var friendInfo = json.User;
-                console.log(friendInfo);
                 var firstname = friendInfo[0].Firstname;
                 var lastname = friendInfo[0].Lastname;
                 var userId = friendInfo[0].UserId;
@@ -262,11 +261,21 @@ function addFriendstoEvent(event){
     event.preventDefault();
     var friendstoAdd="";
     var friendsList = $(".friendList");
+     var invited = $(".invitedGuest");
     for(var i = 0; i < friendsList.size(); i++){
+        friends:
         if($(".friendList").eq(i).prop('checked') === true){
-            $("#eventGuestList").append("<span class='invitedGuest' friendId=" + $(".friendList").eq(i).attr("friendId") + "><img src='img/close.png' id='deleteInvitedGuest' alt='Uninvite this friend.' title='Uninvite friend.'><h4> "+ $(".friendList").eq(i).next().html() + "</h4></span>");
+            var friendId = $(".friendList").eq(i).attr("friendId");
+            for(var j = 0; j < invited.size();j++){
+                var id = invited.eq(j).attr("friendId");
+                if(id === friendId ){
+                    break friends;
+                }
+            }
+            
+            $("#eventGuestList").append("<span class='invitedGuest' friendId=" + friendId + "><img src='img/close.png' id='deleteInvitedGuest' alt='Uninvite this friend.' title='Uninvite friend.'><h4> "+ $(".friendList").eq(i).next().html() + "</h4></span>");
         }
-    }    
+    }   
     $("#addFriendsOptions").hide();
     $("#enterEvent").show();
     $(".friendList").prop('checked', false);
@@ -284,12 +293,24 @@ function addGroupstoEvent(event){
             groupFriendIds = $(".groupList").eq(i).attr("friendIds");
             var friends = groupFriends.split(", ");
             var friendIds = groupFriendIds.split(", ");
-
-                for(var k = 0; k < friends.length; k++){
+            var invited = $(".invitedGuest");
+            
+            for(var k = 0; k < friends.length; k++){
+                friends:
+                {
+                    var friendId = $(".friendList").eq(i).attr("friendId");
+                    for(var j = 0; j < invited.size();j++){
+                        var id = invited.eq(j).attr("friendId");
+                        if(id === friendIds[k] ){
+                            break friends;
+                        }
+                    }
                     $("#eventGuestList").append("<span class='invitedGuest' friendId=" + friendIds[k] +"><img src='img/close.png' id='deleteInvitedGuest' alt='Uninvite this friend.' title='Uninvite friend.'><h4> "+ friends[k] + "</h4></span>");
                 }
-        }
+            }
+       }    
     }
+       
     $("#addGroupsOptions").hide();
     $("#enterEvent").show();
     $(".groupList").prop('checked', false);
@@ -334,7 +355,6 @@ function addCreatedEvent(event){
 
 
     event = JSON.stringify(event);
-    console.log(event);
 
     $.ajax({
             type: "POST",
@@ -359,7 +379,6 @@ function addCreatedEvent(event){
 }
 
 function sendFriendRequest(){
-    console.log($("#foundFriend h3").eq(0).attr("friendId"));
     $.ajax({
             type: "POST",
             url: "api/AddFriendRequest",
@@ -461,7 +480,6 @@ function updateFriendsList(){
             $.ajax({url:"api/UserInfo/" + friendId, success: function(json){
                 json = JSON.parse(json);
                 var friendInfo = json.User;
-                console.log(friendInfo);
                 var firstname = friendInfo[0].Firstname;
                 var lastname = friendInfo[0].Lastname;
                 var userId = friendInfo[0].UserId;
