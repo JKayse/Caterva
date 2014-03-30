@@ -88,7 +88,6 @@ $(document).ready(function() {
                 $("#friendList").append(friend);
                 var friendAdder = "<input type='checkbox' class='friendList' friendId=" + userId + " id='" + userId + "friend' title='Invite' name='invitedFriends'><label for='" + userId + "friend'>"+ firstname +" "+ lastname + "</label><br>";
                 $("#friendAdderList").append(friendAdder);
-                $("#flockList button").css("font-size", $(".friendRequest").css("font-size"));
             }});    
         }
 
@@ -137,7 +136,6 @@ $(document).ready(function() {
 
             $("#groupAdderList").append(groupAdder);
             $("#groupList").append(group);
-            $("#flockList button").css("font-size", $(".friendRequest").css("font-size"));   
         }
 
     }}); 
