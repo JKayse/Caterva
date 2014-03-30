@@ -411,7 +411,3 @@ textarea{
 .eventInfo{
     cursor: pointer;
 }
-
-#groupAdderList, #friendAdderList{
-    background-color: rgb(255, 255, 255);
-}
