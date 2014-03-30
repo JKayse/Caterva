@@ -45,7 +45,7 @@ function signout(){
             success: function(){
                 $("#signIn").css("display", "block");
                 $("#signedIn").css("display", "none");
-                goToCorrectPage();
+                window.location = "index.html";
     }});
 }
 
