@@ -24,8 +24,6 @@
 
             <section id="yourFlock">
                 <!-- Friends and Groups, adding and editing section. -->
-                <!-- Possibly look at the sortable jquery. -->
-                <!-- Possible add friends or group to event with autocomplete multiple values with scrollable results. -->
                 <button class="button" id="addFriend" type="button">Add Friend</button>
                 <div id="flockList">
                     <img src="img/gear.png" id="editFriends" alt="Edit Friends and Groups" title="Edit">
@@ -33,47 +31,13 @@
                     <div id="groups">
                         <h3>Groups</h3>
                         <hr>
-                        <!-- Add function to populate the groups. -->
-                        <!-- When clicked on a function will get the friensd of that group and add them below. -->
-                        <!-- Or get them all before hand but keep them hidden. -->
                         <div id="groupList" class="mouseover">
-
-                            <button class="groupButton" type="button">GUI</button>
-                            <div class="groupMembers">
-                                <button class="friend" type="button">Taylor Ellington</button>
-                                <button class="friend" type="button">Maryssa Crews</button>
-                                <button class="friend" type="button">Jordan Kayse</button>
-                            </div>
-                            <button class="groupButton" type="button">Database</button>
-                            <div class="groupMembers">
-                                <button class="friend" type="button">Alex Cheng</button>
-                                <button class="friend" type="button">Chris Hauser</button>
-                            </div>
-                            <button  class="groupButton" type="button">Awesome People</button>
-                            <div class="groupMembers">
-                                <button class="friend" type="button">Rebbeca Ward</button>
-                                <button class="friend" type="button">Story Zanetti</button>
-                                <button class="friend" type="button">Jessica Yeh</button>
-                                <button class="friend" type="button">Jordan Kayse</button>
-                            </div>
-                          
-                           
                         </div>
                     </div>
                     <div id="friends">
                         <h3>Friends</h3>
                         <hr>
-                        <!-- Add function to populate the friends. -->
                         <div id="friendList" class="mouseover">
-                            <button class="friend" type="button">Jessica Yeh</button>
-                            <button class="friend" type="button">Story Zanetti</button>
-                            <button class="friend" type="button">Rebecca Ward</button>
-                            <button class="friend" type="button">Maryssa Crews</button>
-                            <button class="friend" type="button">Taylor Ellington</button>
-                            <button class="friend" type="button">Chris Hauser</button>
-                            <button class="friend" type="button">Alex Cheng</button>
-                            <button class="friend" type="button">Jordan Kayse</button>
-
                         </div>
                     </div>
                 </div>
@@ -83,9 +47,6 @@
 
             <section id="attendingEvents">
                 <!-- A list of events you're attending. With some details. -->
-                <!-- Make each event hold a date value which will be used to order it. -->
-                <!-- Or get database to hold it when you say you're attending and they return it in order by date. -->
-                <!-- Have a calendar button somewhere -->
                 <div id="events">
                     <img src="img/calendar.png" id="calendarView" alt="Calendar" title="Calendar View">
                     <h2>List of Upcoming Events</h2>
@@ -165,31 +126,6 @@
                         <!-- Add function to populate the friend requests. -->
                         <!-- When accepted add to friends. -->
                         <div id="friendRequestList" class="mouseover">
-                            <div class="friendRequest">
-                                <h4>Add MysticMadge?</h4>
-                                <img src="img/redX.png" alt="Red X" title="No">
-                                <img src="img/greenCheck.png" alt="Green Check" title="Yes">
-                                
-                            </div>
-                            <div class="friendRequest">
-                                <h4>Add BlueBird?</h4>
-                                <img src="img/redX.png" alt="Red X" title="No">
-                                <img src="img/greenCheck.png" alt="Green Check" title="Yes">
-                                
-                            </div>
-                            <div class="friendRequest">
-                                <h4>Add GreyGoose?</h4>
-                                <img src="img/redX.png" alt="Red X" title="No">
-                                <img src="img/greenCheck.png" alt="Green Check" title="Yes">
-                                
-                            </div>
-                            <div class="friendRequest">
-                                <h4>Add Singingjay?</h4>
-                                <img src="img/redX.png" alt="Red X" title="No">
-                                <img src="img/greenCheck.png" alt="Green Check" title="Yes">
-                                
-                            </div> 
-
                         </div>
                     </div>
                 </div>
@@ -265,18 +201,6 @@
                         <hr>
                         <form id = "friendAdder" name="Create An Account" action="#" method="post">
                             <div id="friendAdderList">
-                                <input type="checkbox" class="friendList" id ="1Friend" title="Share Events" name="invitedFriends">
-                                <label for="1Friend">Jordan Kayse</label>
-                                <br>
-                                <input type="checkbox" class="friendList" id ="2Friend" friendid="1" title="Share Events" name="invitedFriends">
-                                <label for="2Friend">Jessica Yeh</label>
-                                <br>
-                                <input type="checkbox" class="friendList" id ="3Friend" title="Share Events" name="invitedFriends">
-                                <label for="3Friend">Story Zanetti</label>
-                                <br>
-                                <input type="checkbox" class="friendList" id ="4Friend" title="Share Events" name="invitedFriends">
-                                <label for="4Friend">Rebecca Ward</label>
-                                <br>
                             </div> 
                             <input type="submit" class="button" id ="addTheseFriends" value="Add">   
                             <input type="button" class="button cancelFriends" value="Cancel"> 
@@ -291,15 +215,6 @@
                         <hr>
                         <form id = "groupAdder" name="Create An Account" action="#" method="post">
                             <div id="groupAdderList">
-                                <input type="checkbox" class="groupList" id ="1Group" friends = "Maryssa Crews, Taylor Ellington" title="Share Events" name="invitedGroups">
-                                <label for="1Group">GUI</label>
-                                <br>
-                                <input type="checkbox"  class="groupList" id ="2Group" friends = "Chris Hauser, Alex Cheng" title="Share Events" name="invitedGroups">
-                                <label for="2Group">DB</label>
-                                <br>
-                                <input type="checkbox" class="groupList" id ="3Group" friends = "Story Zanetti, Jessica Yeh, Jordan Kayse, Rebecca Ward" title="Share Events" name="invitedGroups">
-                                <label for="3Group">Awesome People</label>
-                                <br>
                             </div>
                             <input type="submit" class="button" id ="addTheseGroups" value="Add">   
                             <input type="button" class="button cancelGroups" value="Cancel">   
