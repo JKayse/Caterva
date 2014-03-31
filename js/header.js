@@ -38,13 +38,12 @@ function goToCorrectPage(){
 }
 
 
-function signout(){
+function signout(event){
+    event.preventDefault();
     $.ajax({
             type: "POST",
             url: "api/Logout",
             success: function(){
-                $("#signIn").css("display", "block");
-                $("#signedIn").css("display", "none");
                 window.location = "index.html";
     }});
 }
