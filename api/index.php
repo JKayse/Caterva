@@ -90,6 +90,17 @@ $app->get('/Groups', 'viewGroups');
 */
 $app->get('/GroupMembers/:groupId', 'viewGroupMembers');
 
+/**
+* Android Versions of some of the functions listed above
+*/
+$app->post('/AndroidViewFriends', 'androidViewFriends');
+$app->post('/AndroidAddFriendRequest', 'androidAddFriendRequest');
+$app->post('/AndroidAddFriend', 'androidAddFriend');
+$app->post('/AndroidViewFriendRequest', 'androidGetFriendRequest');
+$app->post('/AndroidCreateEvent', 'androidCreateEvent');
+$app->post('/AndroidCreateGroup', 'androidCreateGroup');
+$app->post('/AndroidGroups', 'androidViewGroups');
+
 $app->run();
 
 /**
@@ -252,7 +263,6 @@ function logout() {
 * A function that shows all the user's friends
 */
 function viewFriends(){
-    //$userId = 1;
     $userId = $_SESSION['userId'];
     $sql = "SELECT FriendId FROM FriendsList WHERE UserId = :userId";
     try {
@@ -313,7 +323,6 @@ function searchFriend()
 */
 function addFriendRequest()
 {
-    //$userId = 1;
     $userId = $_SESSION['userId'];
     $friendId = Slim::getInstance()->request()->post('friendId');
     $insertFriendQuery2 = "INSERT INTO FriendRequest(userId, friendId) VALUE(:userId, :friendId)";
@@ -335,7 +344,6 @@ function addFriendRequest()
 */
 function addFriend()
 {
-    //$userId = 1;
     $userId = $_SESSION['userId'];
     $friendId = Slim::getInstance()->request()->post('friendId');
     $response = Slim::getInstance()->request()->post('response');
@@ -383,8 +391,7 @@ function addFriend()
 * A function that gets the friend request of the user
 */
 function getFriendRequest()
-{
-    //$userId = 1;  
+{  
     $userId = $_SESSION['userId'];
     $sql = "SELECT UserId, FriendId FROM FriendRequest WHERE FriendId = :userId";
     try {
@@ -544,7 +551,6 @@ function viewGroups() {
 * A function to view the group members within a user's specific group
 */
 function viewGroupMembers($groupId) {
-    $userId = $_SESSION['userId'];
     try {
         $db = getConnection();      
 
@@ -561,6 +567,258 @@ function viewGroupMembers($groupId) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 }
+
+/**
+* The android version of the function that shows all the user's friends
+*/
+function androidViewFriends(){
+    $userId = Slim::getInstance()->request()->post('id');   
+    $sql = "SELECT FriendId FROM FriendsList WHERE UserId = :userId";
+    try {
+            $db = getConnection();
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam("userId", $userId);
+            $stmt->execute();
+            $Friends = $stmt->fetchAll(PDO::FETCH_OBJ);
+            $db = null;
+            echo '{"FriendsList": ' . json_encode($Friends) . '}';
+        } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+        }
+}
+
+/**
+* the android version of the function that adds a friend request
+*/
+function androidAddFriendRequest()
+{
+    $userId = Slim::getInstance()->request()->post('id');
+    $friendId = Slim::getInstance()->request()->post('friendId');
+    $insertFriendQuery2 = "INSERT INTO FriendRequest(userId, friendId) VALUE(:userId, :friendId)";
+        try {
+            $db = getConnection();
+            $stmt = $db->prepare($insertFriendQuery2);
+            $stmt->bindParam("userId",$userId);
+            $stmt->bindParam("friendId",$friendId);
+            $stmt->execute();
+            $db = null;
+        } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+        }
+}
+
+/**
+* The android version of thefunction that adds or denies friends.  
+*The friend request is deleted after the user makes a response
+*/
+function androidAddFriend()
+{
+    $userId = Slim::getInstance()->request()->post('id');
+    $friendId = Slim::getInstance()->request()->post('friendId');
+    $response = Slim::getInstance()->request()->post('response');
+    if($response == 1){
+        $insertFriend1 = "INSERT INTO FriendsList(UserId, FriendId) VALUE(:friendId, :userId)";
+        $insertFriend2 = "INSERT INTO FriendsList(UserId, FriendId) VALUE(:userId, :friendId)";
+        $deleteFriendRequest = "DELETE FROM FriendRequest WHERE UserId = :friendId AND FriendId = :userId";     
+        try {
+            $db = getConnection();
+            $stmt = $db->prepare($insertFriend1);
+            $stmt->bindParam("friendId", $friendId);
+            $stmt->bindParam("userId", $userId);
+            $stmt->execute();
+
+            $stmt2 = $db->prepare($insertFriend2);
+            $stmt2->bindParam("userId", $userId);
+            $stmt2->bindParam("friendId", $friendId);
+            $stmt2->execute();
+
+            $stmt3 = $db->prepare($deleteFriendRequest);
+            $stmt3->bindParam("friendId", $friendId);
+            $stmt3->bindParam("userId", $userId);
+            $stmt3->execute();
+            $db = null;
+        } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+        }
+    }
+    else{
+        $deleteFriendRequest = "DELETE FROM FriendRequest WHERE UserId = :friendId AND FriendId = :userId";     
+        try {
+            $db = getConnection();
+            $stmt = $db->prepare($deleteFriendRequest);
+            $stmt->bindParam("friendId", $friendId);
+            $stmt->bindParam("userId", $userId);
+            $stmt->execute();
+            $db = null;
+        } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+        }
+    }   
+}
+
+/**
+* The android version of function that gets the friend request of the user
+*/
+function androidGetFriendRequest()
+{  
+    $userId = Slim::getInstance()->request()->post('id');
+    $sql = "SELECT UserId, FriendId FROM FriendRequest WHERE FriendId = :userId";
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("userId", $userId);
+        $stmt->execute();
+        $friendRequest = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+        echo '{"FriendRequest": ' . json_encode($friendRequest) . '}';
+    } catch(PDOException $e) {
+    echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+    }
+}
+
+/**
+* The android version of the function to create an event
+*/
+function androidCreateEvent() {
+    $event = json_decode(Slim::getInstance()->request()->post('event'), true);
+    $userId = Slim::getInstance()->request()->post('id');
+
+    try {
+        $db = getConnection();
+        $startTime = $event['startDate'] . ' ' . $event['startTime'];
+        $endTime = $event['endDate'] . ' ' . $event['endTime'];
+
+
+        $sql = "SELECT EventId FROM Events WHERE EventName=:eventName AND UserId=:userId AND StartTime=:startTime AND EndTime=:endTime AND Share=:share";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("eventName", $event['title']);
+        $stmt->bindParam("userId", $userId);
+        $stmt->bindParam("startTime", $startTime);
+        $stmt->bindParam("endTime", $endTime);
+        $stmt->bindParam("share", $event['share']);
+        $stmt->execute();
+        if($stmt->fetchObject()) {
+            echo "error_event_already_exists";
+        }
+
+        $sql = "INSERT INTO Events (EventName, UserId, StartTime, EndTime, EventDescription, Share) VALUES (:eventName, :userId, :startTime, :endTime, :description, :share)";
+
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("eventName", $event['title']);
+        $stmt->bindParam("userId", $userId);
+        $stmt->bindParam("startTime", $startTime);
+        $stmt->bindParam("endTime", $endTime);
+        $stmt->bindParam("description", $event['description']);
+        $stmt->bindParam("share", $event['share']);
+        $stmt->execute();
+
+        $sql = "SELECT EventId FROM Events WHERE EventName=:eventName AND UserId=:userId AND StartTime=:startTime AND EndTime=:endTime AND Share=:share";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("eventName", $event['title']);
+        $stmt->bindParam("userId", $userId);
+        $stmt->bindParam("startTime", $startTime);
+        $stmt->bindParam("endTime", $endTime);
+        $stmt->bindParam("share", $event['share']);
+        $stmt->execute();
+        $eventId = $stmt->fetchObject()->EventId;
+
+        $sql = "INSERT INTO EventRequest (EventId, UserId) VALUES (:eventId, :userId)";
+        $stmt = $db->prepare($sql);
+        foreach($event['invited'] as $friend) {
+            $stmt->bindParam("eventId", $eventId);
+            $stmt->bindParam("userId", $friend['friendId']);
+            $stmt->execute();
+        }
+
+        $db = null;
+    } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+    }
+}
+
+/**
+* the android version of the function to create a group
+*/
+function androidCreateGroup() {
+    $group = json_decode(Slim::getInstance()->request()->post('group'), true);
+    $userId = Slim::getInstance()->request()->post('id'); 
+
+    try {
+        $db = getConnection();
+
+        $sql = "SELECT GroupId FROM Groups WHERE GroupName=:groupName AND UserId=:userId";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("groupName", $group['name']);
+        $stmt->bindParam("userId", $userId);
+        $stmt->execute();
+        if($stmt->fetchObject()) {
+            echo "error_groupName";
+            return;
+        }
+
+        $sql = "INSERT INTO Groups (GroupName, UserId) VALUES (:groupName, :userId)";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("groupName", $group['name']);
+        $stmt->bindParam("userId", $userId);
+        $stmt->execute();
+
+        $sql = "SELECT GroupId FROM Groups WHERE GroupName=:groupName AND UserId=:userId";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("groupName", $group['name']);
+        $stmt->bindParam("userId", $userId);
+        $stmt->execute();
+        $groupId = $stmt->fetchObject()->GroupId;
+
+        $sql = "INSERT INTO GroupList (GroupId, UserId) VALUES (:groupId, :userId)";
+        $stmt = $db->prepare($sql);
+        foreach($group['friends'] as $friend) {
+            $stmt->bindParam("groupId", $groupId);
+            $stmt->bindParam("userId", $friend['friendId']);
+            $stmt->execute();
+        }
+
+        $db = null;
+    } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+    }
+}
+
+/**
+* Android version of function to view all of the user's groups
+*/
+function androidViewGroups() {
+    $userId = Slim::getInstance()->request()->post('id');
+
+    try {
+        $db = getConnection();
+
+        $sql = "SELECT GroupId, GroupName FROM Groups WHERE UserId=:userId";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam('userId', $userId);
+        $stmt->execute();
+        $groups = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+        echo '{"Groups": [ ';
+	$i = 0;
+	foreach($groups as $group) {
+		if($i != 0) {
+			echo ',';
+		} else {
+			$i++;
+		}
+		echo '{"Group": ' . json_encode($group) . ',';
+		viewGroupMembers($group->GroupId);
+	}
+	echo ']}';
+
+        $db = null;
+
+    } catch(PDOExection $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+}
+
+
 
 /**
 * A function that sets up the connection to the database
