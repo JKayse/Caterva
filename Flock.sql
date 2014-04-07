@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 26, 2014 at 01:20 AM
+-- Generation Time: Apr 07, 2014 at 03:45 AM
 -- Server version: 5.5.35-0ubuntu0.13.10.2
 -- PHP Version: 5.5.3-1ubuntu2.2
 
@@ -21,6 +21,7 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE Flock;
 USE Flock;
+
 -- --------------------------------------------------------
 
 --
@@ -47,22 +48,9 @@ CREATE TABLE IF NOT EXISTS `Events` (
   `StartTime` datetime NOT NULL,
   `EndTime` datetime NOT NULL,
   `EventDescription` varchar(500) NOT NULL,
-  `Share` tinyint NOT NULL,
+  `Share` tinyint(4) NOT NULL,
+  `Cancel` int(11) NOT NULL,
   PRIMARY KEY (`EventId`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `FriendList`
---
-
-CREATE TABLE IF NOT EXISTS `FriendsList` (
-  `FriendListId` int(11) NOT NULL AUTO_INCREMENT,
-  `UserId` int(11) NOT NULL,
-  `FriendId` int(11) NOT NULL,
-  PRIMARY KEY (`FriendListId`),
-  UNIQUE KEY `UserId` (`UserId`,`FriendId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -76,6 +64,20 @@ CREATE TABLE IF NOT EXISTS `FriendRequest` (
   `UserId` int(11) NOT NULL,
   `FriendId` int(11) NOT NULL,
   PRIMARY KEY (`FriendRequestId`),
+  UNIQUE KEY `UserId` (`UserId`,`FriendId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `FriendsList`
+--
+
+CREATE TABLE IF NOT EXISTS `FriendsList` (
+  `FriendListId` int(11) NOT NULL AUTO_INCREMENT,
+  `UserId` int(11) NOT NULL,
+  `FriendId` int(11) NOT NULL,
+  PRIMARY KEY (`FriendListId`),
   UNIQUE KEY `UserId` (`UserId`,`FriendId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
