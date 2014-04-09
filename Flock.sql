@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 07, 2014 at 03:45 AM
+-- Generation Time: Apr 09, 2014 at 01:11 AM
 -- Server version: 5.5.35-0ubuntu0.13.10.2
 -- PHP Version: 5.5.3-1ubuntu2.2
 
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `Flock`
 --
-CREATE DATABASE Flock;
-USE Flock;
 
 -- --------------------------------------------------------
 
@@ -49,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `Events` (
   `EndTime` datetime NOT NULL,
   `EventDescription` varchar(500) NOT NULL,
   `Share` tinyint(4) NOT NULL,
-  `Cancel` int(11) NOT NULL,
+  `Cancel` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`EventId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
