@@ -72,6 +72,11 @@ $app->get('/ViewFriendRequest', 'getFriendRequest');
 $app->post('/AddFriend', 'addFriend');
 
 /**
+* Remove Friend
+*/
+$app->delete('/DeleteFriend', 'deleteFriend');
+
+/**
 * Create Event
 */
 $app->post('/CreateEvent', 'createEvent');
@@ -82,13 +87,24 @@ $app->post('/CreateEvent', 'createEvent');
 $app->post('/CreateGroup', 'createGroup');
 
 /**
+* Change Group Name
+*/
+$app->patch('/ChangeGroupName', 'changeGroupName');
+
+/**
 * View Groups
 */
 $app->get('/Groups', 'viewGroups');
+
 /**
 * View Group Memebers
 */
 $app->get('/GroupMembers/:groupId', 'viewGroupMembers');
+
+/**
+* Delete Friend From Groups
+*/
+$app->get('/DeleteGroupMembers', 'deleteGroupMembers');
 
 /**
 * Android Versions of some of the functions listed above
@@ -388,6 +404,32 @@ function addFriend()
 }
 
 /**
+* A function that deletes friends from a user's friend's list
+*/
+function deleteFriend()
+{
+	$userId = $_SESSION['userId'];
+	$friendId = Slim::getInstance()->request()->post('friendId');
+	$deleteFriendQ1 = "DELETE FROM FriendsList WHERE UserId = :userId AND FriendId = :friendId";
+	$deleteFriendQ2 = "DELETE FROM FriendsList WHERE UserId = :friendId AND FriendId = :userId";
+	try {
+            $db = getConnection();
+            $stmt = $db->prepare($deleteFriendQ1);
+            $stmt->bindParam("userId",$userId);
+            $stmt->bindParam("friendId",$friendId);
+            $stmt->execute();
+	    $stmt2 = $db->prepare($deleteFriendQ2);
+	    $stmt2->bindParam("friendId", $friendId);
+	    $stmt2->bindParam("userId", $userId);
+	    $stmt2->execute();	
+            $db = null;
+        } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+        }
+	
+}
+
+/**
 * A function that gets the friend request of the user
 */
 function getFriendRequest()
@@ -566,6 +608,46 @@ function viewGroupMembers($groupId) {
     } catch(PDOExection $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
+}
+
+/*
+* A function to delete friends from groups
+*/
+function deleteGroupMembers()
+{
+	$groupId = Slim::getInstance()->request()->post('groupId');
+	$userId = Slim::getInstance()->request->post('userId');
+	$DeleteQuery = "DELETE FROM GroupList WHERE GroupId = :groupId AND UserId = :userId";
+	try {
+            $db = getConnection();
+            $stmt = $db->prepare($DeleteQuery);
+	    $stmt->bindParam("groupId", $groupId);
+            $stmt->bindParam("userId", $userId);
+            $stmt->execute();
+            $db = null;
+        } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+        }
+}
+
+/*
+* A function to change the name of the group
+*/
+function changeGroupName()
+{
+	$groupId = Slim::getInstance()->request()->post('groupId');	
+	$groupName = Slim::getInstance()->request()->post('groupname');
+	$sql = "UPDATE Groups SET GroupName = :groupName WHERE GroupId = :groupId";
+	try {
+            $db = getConnection();
+            $stmt = $db->prepare($sql);
+	    $stmt->bindParam("groupName", $groupName);
+            $stmt->bindParam("groupId", $groupId);
+            $stmt->execute();
+            $db = null;
+        } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+        }
 }
 
 /**
