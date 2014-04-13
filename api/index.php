@@ -617,7 +617,7 @@ function viewEvents() {
 	try {	
 		$db = getConnection();
 	
-		$sql = "SELECT EventId, EventName, StartTime, EndTime, EventDescription, Share FROM Events WHERE UserId=:userId";
+		$sql = "SELECT e.EventId, e.EventName, e.UserId as OwnerId, e.StartTime, e.EndTime, e.EventDescription, e.Share FROM Events e INNER JOIN GuestList g ON e.EventId=g.EventId WHERE e.UserId=:userId OR g.UserId=:userId ORDER BY e.StartTime";
 		$stmt = $db->prepare($sql);
 		$stmt->bindParam('userId', $userId);
 		$stmt->execute();
