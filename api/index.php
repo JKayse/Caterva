@@ -97,6 +97,11 @@ $app->post('/ChangeGroupName', 'changeGroupName');
 $app->get('/Groups', 'viewGroups');
 
 /**
+* View Events
+*/
+$app->get('/Events', 'viewEvents');
+
+/**
 * Add friends to group
 */
 $app->post('/AddGroupMembers', 'addGroupMembers');
@@ -602,6 +607,27 @@ function viewGroups() {
     } catch(PDOExection $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
+}
+
+/*
+* A function to view events
+*/
+function viewEvents() {
+	$userId = $_SESSION['userId'];
+	try {	
+		$db = getConnection();
+	
+		$sql = "SELECT EventId, EventName, StartTime, EndTime, EventDescription, Share FROM Events WHERE UserId=:userId";
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam('userId', $userId);
+		$stmt->execute();
+		$events = $stmt->fetchAll(PDO::FETCH_OBJ);
+		$db = null;
+
+		echo '{"Events": ' . json_encode($events) . '}';
+	} catch(PDOExection $e) {
+       		echo '{"error":{"text":'. $e->getMessage() .'}}';
+    	}	
 }
 
 /**
