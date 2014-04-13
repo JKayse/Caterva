@@ -102,6 +102,11 @@ $app->get('/Groups', 'viewGroups');
 $app->get('/Events', 'viewEvents');
 
 /**
+* View Event Requests
+*/
+$app->get('/EventRequests', 'viewEventRequests');
+
+/**
 * Add friends to group
 */
 $app->post('/AddGroupMembers', 'addGroupMembers');
@@ -628,6 +633,27 @@ function viewEvents() {
 	} catch(PDOExection $e) {
        		echo '{"error":{"text":'. $e->getMessage() .'}}';
     	}	
+}
+
+/*
+* A function to get all event invitations
+*/
+function viewEventRequests() {
+	$userId = $_SESSION['userId'];
+	try {	
+		$db = getConnection();
+	
+		$sql = "SELECT EventRequestId, EventId FROM EventRequest WHERE UserId=:userId";
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam('userId', $userId);
+		$stmt->execute();
+		$eventRequests = $stmt->fetchAll(PDO::FETCH_OBJ);
+		$db = null;
+
+		echo '{"EventRequests": ' . json_encode($eventRequests) . '}';
+	} catch(PDOExection $e) {
+       		echo '{"error":{"text":'. $e->getMessage() .'}}';
+    	}
 }
 
 /**
