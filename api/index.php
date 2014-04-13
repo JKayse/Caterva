@@ -97,6 +97,11 @@ $app->post('/ChangeGroupName', 'changeGroupName');
 $app->get('/Groups', 'viewGroups');
 
 /**
+* Add friends to group
+*/
+$app->post('/AddGroupMembers', 'addGroupMembers');
+
+/**
 * View Group Memebers
 */
 $app->get('/GroupMembers/:groupId', 'viewGroupMembers');
@@ -618,6 +623,23 @@ function viewGroupMembers($groupId) {
     } catch(PDOExection $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
+}
+
+/*
+* A function to add group members to an existing group
+*/
+function addGroupMembers()
+{
+	$GroupMembers = Slim::getInstance()->request()->post('groupmembers');
+	$sql = "INSERT INTO GroupList (GroupId, UserId) VALUES (:groupId, :userId)";
+	try {
+            $db = getConnection();
+            $stmt = $db->prepare($DeleteQuery);
+            $stmt->execute();
+            $db = null;
+        } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+        }
 }
 
 /*
