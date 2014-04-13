@@ -9,6 +9,7 @@
         <link rel="icon" type="image/png" href="img/flock_logo_image.png">
         <link rel="stylesheet" type="text/css" href="css/main.css">
         <link rel="stylesheet" type="text/css" href="css/header.css">
+        <link rel="stylesheet" href="css/style.css">
         <script src="//code.jquery.com/jquery-1.9.1.js"></script>
         <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
         <script type="text/javascript" src="js/main.js"></script>
@@ -48,26 +49,38 @@
             <section id="attendingEvents">
                 <!-- A list of events you're attending. With some details. -->
                 <div id="events">
-                    <img src="img/calendar.png" id="calendarView" alt="Calendar" title="Calendar View">
-                    <h2>List of Upcoming Events</h2>
+                    <div class="switch switch-blue">
+                      <input type="radio" class="switch-input selected" name="list" value="ListView" id="list" checked>
+                      <label for="list" class="switch-label switch-label-off selected">List View</label>
+                      <input type="radio" class="switch-input notSelected" name="calendar" value="calendarView" id="calendar">
+                      <label for="calendar" class="switch-label switch-label-on notSelected">Calendar View</label>
+                      <span id="switch" class="switch-selection-left"></span>
+                    </div>
+                    <h2>Upcoming Events</h2>
                     <img src="img/arrow3.png" id="prevEvents" alt="Up Arrow" title="Previous three events.">
                     <div id="eventList">
                         <div class="event left">
-                            <img src="img/FlockLogo1.png" alt="Flock Logo" title="Flock">
+                            <img src="img/FlockLogo1.png" alt="Flock Logo" title="Flock" class="eventImage">
                             <div class="eventInfo">
-                                <p> here lies this event at this time....</p>
+                                <h3 class="eventTitle">Horseback Riding</h3>
+                                <h3 class="startDate">4/12/14</h3>
+                                <p class="hostedBy">Hosted by: Amy Sherwood</p>
                             </div>
                         </div>
                         <div class="event right">
-                            <img src="img/FlockLogo1.png" alt="Flock Logo" title="Flock">
+                            <img src="img/FlockLogo1.png" alt="Flock Logo" title="Flock" class="eventImage">
                             <div class="eventInfo">
-                                <p> here lies this event at this time....</p>
+                                <h3 class="eventTitle">Horseback Riding</h3>
+                                <h3 class="startDate">4/12/14</h3>
+                                <p class="hostedBy">Hosted by: Amy Sherwood</p>
                             </div>
                         </div>
                         <div class="event left">
-                            <img src="img/FlockLogo1.png" alt="Flock Logo" title="Flock">
+                            <img src="img/FlockLogo1.png" alt="Flock Logo" title="Flock" class="eventImage">
                             <div class="eventInfo">
-                                <p> here lies this event at this time....</p>
+                                <h3 class="eventTitle">Horseback Riding</h3>
+                                <h3 class="startDate">4/12/14</h3>
+                                <p class="hostedBy">Hosted by: Amy Sherwood</p>
 
                             </div>
                         </div>
@@ -165,7 +178,7 @@
                             <input type="text" id="eventTitle" name="title" title ="Enter the title of the event." required>
                             <br>
                             <label for="eventDescription">Description:</label>
-                            <textarea wrap="hard" name="description" rows="5%" cols="45%" title ="Enter the description of the event." id="eventDescription" form="eventCreator"></textarea>
+                            <textarea wrap="hard" name="description" rows="5%" cols="60%" title ="Enter the description of the event." id="eventDescription" form="eventCreator"></textarea>
                             <br>
                             <label for="eventDate">Start Date:</label>
                             <input type="date" id="eventDate" name="date" title ="Enter the start date of the event." required>
@@ -233,19 +246,43 @@
                         <h3>Description:</h3>
                         <h4>Blah blah blah</h4>
                         <br>
-                        <h3>Start Date:</h3>
-                        <h4>3/24/14</h4>
+                        <h3>Start:</h3>
+                        <h4>3/24/14 4:40 PM</h4>
                         <br>
-                        <h3>End Date:</h3>
-                        <h4>3/24/14</h4>
+                        <h3>End:</h3>
+                        <h4>3/24/14 4:40 PM</h4>
                         <br>
-                        <h3>Start Time:</h3>
-                        <h4>4:40 PM</h4>
-                        <br>
-                        <h3>End Time:</h3>
-                        <h4>5:40 PM</h4>
-                        <br>
-                    </div>                                    
+                    </div>  
+
+                    <div id="editEvent">
+                        <img src="img/close.png" class="closePopUp cancelEvent" alt="Close" title="Close">
+                        <h2>Event Editor</h2>
+                        
+                        <hr>
+                        <form id = "eventEditor" name="Create An Account" action="#" method="post">
+                            <label for="eventTitle">Title: Horseback Riding</label>
+                            <br>
+                            <label for="eventDescription">Description:</label>
+                            <textarea wrap="hard" name="description" rows="5%" cols="60%" title ="Enter the description of the event." id="eventDescription" form="eventEditor"></textarea>
+                            <br>
+                            <label for="eventDate">Start Date: 4/12/14</label>
+                            <label for="eventTimeStart">Start Time: 3:00 PM</label>
+                            <br>
+                            <label for="eventDateEnd">End Date: 4/13/14</label>
+                            <label for="eventTimeEnd">End Time: 3:00PM</label>
+                            <br>
+                            <label for="eventGuestList">Invited:</label>
+                            <div id="eventGuestList" name="guestList" title="Add people to the event."></div>
+
+                            
+                            <input type="button" class="button" id ="addFriendsEvent" value="Add Friends">   
+                            <input type="button" class="button" id ="addGroupsEvent" value="Add Groups">  
+                            <br>
+                            <input type="submit" class="button" id ="editThisEvent" value="Submit">   
+                            <input type="button" class="button cancelEvent" value="Cancel">  
+                        </form>
+
+                    </div>                                     
                 </div> 
             </div>
     </body>

@@ -1,9 +1,10 @@
-
+var eventList =[];
+var currentEvent=0;
 
 $(document).ready(function() {
     $("header").load("header.html");
     $(document).on('click', ".groupButton", openList);
-    $(".event img").width($(".event img").height());
+    $(".eventImage").width($(".eventImage").height());
 
     $(document).on('click', "#editFriends", goToEditPage);
     $(document).on('click', "#addFriend", addFriend);
@@ -35,6 +36,9 @@ $(document).ready(function() {
 
     $(document).on('click', ".closeEventInformation", closeEventInformation);
 
+    $(document).on('click', ".switch-label", toggleItem);
+
+
     $('.mouseover').slimScroll({
         height: '83%'
     });
@@ -45,7 +49,7 @@ $(document).ready(function() {
 
 
 
-
+    /*
     $.ajax({url:"api/LoginStatus", success: function(json){
         if(json !== 'null'){
             
@@ -54,6 +58,27 @@ $(document).ready(function() {
             window.location = "index.html";
         }
     }});
+*/
+
+    $.ajax({url:"api/Events", success: function(json){
+        json = JSON.parse(json);
+        var events = json.Events;
+        for(var i =0; i < events.length; i++){
+            var event = {};
+            event.eventId = events[i].EventId;
+            event.ownerId = events[i].OwnerId;
+            event.eventName = events[i].EventName;
+            event.endTime = events[i].EndTime;
+            event.startTime = events[i].StartTime;
+            event.description = events[i].EventDescription;
+            event.share = events[i].Share;
+            eventList.push(event);
+            
+        }
+        
+
+
+    }}); 
 
 
     $.ajax({url:"api/ViewFriendRequest", success: function(json2){
@@ -140,7 +165,7 @@ $(document).ready(function() {
 
     }}); 
 
-
+    
 });
 
 function showAddFriendsPopUp(){
@@ -490,5 +515,15 @@ function updateFriendsList(){
         }
 
     }}); 
+
+}
+
+function toggleItem(){
+    $("#switch").toggleClass('switch-selection-right');
+    $("#switch").toggleClass('switch-selection-left');
+    $("#list").next().toggleClass('selected');
+    $("#list").next().toggleClass('notSelected');
+    $("#calendar").next().toggleClass('selected');
+    $("#calendar").next().toggleClass('notSelected');
 
 }
