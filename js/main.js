@@ -4,7 +4,7 @@ var currentEvent=0;
 $(document).ready(function() {
     $("header").load("header.html");
     $(document).on('click', ".groupButton", openList);
-    $(".eventImage").width($(".eventImage").height());
+    
 
     $(document).on('click', "#editFriends", goToEditPage);
     $(document).on('click', "#addFriend", addFriend);
@@ -16,6 +16,14 @@ $(document).ready(function() {
 
     $(document).on('click', "#addFriendsEvent", showAddFriendsPopUp);
     $(document).on('click', "#addGroupsEvent", showAddGroupsPopUp);
+
+    $(document).on('click', "#addFriendsEditEvent", showAddFriendsEditPopUp);
+    $(document).on('click', "#addGroupsEditEvent", showAddGroupsEditPopUp);
+    $(document).on('click', ".cancelEditFriends", closeFriendsEditPopUp);
+    $(document).on('click', ".cancelEditGroups", closeGroupsEditPopUp);
+    $(document).on('submit', "#friendEditor", addFriendstoEditEvent);
+    $(document).on('submit', "#groupEditor", addGroupstoEditEvent); 
+    $(document).on('submit', "#eventEditor", addEditedEvent);
 
     $(document).on('submit', "#friendSearchForm", searchForFriend);
     $(document).on('submit', "#friendAdder", addFriendstoEvent);
@@ -37,6 +45,18 @@ $(document).ready(function() {
     $(document).on('click', ".closeEventInformation", closeEventInformation);
 
     $(document).on('click', ".switch-label", toggleItem);
+
+    $(document).on('click', "#prevEvents", getPrevEvents);
+    $(document).on('click', "#nextEvents", getNextEvents);
+
+    $(document).on('click', "#editEventButton", editEventPopUp);
+    //$(document).on('click', "#shareEventButton", shareEventPopUp);
+    $(document).on('click', ".cancelEditEvent", closeEditEventPopUp);
+    //$(document).on('click', ".cancelShareEvent", shareEventPopUp);
+
+    
+    
+    
 
 
     $('.mouseover').slimScroll({
@@ -65,17 +85,127 @@ $(document).ready(function() {
         var events = json.Events;
         for(var i =0; i < events.length; i++){
             var event = {};
+            console.log(events.length);
             event.eventId = events[i].EventId;
             event.ownerId = events[i].OwnerId;
             event.eventName = events[i].EventName;
-            event.endTime = events[i].EndTime;
-            event.startTime = events[i].StartTime;
             event.description = events[i].EventDescription;
             event.share = events[i].Share;
+            var d = new Date(events[i].StartTime);
+            var d2 = new Date(events[i].EndTime);
+
+
+            $.ajax({url:"api/UserInfo/" + event.ownerId, async:false, success: function(json){
+                json = JSON.parse(json);
+                var info = json.User;
+                var firstname = info[0].Firstname;
+                var lastname = info[0].Lastname;
+                event.ownerName = firstname + " " + lastname;
+            }});
+
+            var end = "";
+            var end2 ="";
+            var startHour = d.getHours();
+            if(startHour === 0 ){
+                end = "AM";
+                startHour = "12"
+            }
+            else if(startHour < 12 ){
+                end = "AM";
+            }
+            else if(startHour === 12 ){
+                end = "PM";
+            }
+            else{
+                startHour = startHour-12;
+                end = "PM";
+            }
+            var endHour = d2.getHours();
+            if(endHour === 0 ){
+                end2 = "AM";
+                endHour = "12"
+            }
+            else if(endHour < 12 ){
+                end2 = "AM";
+            }
+            else if(endHour === 12 ){
+                end2 = "PM";
+            }
+            else{
+                endHour = endHour-12;
+                end2 = "PM";
+            }
+
+            var month1 = d.getMonth()+1;
+            var month2 = d2.getMonth()+1;
+            var date1 = d.getDate();
+            var date2 = d2.getDate();
+            var minute1 = d.getMinutes();
+            var minute2 = d2.getMinutes();
+
+            if(month1 < 10){
+                month1 = "0" + month1;
+            }
+            if(month2 < 10){
+                month2 = "0" + month2;
+            }
+            if(date1 < 10){
+                date1 = "0" + date1;
+            }
+            if(date2 < 10){
+                date2 = "0" + date2;
+            }
+            if(minute1 < 10){
+                minute1 = "0" + minute1;
+            }
+            if(minute2 < 10){
+                minute2 = "0" + minute2;
+            }
+            if(startHour < 10){
+                startHour = "0" + startHour;
+            }
+            if(endHour < 10){
+                endHour = "0" + endHour;
+            }
+
+
+            var startDate = month1 +'/'+ date1 +'/'+ d.getFullYear();
+            var endDate = month2 +'/'+ date2 +'/'+ d2.getFullYear();
+            var startTime = startHour +':'+ minute1 + " " + end;
+            var endTime = endHour +':'+ minute2 + " " + end2;
+
+            event.startDate = startDate;
+            event.startTime = startTime;
+            event.endDate = endDate;
+            event.endTime = endTime;
+
             eventList.push(event);
             
         }
-        
+        if(eventList.length >= 3){
+            var newEvent = "<div class='event left'><img src='img/FlockLogo1.png' alt='Flock Logo' title='Flock' class='eventImage'><div class='eventInfo' description='" + eventList[0].description+ "' startDate='" + eventList[0].startDate+ "' startTime='" + eventList[0].startTime+ "' endDate='" + eventList[0].endDate+ "' endTime='" + eventList[0].endTime+ "' share='" + eventList[0].share+ "' eventId='" + eventList[0].eventId+ "' ownerId='" + eventList[0].ownerId+ "' ><h3 class='eventTitle'>" + eventList[0].eventName + "</h3><h3 class='startDate'>" + eventList[0].startDate + "</h3><p class='hostedBy'>Hosted by: " + eventList[0].ownerName + "</p><button class='cancelThisEvent' type='button'>Cancel Event</button></div></div>";
+            newEvent = newEvent + "<div class='event right'><img src='img/FlockLogo1.png' alt='Flock Logo' title='Flock' class='eventImage'><div class='eventInfo' description='" + eventList[1].description+ "' startDate='" + eventList[1].startDate+ "' startTime='" + eventList[1].startTime+ "' endDate='" + eventList[1].endDate+ "' endTime='" + eventList[1].endTime+ "' share='" + eventList[1].share+ "' eventId='" + eventList[1].eventId+ "' ownerId='" + eventList[1].ownerId+ "'><h3 class='eventTitle'>" + eventList[1].eventName + "</h3><h3 class='startDate'>" + eventList[1].startDate + "</h3><p class='hostedBy'>Hosted by: " + eventList[1].ownerName + "</p><button class='cancelThisEvent' type='button'>Cancel Event</button></div></div>";
+            newEvent = newEvent + "<div class='event left'><img src='img/FlockLogo1.png' alt='Flock Logo' title='Flock' class='eventImage'><div class='eventInfo' description='" + eventList[2].description+ "' startDate='" + eventList[2].startDate+ "' startTime='" + eventList[2].startTime+ "' endDate='" + eventList[2].endDate+ "' endTime='" + eventList[2].endTime+ "' share='" + eventList[2].share+ "' eventId='" + eventList[2].eventId+ "' ownerId='" + eventList[2].ownerId+ "'><h3 class='eventTitle'>" + eventList[2].eventName + "</h3><h3 class='startDate'>" + eventList[2].startDate + "</h3><p class='hostedBy'>Hosted by: " + eventList[2].ownerName + "</p><button class='cancelThisEvent' type='button'>Cancel Event</button></div></div>";
+            $("#eventList").append(newEvent);
+        }
+        else if(eventList.length == 2){
+            
+            newEvent = "<div class='event left'><img src='img/FlockLogo1.png' alt='Flock Logo' title='Flock' class='eventImage'><div class='eventInfo' description='" + eventList[0].description+ "' startDate='" + eventList[0].startDate+ "' startTime='" + eventList[0].startTime+ "' endDate='" + eventList[0].endDate+ "' endTime='" + eventList[0].endTime+ "' share='" + eventList[0].share+ "' eventId='" + eventList[0].eventId+ "' ownerId='" + eventList[0].ownerId+ "'><h3 class='eventTitle'>" + eventList[0].eventName + "</h3><h3 class='startDate'>" + eventList[0].startDate + "</h3><p class='hostedBy'>Hosted by: " + eventList[0].ownerName + "</p><button class='cancelThisEvent' type='button'>Cancel Event</button></div></div>";
+            newEvent = newEvent + "<div class='event right'><img src='img/FlockLogo1.png' alt='Flock Logo' title='Flock' class='eventImage'><div class='eventInfo' description='" + eventList[1].description+ "' startDate='" + eventList[1].startDate+ "' startTime='" + eventList[1].startTime+ "' endDate='" + eventList[1].endDate+ "' endTime='" + eventList[1].endTime+ "' share='" + eventList[1].share+ "' eventId='" + eventList[1].eventId+ "' ownerId='" + eventList[1].ownerId+ "'><h3 class='eventTitle'>" + eventList[1].eventName + "</h3><h3 class='startDate'>" + eventList[1].startDate + "</h3><p class='hostedBy'>Hosted by: " + eventList[1].ownerName + "</p><button class='cancelThisEvent' type='button'>Cancel Event</button></div></div>";
+            $("#eventList").append(newEvent);
+        }
+        else if(eventList.length == 1){
+            newEvent = "<div class='event left'><img src='img/FlockLogo1.png' alt='Flock Logo' title='Flock' class='eventImage'><div class='eventInfo' description='" + eventList[0].description+ "' startDate='" + eventList[0].startDate+ "' startTime='" + eventList[0].startTime+ "' endDate='" + eventList[0].endDate+ "' endTime='" + eventList[0].endTime+ "' share='" + eventList[0].share+ "' eventId='" + eventList[0].eventId+ "' ownerId='" + eventList[0].ownerId+ "'><h3 class='eventTitle'>" + eventList[0].eventName + "</h3><h3 class='startDate'>" + eventList[0].startDate + "</h3><p class='hostedBy'>Hosted by: " + eventList[0].ownerName + "</p><button class='cancelThisEvent' type='button'>Cancel Event</button></div></div>";
+            $("#eventList").append(newEvent);
+        }
+        else{
+            ;
+        }
+        $(".eventImage").width($(".eventImage").height());
+        if(eventList.length <= 3){
+            $("#nextEvents").css('opacity', '0');
+            $("#nextEvents").css('cursor', 'auto');
+        }
 
 
     }}); 
@@ -113,6 +243,7 @@ $(document).ready(function() {
                 $("#friendList").append(friend);
                 var friendAdder = "<input type='checkbox' class='friendList' friendId=" + userId + " id='" + userId + "friend' title='Invite' name='invitedFriends'><label for='" + userId + "friend'>"+ firstname +" "+ lastname + "</label><br>";
                 $("#friendAdderList").append(friendAdder);
+                $("#friendEditorList").append(friendAdder);
             }});    
         }
 
@@ -160,6 +291,8 @@ $(document).ready(function() {
             groupAdder = groupAdder + friendList + "' friendIds= '" + friendIdList + "' title ='Invite' name='invitedGroups'><label for=" + groupId + "Group'>" + groupName + "</label><br>";
 
             $("#groupAdderList").append(groupAdder);
+            $("#groupEditorList").append(groupAdder);
+
             $("#groupList").append(group);
         }
 
@@ -171,6 +304,7 @@ $(document).ready(function() {
 function showAddFriendsPopUp(){
     $("#addFriendsOptions").show();
     $("#enterEvent").hide();
+    $("#editEvent").hide();
 }
 
 function showAddGroupsPopUp(){
@@ -487,7 +621,38 @@ function closeEventInformation(){
 function viewAttendingEventInformation(){
     $("#blackScreenofDeath").show();
     $("#popUp").show();
+    var clicked =$(this).children().eq(1);
+    var description = clicked.attr('description');
+    var eventName = clicked.children().eq(0).html();
+    var hostedBy = clicked.children().eq(2).html();
+    var start = clicked.attr('startDate') + " " + clicked.attr('startTime');
+    var end = clicked.attr('endDate') + " " + clicked.attr('endTime');
+    var eventId = clicked.attr('eventId');
+    var userId;
+
+    $("#eventInformation").attr('eventId', eventId);
+
+    // $.ajax({url:"api/LoginStatus", success: function(json){
+    //     userId = json.ID;
+    // }});
+    userId = '1';
+    //will replace with the real user id later.
+
+    var imageChosen ="";
+    console.log(clicked.attr('ownerId'));
+    if(clicked.attr('ownerId') === userId){
+        imageChosen = "<img src='img/edit.png' class='options'  id='editEventButton' alt='Edit' title='Edit'>";
+    }
+    else if(clicked.attr('share') === '1'){
+        imageChosen = "<img src='img/share.png' id='shareEventButton' class='options' alt='Share' title='Share'>";
+    }
+    $("#eventInformation").empty();
+    var information = "<img src='img/close.png' class='closePopUp closeEventInformation' alt='Close' title='Close'><h2>Event Information</h2>"
+    information = information + imageChosen + "<hr><h2 id='eventInfoName'>" + eventName + "</h2><br><h4 id='eventInfoHost'>" + hostedBy + "</h4><br><h4 id='eventInfoDescription'>Description: " + description + "</h4><br><h4 id='eventInfoStart'>Start: " + start + "</h4><br><h4 id='eventInfoEnd'>End: " + end + "</h4><br>"
+    console.log(information);
+    $("#eventInformation").append(information);
     $("#eventInformation").show();
+             
         
 }
 
@@ -526,4 +691,259 @@ function toggleItem(){
     $("#calendar").next().toggleClass('selected');
     $("#calendar").next().toggleClass('notSelected');
 
+}
+
+function getPrevEvents(){
+    if(currentEvent==0){
+        return;
+    }
+
+    currentEvent -= 3;
+    $("#eventList").empty();
+    $("#nextEvents").css('opacity', '1');
+    $("#nextEvents").css('cursor', 'pointer');
+
+        if(eventList.length - currentEvent >= 3 && currentEvent%2 === 0){
+            var newEvent = "<div class='event left'><img src='img/FlockLogo1.png' alt='Flock Logo' title='Flock' class='eventImage'><div class='eventInfo' description='" + eventList[currentEvent].description+ "' startDate='" + eventList[currentEvent].startDate+ "' startTime='" + eventList[currentEvent].startTime+ "' endDate='" + eventList[currentEvent].endDate+ "' endTime='" + eventList[currentEvent].endTime+ "' share='" + eventList[currentEvent].share+ "' eventId='" + eventList[currentEvent].eventId+ "' ownerId='" + eventList[currentEvent].ownerId+ "' ><h3 class='eventTitle'>" + eventList[currentEvent].eventName + "</h3><h3 class='startDate'>" + eventList[currentEvent].startDate + "</h3><p class='hostedBy'>Hosted by: " + eventList[currentEvent].ownerName + "</p><button class='cancelThisEvent' type='button'>Cancel Event</button></div></div>";
+            newEvent = newEvent + "<div class='event right'><img src='img/FlockLogo1.png' alt='Flock Logo' title='Flock' class='eventImage'><div class='eventInfo' description='" + eventList[currentEvent+1].description+ "' startDate='" + eventList[currentEvent+1].startDate+ "' startTime='" + eventList[currentEvent+1].startTime+ "' endDate='" + eventList[currentEvent+1].endDate+ "' endTime='" + eventList[currentEvent+1].endTime+ "' share='" + eventList[currentEvent+1].share+ "' eventId='" + eventList[currentEvent+1].eventId+ "' ownerId='" + eventList[currentEvent+1].ownerId+ "'><h3 class='eventTitle'>" + eventList[currentEvent+1].eventName + "</h3><h3 class='startDate'>" + eventList[currentEvent+1].startDate + "</h3><p class='hostedBy'>Hosted by: " + eventList[currentEvent+1].ownerName + "</p><button class='cancelThisEvent' type='button'>Cancel Event</button></div></div>";
+            newEvent = newEvent + "<div class='event left'><img src='img/FlockLogo1.png' alt='Flock Logo' title='Flock' class='eventImage'><div class='eventInfo' description='" + eventList[currentEvent+2].description+ "' startDate='" + eventList[currentEvent+2].startDate+ "' startTime='" + eventList[currentEvent+2].startTime+ "' endDate='" + eventList[currentEvent+2].endDate+ "' endTime='" + eventList[currentEvent+2].endTime+ "' share='" + eventList[currentEvent+2].share+ "' eventId='" + eventList[currentEvent+2].eventId+ "' ownerId='" + eventList[currentEvent+2].ownerId+ "'><h3 class='eventTitle'>" + eventList[currentEvent+2].eventName + "</h3><h3 class='startDate'>" + eventList[currentEvent+2].startDate + "</h3><p class='hostedBy'>Hosted by: " + eventList[currentEvent+2].ownerName + "</p><button class='cancelThisEvent' type='button'>Cancel Event</button></div></div>";
+            $("#eventList").append(newEvent);
+        }
+        else if(eventList.length - currentEvent == 2 && currentEvent%2 === 0){
+            newEvent = "<div class='event left'><img src='img/FlockLogo1.png' alt='Flock Logo' title='Flock' class='eventImage'><div class='eventInfo' description='" + eventList[currentEvent].description+ "' startDate='" + eventList[currentEvent].startDate+ "' startTime='" + eventList[currentEvent].startTime+ "' endDate='" + eventList[currentEvent].endDate+ "' endTime='" + eventList[currentEvent].endTime+ "' share='" + eventList[currentEvent].share+ "' eventId='" + eventList[currentEvent].eventId+ "' ownerId='" + eventList[currentEvent].ownerId+ "' ><h3 class='eventTitle'>" + eventList[currentEvent].eventName + "</h3><h3 class='startDate'>" + eventList[currentEvent].startDate + "</h3><p class='hostedBy'>Hosted by: " + eventList[currentEvent].ownerName + "</p><button class='cancelThisEvent' type='button'>Cancel Event</button></div></div>";
+            newEvent = newEvent + "<div class='event right'><img src='img/FlockLogo1.png' alt='Flock Logo' title='Flock' class='eventImage'><div class='eventInfo' description='" + eventList[currentEvent+1].description+ "' startDate='" + eventList[currentEvent+1].startDate+ "' startTime='" + eventList[currentEvent+1].startTime+ "' endDate='" + eventList[currentEvent+1].endDate+ "' endTime='" + eventList[currentEvent+1].endTime+ "' share='" + eventList[currentEvent+1].share+ "' eventId='" + eventList[currentEvent+1].eventId+ "' ownerId='" + eventList[currentEvent+1].ownerId+ "'><h3 class='eventTitle'>" + eventList[currentEvent+1].eventName + "</h3><h3 class='startDate'>" + eventList[currentEvent+1].startDate + "</h3><p class='hostedBy'>Hosted by: " + eventList[currentEvent+1].ownerName + "</p><button class='cancelThisEvent' type='button'>Cancel Event</button></div></div>";
+            $("#eventList").append(newEvent);
+        }
+        else if(eventList.length - currentEvent == 1 && currentEvent%2 === 0){
+            newEvent = "<div class='event left'><img src='img/FlockLogo1.png' alt='Flock Logo' title='Flock' class='eventImage'><div class='eventInfo' description='" + eventList[currentEvent].description+ "' startDate='" + eventList[currentEvent].startDate+ "' startTime='" + eventList[currentEvent].startTime+ "' endDate='" + eventList[currentEvent].endDate+ "' endTime='" + eventList[currentEvent].endTime+ "' share='" + eventList[currentEvent].share+ "' eventId='" + eventList[currentEvent].eventId+ "' ownerId='" + eventList[currentEvent].ownerId+ "' ><h3 class='eventTitle'>" + eventList[currentEvent].eventName + "</h3><h3 class='startDate'>" + eventList[currentEvent].startDate + "</h3><p class='hostedBy'>Hosted by: " + eventList[currentEvent].ownerName + "</p><button class='cancelThisEvent' type='button'>Cancel Event</button></div></div>";
+            $("#eventList").append(newEvent);
+        }
+        else if(eventList.length - currentEvent >= 3 && currentEvent%2 === 1){
+            var newEvent = "<div class='event right'><img src='img/FlockLogo1.png' alt='Flock Logo' title='Flock' class='eventImage'><div class='eventInfo' description='" + eventList[currentEvent].description+ "' startDate='" + eventList[currentEvent].startDate+ "' startTime='" + eventList[currentEvent].startTime+ "' endDate='" + eventList[currentEvent].endDate+ "' endTime='" + eventList[currentEvent].endTime+ "' share='" + eventList[currentEvent].share+ "' eventId='" + eventList[currentEvent].eventId+ "' ownerId='" + eventList[currentEvent].ownerId+ "' ><h3 class='eventTitle'>" + eventList[currentEvent].eventName + "</h3><h3 class='startDate'>" + eventList[currentEvent].startDate + "</h3><p class='hostedBy'>Hosted by: " + eventList[currentEvent].ownerName + "</p><button class='cancelThisEvent' type='button'>Cancel Event</button></div></div>";
+            newEvent = newEvent + "<div class='event left'><img src='img/FlockLogo1.png' alt='Flock Logo' title='Flock' class='eventImage'><div class='eventInfo' description='" + eventList[currentEvent+1].description+ "' startDate='" + eventList[currentEvent+1].startDate+ "' startTime='" + eventList[currentEvent+1].startTime+ "' endDate='" + eventList[currentEvent+1].endDate+ "' endTime='" + eventList[currentEvent+1].endTime+ "' share='" + eventList[currentEvent+1].share+ "' eventId='" + eventList[currentEvent+1].eventId+ "' ownerId='" + eventList[currentEvent+1].ownerId+ "'><h3 class='eventTitle'>" + eventList[currentEvent+1].eventName + "</h3><h3 class='startDate'>" + eventList[currentEvent+1].startDate + "</h3><p class='hostedBy'>Hosted by: " + eventList[currentEvent+1].ownerName + "</p><button class='cancelThisEvent' type='button'>Cancel Event</button></div></div>";
+            newEvent = newEvent + "<div class='event right'><img src='img/FlockLogo1.png' alt='Flock Logo' title='Flock' class='eventImage'><div class='eventInfo' description='" + eventList[currentEvent+2].description+ "' startDate='" + eventList[currentEvent+2].startDate+ "' startTime='" + eventList[currentEvent+2].startTime+ "' endDate='" + eventList[currentEvent+2].endDate+ "' endTime='" + eventList[currentEvent+2].endTime+ "' share='" + eventList[currentEvent+2].share+ "' eventId='" + eventList[currentEvent+2].eventId+ "' ownerId='" + eventList[currentEvent+2].ownerId+ "'><h3 class='eventTitle'>" + eventList[currentEvent+2].eventName + "</h3><h3 class='startDate'>" + eventList[currentEvent+2].startDate + "</h3><p class='hostedBy'>Hosted by: " + eventList[currentEvent+2].ownerName + "</p><button class='cancelThisEvent' type='button'>Cancel Event</button></div></div>";
+            $("#eventList").append(newEvent);
+        }
+        else if(eventList.length - currentEvent == 2 && currentEvent%2 === 1){
+            newEvent = "<div class='event right'><img src='img/FlockLogo1.png' alt='Flock Logo' title='Flock' class='eventImage'><div class='eventInfo' description='" + eventList[currentEvent].description+ "' startDate='" + eventList[currentEvent].startDate+ "' startTime='" + eventList[currentEvent].startTime+ "' endDate='" + eventList[currentEvent].endDate+ "' endTime='" + eventList[currentEvent].endTime+ "' share='" + eventList[currentEvent].share+ "' eventId='" + eventList[currentEvent].eventId+ "' ownerId='" + eventList[currentEvent].ownerId+ "' ><h3 class='eventTitle'>" + eventList[currentEvent].eventName + "</h3><h3 class='startDate'>" + eventList[currentEvent].startDate + "</h3><p class='hostedBy'>Hosted by: " + eventList[currentEvent].ownerName + "</p><button class='cancelThisEvent' type='button'>Cancel Event</button></div></div>";
+            newEvent = newEvent + "<div class='event left'><img src='img/FlockLogo1.png' alt='Flock Logo' title='Flock' class='eventImage'><div class='eventInfo' description='" + eventList[currentEvent+1].description+ "' startDate='" + eventList[currentEvent+1].startDate+ "' startTime='" + eventList[currentEvent+1].startTime+ "' endDate='" + eventList[currentEvent+1].endDate+ "' endTime='" + eventList[currentEvent+1].endTime+ "' share='" + eventList[currentEvent+1].share+ "' eventId='" + eventList[currentEvent+1].eventId+ "' ownerId='" + eventList[currentEvent+1].ownerId+ "'><h3 class='eventTitle'>" + eventList[currentEvent+1].eventName + "</h3><h3 class='startDate'>" + eventList[currentEvent+1].startDate + "</h3><p class='hostedBy'>Hosted by: " + eventList[currentEvent+1].ownerName + "</p><button class='cancelThisEvent' type='button'>Cancel Event</button></div></div>";
+            $("#eventList").append(newEvent);
+        }
+        else if(eventList.length - currentEvent == 1 && currentEvent%2 === 1){
+            newEvent = "<div class='event right'><img src='img/FlockLogo1.png' alt='Flock Logo' title='Flock' class='eventImage'><div class='eventInfo' description='" + eventList[currentEvent].description+ "' startDate='" + eventList[currentEvent].startDate+ "' startTime='" + eventList[currentEvent].startTime+ "' endDate='" + eventList[currentEvent].endDate+ "' endTime='" + eventList[currentEvent].endTime+ "' share='" + eventList[currentEvent].share+ "' eventId='" + eventList[currentEvent].eventId+ "' ownerId='" + eventList[currentEvent].ownerId+ "' ><h3 class='eventTitle'>" + eventList[currentEvent].eventName + "</h3><h3 class='startDate'>" + eventList[currentEvent].startDate + "</h3><p class='hostedBy'>Hosted by: " + eventList[currentEvent].ownerName + "</p><button class='cancelThisEvent' type='button'>Cancel Event</button></div></div>";
+            $("#eventList").append(newEvent);
+        }
+        else{
+            ;
+        }
+        $(".eventImage").width($(".eventImage").height());
+        if(eventList.length - currentEvent <= 3){
+            $("#nextEvents").css('opacity', '0');
+            $("#nextEvents").css('cursor', 'auto');
+        }
+        if(currentEvent >= 3){
+            $("#prevEvents").css('opacity', '1');
+            $("#prevEvents").css('cursor', 'pointer');
+        }
+        if(currentEvent == 0){
+            $("#prevEvents").css('opacity', '0');
+            $("#prevEvents").css('cursor', 'auto');
+        }
+}
+
+function getNextEvents(){
+
+    console.log(eventList);
+
+    if(eventList.length - currentEvent <= 3){
+        return;
+    }
+    currentEvent += 3;
+    $("#eventList").empty();
+    $("#prevEvents").css('opacity', '1');
+    $("#prevEvents").css('cursor', 'pointer');
+
+        if(eventList.length - currentEvent >= 3 && currentEvent%2 === 0){
+            var newEvent = "<div class='event left'><img src='img/FlockLogo1.png' alt='Flock Logo' title='Flock' class='eventImage'><div class='eventInfo' description='" + eventList[currentEvent].description+ "' startDate='" + eventList[currentEvent].startDate+ "' startTime='" + eventList[currentEvent].startTime+ "' endDate='" + eventList[currentEvent].endDate+ "' endTime='" + eventList[currentEvent].endTime+ "' share='" + eventList[currentEvent].share+ "' eventId='" + eventList[currentEvent].eventId+ "' ownerId='" + eventList[currentEvent].ownerId+ "' ><h3 class='eventTitle'>" + eventList[currentEvent].eventName + "</h3><h3 class='startDate'>" + eventList[currentEvent].startDate + "</h3><p class='hostedBy'>Hosted by: " + eventList[currentEvent].ownerName + "</p><button class='cancelThisEvent' type='button'>Cancel Event</button></div></div>";
+            newEvent = newEvent + "<div class='event right'><img src='img/FlockLogo1.png' alt='Flock Logo' title='Flock' class='eventImage'><div class='eventInfo' description='" + eventList[currentEvent+1].description+ "' startDate='" + eventList[currentEvent+1].startDate+ "' startTime='" + eventList[currentEvent+1].startTime+ "' endDate='" + eventList[currentEvent+1].endDate+ "' endTime='" + eventList[currentEvent+1].endTime+ "' share='" + eventList[currentEvent+1].share+ "' eventId='" + eventList[currentEvent+1].eventId+ "' ownerId='" + eventList[currentEvent+1].ownerId+ "'><h3 class='eventTitle'>" + eventList[currentEvent+1].eventName + "</h3><h3 class='startDate'>" + eventList[currentEvent+1].startDate + "</h3><p class='hostedBy'>Hosted by: " + eventList[currentEvent+1].ownerName + "</p><button class='cancelThisEvent' type='button'>Cancel Event</button></div></div>";
+            newEvent = newEvent + "<div class='event left'><img src='img/FlockLogo1.png' alt='Flock Logo' title='Flock' class='eventImage'><div class='eventInfo' description='" + eventList[currentEvent+2].description+ "' startDate='" + eventList[currentEvent+2].startDate+ "' startTime='" + eventList[currentEvent+2].startTime+ "' endDate='" + eventList[currentEvent+2].endDate+ "' endTime='" + eventList[currentEvent+2].endTime+ "' share='" + eventList[currentEvent+2].share+ "' eventId='" + eventList[currentEvent+2].eventId+ "' ownerId='" + eventList[currentEvent+2].ownerId+ "'><h3 class='eventTitle'>" + eventList[currentEvent+2].eventName + "</h3><h3 class='startDate'>" + eventList[currentEvent+2].startDate + "</h3><p class='hostedBy'>Hosted by: " + eventList[currentEvent+2].ownerName + "</p><button class='cancelThisEvent' type='button'>Cancel Event</button></div></div>";
+            $("#eventList").append(newEvent);
+        }
+        else if(eventList.length - currentEvent == 2 && currentEvent%2 === 0){
+            newEvent = "<div class='event left'><img src='img/FlockLogo1.png' alt='Flock Logo' title='Flock' class='eventImage'><div class='eventInfo' description='" + eventList[currentEvent].description+ "' startDate='" + eventList[currentEvent].startDate+ "' startTime='" + eventList[currentEvent].startTime+ "' endDate='" + eventList[currentEvent].endDate+ "' endTime='" + eventList[currentEvent].endTime+ "' share='" + eventList[currentEvent].share+ "' eventId='" + eventList[currentEvent].eventId+ "' ownerId='" + eventList[currentEvent].ownerId+ "' ><h3 class='eventTitle'>" + eventList[currentEvent].eventName + "</h3><h3 class='startDate'>" + eventList[currentEvent].startDate + "</h3><p class='hostedBy'>Hosted by: " + eventList[currentEvent].ownerName + "</p><button class='cancelThisEvent' type='button'>Cancel Event</button></div></div>";
+            newEvent = newEvent + "<div class='event right'><img src='img/FlockLogo1.png' alt='Flock Logo' title='Flock' class='eventImage'><div class='eventInfo' description='" + eventList[currentEvent+1].description+ "' startDate='" + eventList[currentEvent+1].startDate+ "' startTime='" + eventList[currentEvent+1].startTime+ "' endDate='" + eventList[currentEvent+1].endDate+ "' endTime='" + eventList[currentEvent+1].endTime+ "' share='" + eventList[currentEvent+1].share+ "' eventId='" + eventList[currentEvent+1].eventId+ "' ownerId='" + eventList[currentEvent+1].ownerId+ "'><h3 class='eventTitle'>" + eventList[currentEvent+1].eventName + "</h3><h3 class='startDate'>" + eventList[currentEvent+1].startDate + "</h3><p class='hostedBy'>Hosted by: " + eventList[currentEvent+1].ownerName + "</p><button class='cancelThisEvent' type='button'>Cancel Event</button></div></div>";
+            $("#eventList").append(newEvent);
+        }
+        else if(eventList.length - currentEvent == 1 && currentEvent%2 === 0){
+            newEvent = "<div class='event left'><img src='img/FlockLogo1.png' alt='Flock Logo' title='Flock' class='eventImage'><div class='eventInfo' description='" + eventList[currentEvent].description+ "' startDate='" + eventList[currentEvent].startDate+ "' startTime='" + eventList[currentEvent].startTime+ "' endDate='" + eventList[currentEvent].endDate+ "' endTime='" + eventList[currentEvent].endTime+ "' share='" + eventList[currentEvent].share+ "' eventId='" + eventList[currentEvent].eventId+ "' ownerId='" + eventList[currentEvent].ownerId+ "' ><h3 class='eventTitle'>" + eventList[currentEvent].eventName + "</h3><h3 class='startDate'>" + eventList[currentEvent].startDate + "</h3><p class='hostedBy'>Hosted by: " + eventList[currentEvent].ownerName + "</p><button class='cancelThisEvent' type='button'>Cancel Event</button></div></div>";
+            $("#eventList").append(newEvent);
+        }
+        else if(eventList.length - currentEvent >= 3 && currentEvent%2 === 1){
+            var newEvent = "<div class='event right'><img src='img/FlockLogo1.png' alt='Flock Logo' title='Flock' class='eventImage'><div class='eventInfo' description='" + eventList[currentEvent].description+ "' startDate='" + eventList[currentEvent].startDate+ "' startTime='" + eventList[currentEvent].startTime+ "' endDate='" + eventList[currentEvent].endDate+ "' endTime='" + eventList[currentEvent].endTime+ "' share='" + eventList[currentEvent].share+ "' eventId='" + eventList[currentEvent].eventId+ "' ownerId='" + eventList[currentEvent].ownerId+ "' ><h3 class='eventTitle'>" + eventList[currentEvent].eventName + "</h3><h3 class='startDate'>" + eventList[currentEvent].startDate + "</h3><p class='hostedBy'>Hosted by: " + eventList[currentEvent].ownerName + "</p><button class='cancelThisEvent' type='button'>Cancel Event</button></div></div>";
+            newEvent = newEvent + "<div class='event left'><img src='img/FlockLogo1.png' alt='Flock Logo' title='Flock' class='eventImage'><div class='eventInfo' description='" + eventList[currentEvent+1].description+ "' startDate='" + eventList[currentEvent+1].startDate+ "' startTime='" + eventList[currentEvent+1].startTime+ "' endDate='" + eventList[currentEvent+1].endDate+ "' endTime='" + eventList[currentEvent+1].endTime+ "' share='" + eventList[currentEvent+1].share+ "' eventId='" + eventList[currentEvent+1].eventId+ "' ownerId='" + eventList[currentEvent+1].ownerId+ "'><h3 class='eventTitle'>" + eventList[currentEvent+1].eventName + "</h3><h3 class='startDate'>" + eventList[currentEvent+1].startDate + "</h3><p class='hostedBy'>Hosted by: " + eventList[currentEvent+1].ownerName + "</p><button class='cancelThisEvent' type='button'>Cancel Event</button></div></div>";
+            newEvent = newEvent + "<div class='event right'><img src='img/FlockLogo1.png' alt='Flock Logo' title='Flock' class='eventImage'><div class='eventInfo' description='" + eventList[currentEvent+2].description+ "' startDate='" + eventList[currentEvent+2].startDate+ "' startTime='" + eventList[currentEvent+2].startTime+ "' endDate='" + eventList[currentEvent+2].endDate+ "' endTime='" + eventList[currentEvent+2].endTime+ "' share='" + eventList[currentEvent+2].share+ "' eventId='" + eventList[currentEvent+2].eventId+ "' ownerId='" + eventList[currentEvent+2].ownerId+ "'><h3 class='eventTitle'>" + eventList[currentEvent+2].eventName + "</h3><h3 class='startDate'>" + eventList[currentEvent+2].startDate + "</h3><p class='hostedBy'>Hosted by: " + eventList[currentEvent+2].ownerName + "</p><button class='cancelThisEvent' type='button'>Cancel Event</button></div></div>";
+            $("#eventList").append(newEvent);
+        }
+        else if(eventList.length - currentEvent == 2 && currentEvent%2 === 1){
+            newEvent = "<div class='event right'><img src='img/FlockLogo1.png' alt='Flock Logo' title='Flock' class='eventImage'><div class='eventInfo' description='" + eventList[currentEvent].description+ "' startDate='" + eventList[currentEvent].startDate+ "' startTime='" + eventList[currentEvent].startTime+ "' endDate='" + eventList[currentEvent].endDate+ "' endTime='" + eventList[currentEvent].endTime+ "' share='" + eventList[currentEvent].share+ "' eventId='" + eventList[currentEvent].eventId+ "' ownerId='" + eventList[currentEvent].ownerId+ "' ><h3 class='eventTitle'>" + eventList[currentEvent].eventName + "</h3><h3 class='startDate'>" + eventList[currentEvent].startDate + "</h3><p class='hostedBy'>Hosted by: " + eventList[currentEvent].ownerName + "</p><button class='cancelThisEvent' type='button'>Cancel Event</button></div></div>";
+            newEvent = newEvent + "<div class='event left'><img src='img/FlockLogo1.png' alt='Flock Logo' title='Flock' class='eventImage'><div class='eventInfo' description='" + eventList[currentEvent+1].description+ "' startDate='" + eventList[currentEvent+1].startDate+ "' startTime='" + eventList[currentEvent+1].startTime+ "' endDate='" + eventList[currentEvent+1].endDate+ "' endTime='" + eventList[currentEvent+1].endTime+ "' share='" + eventList[currentEvent+1].share+ "' eventId='" + eventList[currentEvent+1].eventId+ "' ownerId='" + eventList[currentEvent+1].ownerId+ "'><h3 class='eventTitle'>" + eventList[currentEvent+1].eventName + "</h3><h3 class='startDate'>" + eventList[currentEvent+1].startDate + "</h3><p class='hostedBy'>Hosted by: " + eventList[currentEvent+1].ownerName + "</p><button class='cancelThisEvent' type='button'>Cancel Event</button></div></div>";
+            $("#eventList").append(newEvent);
+        }
+        else if(eventList.length - currentEvent == 1 && currentEvent%2 === 1){
+            newEvent = "<div class='event right'><img src='img/FlockLogo1.png' alt='Flock Logo' title='Flock' class='eventImage'><div class='eventInfo' description='" + eventList[currentEvent].description+ "' startDate='" + eventList[currentEvent].startDate+ "' startTime='" + eventList[currentEvent].startTime+ "' endDate='" + eventList[currentEvent].endDate+ "' endTime='" + eventList[currentEvent].endTime+ "' share='" + eventList[currentEvent].share+ "' eventId='" + eventList[currentEvent].eventId+ "' ownerId='" + eventList[currentEvent].ownerId+ "' ><h3 class='eventTitle'>" + eventList[currentEvent].eventName + "</h3><h3 class='startDate'>" + eventList[currentEvent].startDate + "</h3><p class='hostedBy'>Hosted by: " + eventList[currentEvent].ownerName + "</p><button class='cancelThisEvent' type='button'>Cancel Event</button></div></div>";
+            $("#eventList").append(newEvent);
+        }
+        else{
+            ;
+        }
+        $(".eventImage").width($(".eventImage").height());
+        if(eventList.length - currentEvent <= 3){
+            $("#nextEvents").css('opacity', '0');
+            $("#nextEvents").css('cursor', 'auto');
+        }
+
+
+}
+
+function editEventPopUp(){
+    $('#editEvent').show();
+    $('#eventInformation').hide();
+
+
+    var description = $("#eventInfoDescription").html();
+    description = description.substring(13);
+
+    $("#editTitle").html("Title: " + $("#eventInfoName").html());
+    $("#editStart").html($("#eventInfoStart").html());
+    $("#editEnd").html($("#eventInfoEnd").html());
+    $("#editDescription").val(description);
+
+}
+
+function shareEventPopUp(){
+    
+}
+
+function closeEditEventPopUp(){
+    $("#eventInformation").show();
+    $("#editEvent").hide();
+}
+
+
+function showAddFriendsEditPopUp(){
+    $("#editFriendsOptions").show();
+    $("#editEvent").hide();
+}
+
+function showAddGroupsEditPopUp(){
+    $("#editGroupsOptions").show();
+    $("#editEvent").hide();
+}
+
+function closeFriendsEditPopUp(){
+    $("#editFriendsOptions").hide();
+    $("#editEvent").show();
+    $(".friendList").prop('checked', false);
+}
+
+function closeGroupsEditPopUp(){
+    $("#editGroupsOptions").hide();
+    $("#editEvent").show();
+    $(".groupList").prop('checked', false);
+}
+
+function addFriendstoEditEvent(event){
+    event.preventDefault();
+    var friendstoAdd="";
+    var friendsList = $(".friendList");
+     var invited = $(".invitedGuest");
+    for(var i = 0; i < friendsList.size(); i++){
+        friends:
+        if($(".friendList").eq(i).prop('checked') === true){
+            var friendId = $(".friendList").eq(i).attr("friendId");
+            for(var j = 0; j < invited.size();j++){
+                var id = invited.eq(j).attr("friendId");
+                if(id === friendId ){
+                    break friends;
+                }
+            }
+            
+            $("#editGuestList").append("<span class='invitedGuest' friendId=" + friendId + "><img src='img/close.png' id='deleteInvitedGuest' alt='Uninvite this friend.' title='Uninvite friend.'><h4> "+ $(".friendList").eq(i).next().html() + "</h4></span>");
+        }
+    }   
+    $("#editFriendsOptions").hide();
+    $("#editEvent").show();
+    $(".friendList").prop('checked', false);
+}
+
+
+function addGroupstoEditEvent(event){
+    event.preventDefault();
+    var groupstoAdd="";
+    var groupFriends="";
+    var groupsList = $(".groupList");
+    for(var i = 0; i < groupsList.size(); i++){
+        if($(".groupList").eq(i).prop('checked') === true){
+            groupFriends = $(".groupList").eq(i).attr("friends");
+            groupFriendIds = $(".groupList").eq(i).attr("friendIds");
+            var friends = groupFriends.split(", ");
+            var friendIds = groupFriendIds.split(", ");
+            var invited = $(".invitedGuest");
+            
+            for(var k = 0; k < friends.length; k++){
+                friends:
+                {
+                    var friendId = $(".friendList").eq(i).attr("friendId");
+                    for(var j = 0; j < invited.size();j++){
+                        var id = invited.eq(j).attr("friendId");
+                        if(id === friendIds[k] ){
+                            break friends;
+                        }
+                    }
+                    $("#editGuestList").append("<span class='invitedGuest' friendId=" + friendIds[k] +"><img src='img/close.png' id='deleteInvitedGuest' alt='Uninvite this friend.' title='Uninvite friend.'><h4> "+ friends[k] + "</h4></span>");
+                }
+            }
+       }    
+    }
+       
+    $("#editGroupsOptions").hide();
+    $("#editEvent").show();
+    $(".groupList").prop('checked', false);
+}
+
+function addEditedEvent(event){
+    event.preventDefault();
+    $("#blackScreenofDeath").hide();
+    $("#popUp").hide();
+    $("#editEvent").hide();
+
+    var invitedList = [];
+    var event = {};
+    var friend = {};
+
+    event.eventId = $("#eventInformation").attr('eventId');
+    event.description = $("#editDescription").val();
+    
+    var invited = $(".invitedGuest");
+    for(var i = 0; i < invited.size(); i++){
+        var friend = {};
+        friend.friendId = invited.eq(i).attr("friendId");
+        invitedList.push(friend);
+    }   
+    event.invited = invitedList; 
+
+    event = JSON.stringify(event);
+
+    /*$.ajax({
+            type: "POST",
+            url: "api/EditEvent",
+            data: {
+                event: event
+            },
+            success: function(json){     
+                $("#editDescription").val("");
+                $("#editGuestList").empty();
+                //update event list.
+            }
+    });*/
 }
