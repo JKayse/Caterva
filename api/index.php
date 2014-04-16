@@ -643,7 +643,7 @@ function viewEventRequests() {
 	try {	
 		$db = getConnection();
 	
-		$sql = "SELECT EventRequestId, EventId FROM EventRequest WHERE UserId=:userId";
+		$sql = "SELECT er.EventRequestId, er.EventId, e.EventName, e.UserId AS OwnerId, e.StartTime, e.EndTime, e.EventDescription FROM EventRequest er INNER JOIN Events e ON er.EventId=e.EventId WHERE er.UserId=:userId ORDER BY e.StartTime";
 		$stmt = $db->prepare($sql);
 		$stmt->bindParam('userId', $userId);
 		$stmt->execute();
