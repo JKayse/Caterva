@@ -298,7 +298,7 @@ function logout() {
 * A function that shows all the user's friends
 */
 function viewFriends(){
-    $userId = $_SESSION['userId'];
+    $userId =$_SESSION['userId'];
     $sql = "SELECT FriendId FROM FriendsList WHERE UserId = :userId";
     try {
             $db = getConnection();
