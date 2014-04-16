@@ -28,7 +28,14 @@
             <a id="editProfile">Edit Profile</a>
             <h2>About Me:</h2>
             <textarea wrap="hard" name="profile" rows="5%" cols="45%" title ="Profile" id="aboutMe">Hear lies a description.</textarea>
-                
+               
+            <form id="form1" action="api/AddPicture" method="POST" enctype="multipart/form-data">
+                <input type='file' name='image' accept="image/x-png, image/gif, image/jpeg, image/jpg" id="imgInp" />
+                <img id="target" src="#" alt="your image" />
+                <br>
+                <input type="submit" value="Upload" />
+            </form>
+
         </main>
     </body>
 </html>

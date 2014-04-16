@@ -125,6 +125,13 @@ $app->post('/DeleteGroupMembers', 'deleteGroupMembers');
 * Delete Group
 */
 $app->post('/DeleteGroup', 'deleteGroup');
+
+
+/**
+* Add picture.
+*/
+$app->post('/AddPicture', 'addPicture');
+
 /**
 * Android Versions of some of the functions listed above
 */
@@ -622,7 +629,7 @@ function viewEvents() {
 	try {	
 		$db = getConnection();
 	
-		$sql = "SELECT EventId, EventName, UserId as OwnerId, StartTime, EndTime, EventDescription, Share FROM Events WHERE UserId=:userId UNION (SELECT e.EventId, e.EventName, e.UserId as OwnerId, e.StartTime, e.EndTime, e.EventDescription, e.Share FROM Events e INNER JOIN GuestList g ON e.EventId=g.EventId WHERE g.UserId=:userId) ORDER BY StartTime";
+		$sql = "SELECT EventId, EventName, UserId as OwnerId, StartTime, EndTime, EventDescription, Share, Cancel FROM Events WHERE UserId=:userId UNION (SELECT e.EventId, e.EventName, e.UserId as OwnerId, e.StartTime, e.EndTime, e.EventDescription, e.Share FROM Events e INNER JOIN GuestList g ON e.EventId=g.EventId WHERE g.UserId=:userId) ORDER BY StartTime";
 		$stmt = $db->prepare($sql);
 		$stmt->bindParam('userId', $userId);
 		$stmt->execute();
@@ -754,6 +761,62 @@ function deleteGroup()
         echo '{"error":{"text":'. $e->getMessage() .'}}'; 
         }
 }
+
+
+/*
+* A function to add a user's picture
+*/
+function addPicture()
+{
+    date_default_timezone_set(date_default_timezone_get());
+    $date = date('mdYhisa', time());
+    $allowedExts = array("gif", "jpeg", "jpg", "png", "PNG");
+    $temp = explode(".", $_FILES["image"]["name"]);
+    $extension = end($temp);
+    $userId = $_SESSION['userId'];
+
+    if ((($_FILES["image"]["type"] == "image/gif")
+    || ($_FILES["image"]["type"] == "image/jpeg")
+    || ($_FILES["image"]["type"] == "image/jpg")
+    || ($_FILES["image"]["type"] == "image/pjpeg")
+    || ($_FILES["image"]["type"] == "image/x-png")
+    || ($_FILES["image"]["type"] == "image/png"))
+    && ($_FILES["image"]["size"] < 20000)
+    && in_array($extension, $allowedExts))
+    {
+        if ($_FILES["image"]["error"] > 0)
+        {
+            echo "Return Code: " . $_FILES["image"]["error"] . "<br>";
+        }
+        else
+        {
+
+            if (file_exists("img/" . $_FILES["image"]["name"]))
+            {
+                echo $_FILES["image"]["name"] . " already exists. ";
+            }
+            else
+            {
+                $store = $date . $_FILES["image"]["name"];
+                move_uploaded_file($_FILES["image"]["tmp_name"],
+                "../img/" . $store);
+                echo "Stored in: " . "img/" . $store ;
+
+                $query = "UPDATE Users SET PictureName=:store WHERE UserId=:userId";
+                $db = getConnection();
+                $stmt = $db->prepare($query);
+                $stmt->bindParam("store", $store);
+                $stmt->bindParam("userId", $userId);
+                $stmt->execute();
+            }
+        }
+    }
+    else
+    {
+        echo "Invalid file";
+    }
+}
+    
 
 /****************************ANDROID SPECIFIC FUNCTIONS*************************************/
 /**
