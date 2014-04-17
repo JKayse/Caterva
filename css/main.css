@@ -128,7 +128,7 @@ main div div div button:hover{
   float:right;
 }
 
-#enterFriend, #enterEvent, #addFriendsOptions, #editGroupsOptions, #editFriendsOptions, #addGroupsOptions{
+#enterFriend, #enterEvent, #addFriendsOptions, #editGroupsOptions, #editFriendsOptions, #addGroupsOptions, #shareGroupsOptions, #shareFriendsOptions{
   display: none;
   height: 100%;
 }
@@ -447,6 +447,10 @@ textarea{
   display: none;
 }
 
+#shareEvent{
+  display: none;
+}
+
 #events #prevEvents{
   opacity: 0;
   cursor: auto;
@@ -483,6 +487,23 @@ textarea{
   margin:0px;
 }
 
+#shareGuestList{
+  background-color: white;
+  border-color: rgb(169, 169, 169);
+  border-style: solid;
+  border-width: 1px;
+  width: 95%;
+  margin-left: 2px;
+  padding-top: 3px;
+  overflow-y: auto;
+  height: 80px;
+
+}
+
+#shareEvent h4{
+  margin:0px;
+}
+
 .cancelThisEvent{
   float: right;
   width:20%;
@@ -496,4 +517,21 @@ textarea{
 
 .eventInfo h3{
   margin-top: 10%;
+}
+
+
+.left .canceled{
+    position: absolute;
+    width: 23%;
+    margin-top: 2%;
+    margin-left: 7%;
+    -webkit-transform: rotate(-9deg);
+}
+
+.right .canceled{
+    position: absolute;
+    width: 23%;
+    margin-top: 2%;
+    margin-left: 14%;
+    -webkit-transform: rotate(-9deg);
 }

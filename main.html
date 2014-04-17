@@ -80,32 +80,6 @@
                         <!-- When accepted add to the list of attending events. -->
                         <!-- Can click on it for more info. -->
                         <div id="eventRequestList" class="mouseover">
-                            <div class="eventRequest">
-                                <h4>Horseback Riding</h4>
-                                <img src="img/redX.png" alt="Red X" title="No">
-                                <img src="img/greenCheck.png" alt="Green Check" title="Yes">
-                            </div>
-                            <div class="eventRequest">
-                                <h4>Iteration One</h4>
-                                <img src="img/redX.png" alt="Red X" title="No">
-                                <img src="img/greenCheck.png" alt="Green Check" title="Yes">
-                            </div>
-                            <div class="eventRequest">
-                                <h4>Movie Night</h4>
-                                <img src="img/redX.png" alt="Red X" title="No">
-                                <img src="img/greenCheck.png" alt="Green Check" title="Yes">
-                            </div>
-                            <div class="eventRequest">
-                                <h4>Bored Day</h4>
-                                <img src="img/redX.png" alt="Red X" title="No">
-                                <img src="img/greenCheck.png" alt="Green Check" title="Yes">
-                            </div>
-                            <div class="eventRequest">
-                                <h4>Testing</h4>
-                                <img src="img/redX.png" alt="Red X" title="No">
-                                <img src="img/greenCheck.png" alt="Green Check" title="Yes">
-                            </div>
-                            
 
                         </div>
                     </div>
@@ -137,7 +111,7 @@
                             <h2>Add a Friend</h2>
                             <hr>
                             <h3>BlueBird was found!</h3>
-                            <img src="img/FlockLogo1.png" alt="Flock Logo" title="Flock">
+                            <img id="friendPicture" src="img/FlockLogo1.png" alt="Flock Logo" title="Flock">
                             <h3>Add BlueBird as a friend?</h3>
                             <button id="sendFriendRequest">Yes</button>
                             <button class="closeFriendRequest">No</button>                   
@@ -262,7 +236,58 @@
                             <input type="button" class="button cancelEditGroups" value="Cancel">   
                         </form>
 
-                    </div>                                    
+                    </div>    
+
+                    <div id="shareEvent">
+                        <img src="img/close.png" class="closePopUp cancelShareEvent" alt="Close" title="Close">
+                        <h2>Share Event</h2>
+                        <hr>
+                        <form id = "eventShare" name="Create An Account" action="#" method="post">
+                            <h4 id="shareTitle">Title: Horseback Riding</h4>
+                            <h4>Description:</h4>
+                            <textarea wrap="hard" name="description" rows="5%" cols="60%" title ="Enter the description of the event." id="shareDescription" form="eventShare" disabled></textarea>
+                            <br>
+                            <h4 id="shareStart">Start: 4/12/14 3:00PM</h4>
+                            <h4 id="shareEnd">End: 4/12/14 3:00PM</h4>
+                            <h4>Invite More Guests:</h4>
+                            <div id="shareGuestList" name="guestList" title="Add people to the event."></div>
+
+                            
+                            <input type="button" class="button" id ="addFriendsShareEvent" value="Add Friends">   
+                            <input type="button" class="button" id ="addGroupsShareEvent" value="Add Groups">  
+                            <br>
+                            <input type="submit" class="button" id ="shareThisEvent" value="Submit">   
+                            <input type="button" class="button cancelShareEvent" value="Cancel">  
+                        </form>
+
+                    </div> 
+                    <div id="shareFriendsOptions">
+                        <img src="img/close.png" class="closePopUp cancelShareFriends" alt="Close" title="Close">
+                        <h2>Add Friends</h2>
+                        
+                        <hr>
+                        <form id = "friendShare" name="Create An Account" action="#" method="post">
+                            <div id="friendShareList">
+                            </div> 
+                            <input type="submit" class="button" id ="shareTheseFriends" value="Add">   
+                            <input type="button" class="button cancelShareFriends" value="Cancel"> 
+                        </form>
+
+
+                        
+                    </div> 
+                    <div id="shareGroupsOptions">
+                        <img src="img/close.png" class="closePopUp cancelShareGroups" alt="Close" title="Close">
+                        <h2>Add Groups</h2>
+                        <hr>
+                        <form id = "groupShare" name="Create An Account" action="#" method="post">
+                            <div id="groupShareList">
+                            </div>
+                            <input type="submit" class="button" id ="shareTheseGroups" value="Add">   
+                            <input type="button" class="button cancelShareGroups" value="Cancel">   
+                        </form>
+
+                    </div>                                 
                 </div> 
             </div>
     </body>

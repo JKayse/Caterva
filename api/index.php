@@ -305,7 +305,7 @@ function logout() {
 * A function that shows all the user's friends
 */
 function viewFriends(){
-    $userId =$_SESSION['userId'];
+    $userId = $_SESSION['userId'];
     $sql = "SELECT FriendId FROM FriendsList WHERE UserId = :userId";
     try {
             $db = getConnection();
@@ -629,7 +629,7 @@ function viewEvents() {
 	try {	
 		$db = getConnection();
 	
-		$sql = "SELECT EventId, EventName, UserId as OwnerId, StartTime, EndTime, EventDescription, Share, Cancel FROM Events WHERE UserId=:userId UNION (SELECT e.EventId, e.EventName, e.UserId as OwnerId, e.StartTime, e.EndTime, e.EventDescription, e.Share FROM Events e INNER JOIN GuestList g ON e.EventId=g.EventId WHERE g.UserId=:userId) ORDER BY StartTime";
+		$sql = "SELECT EventId, EventName, UserId as OwnerId, StartTime, EndTime, EventDescription, Share, Cancel FROM Events WHERE UserId=:userId UNION (SELECT e.EventId, e.EventName, e.UserId as OwnerId, e.StartTime, e.EndTime, e.EventDescription, e.Share, e.Cancel FROM Events e INNER JOIN GuestList g ON e.EventId=g.EventId WHERE g.UserId=:userId) ORDER BY StartTime";
 		$stmt = $db->prepare($sql);
 		$stmt->bindParam('userId', $userId);
 		$stmt->execute();
@@ -781,7 +781,6 @@ function addPicture()
     || ($_FILES["image"]["type"] == "image/pjpeg")
     || ($_FILES["image"]["type"] == "image/x-png")
     || ($_FILES["image"]["type"] == "image/png"))
-    && ($_FILES["image"]["size"] < 20000)
     && in_array($extension, $allowedExts))
     {
         if ($_FILES["image"]["error"] > 0)
