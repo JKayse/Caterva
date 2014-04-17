@@ -98,7 +98,9 @@ $(document).ready(function() {
             var eventRequestId = eventRequests[i].EventRequestId;
             var ownerId = eventRequests[i].OwnerId;
             var eventName = eventRequests[i].EventName;
+            eventName = eventName.replace(/"/g, "&quot;").replace(/'/g, "&apos;");
             var description = eventRequests[i].EventDescription;
+            description = description.replace(/"/g, "&quot;").replace(/'/g, "&apos;");
             var d = new Date(eventRequests[i].StartTime);
             var d2 = new Date(eventRequests[i].EndTime);
             var ownerName="";
@@ -1070,7 +1072,9 @@ function getEvents(){
             event.eventId = events[i].EventId;
             event.ownerId = events[i].OwnerId;
             event.eventName = events[i].EventName;
+            event.eventName = event.eventName.replace(/"/g, "&quot;").replace(/'/g, "&apos;");
             event.description = events[i].EventDescription;
+            event.description = event.description.replace(/"/g, "&quot;").replace(/'/g, "&apos;");
             event.share = events[i].Share;
             event.cancel = events[i].Cancel;
             var d = new Date(events[i].StartTime);

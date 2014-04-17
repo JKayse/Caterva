@@ -2,7 +2,7 @@
 $(document).ready(function() {
     $("header").load("header.html");
     $("main img").width($("main img").height());
-
+    $(document).on('submit', "#imageUpload", uploadImage);
 
     // $.ajax({url:"api/LoginStatus", success: function(json){
     //     if(json !== 'null'){
@@ -27,4 +27,23 @@ function readURL(input) {
         }
         reader.readAsDataURL(input.files[0]);
     }
+}
+
+function uploadImage(e){
+    e.preventDefault();
+
+    //grab all form data  
+    var formData = new FormData($(this)[0]);
+
+    $.ajax({
+        url: 'api/AddPicture',
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function () {
+            alert("The image was successfully uploaded!");
+        }
+    });
+
 }
