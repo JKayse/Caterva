@@ -39,6 +39,9 @@ $(document).ready(function() {
     $(document).on('click', ".friendRequest img", updateFriendRequest);
     $(document).on('click', ".eventRequest img", updateEventRequest);
 
+    $(document).on('click', ".friendRequest", getFriendRequestInfo);
+    $(document).on('click', ".closeRequestInfo", closeRequestInfo);
+
     $(document).on('click', ".eventRequest", viewEventInformation);
     $(document).on('click', ".event", viewAttendingEventInformation);
 
@@ -1418,4 +1421,33 @@ function cancelEvent(e){
         });
 
     }
+}
+
+
+function getFriendRequestInfo(){
+    var userId = $(this).attr("friendId");
+    $.ajax({url:"api/UserInfo/" + userId, success: function(json2){
+        json2 = JSON.parse(json2);
+        var friendInfo = json2.User;
+        var username = friendInfo[0].Username;
+        var pictureName = friendInfo[0].PictureName;
+        if(pictureName === null){
+            pictureName = "FlockLogo1.png";
+        }
+        $("#requestedFriendInfo h3").html(username + " wants to be your friend!")
+        $("#requestedFriendInfo #requestedFriendPicture").attr("src", "img/" + pictureName);
+
+        $("#blackScreenofDeath").show();
+        $("#popUp").show();
+        $("#requestedFriendInfo").show();
+        $("#requestedFriendPicture").height($("#requestedFriendPicture").width());
+
+    }}); 
+}
+
+function closeRequestInfo(){
+    $("#blackScreenofDeath").hide();
+        $("#popUp").hide();
+    $("#requestedFriendInfo").hide();
+
 }

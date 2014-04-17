@@ -535,3 +535,15 @@ textarea{
     margin-left: 14%;
     -webkit-transform: rotate(-9deg);
 }
+
+#requestedFriendInfo{
+    display: none;
+    text-align: center;
+}
+
+#requestedFriendPicture{
+  width:40%;
+  border-radius: 100%;
+  margin-right: auto;
+  margin-left: auto;
+}
