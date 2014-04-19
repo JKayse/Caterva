@@ -92,6 +92,16 @@ $app->post('/ShareEvent', 'shareEvent');
 $app->post('/EditEvent', 'editEvent');
 
 /**
+* Cancel Event
+*/
+$app->post('/CancelEvent', 'cancelEvent');
+
+/**
+* Remove Guest
+*/
+$app->post('/RemoveGuest', 'removeGuest');
+
+/**
 * Create Group
 */
 $app->post('/CreateGroup', 'createGroup');
@@ -668,6 +678,44 @@ function editEvent() {
 		}
 	
 		$db = null;
+	} catch(PDOException $e) {
+        	echo '{"error":{"text":' . $e->getMessage() . '}}'; 
+    	}
+}
+
+/*
+* A function to cancel an event
+*/
+function cancelEvent() {
+	$eventId = Slim::getInstance()->request()->post('eventId');
+
+	try {
+		$db = getConnection();
+		
+		$sql = "UPDATE Events SET Cancel=1 WHERE EventId=:eventId";
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam('eventId', $eventId);
+		$stmt->execute();
+	} catch(PDOException $e) {
+        	echo '{"error":{"text":' . $e->getMessage() . '}}'; 
+    	}
+}
+
+/*
+* A function that removes the current user from the guest list of the requested event
+*/
+function removeGuest() {
+	$userId = $_SESSION['userId'];
+	$eventId = Slim::getInstance()->request()->post('eventId');
+
+	try {
+		$db = getConnection();
+		
+		$sql = "DELETE FROM GuestList WHERE EventId=:eventId AND UserId=:userId";
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam('eventId', $eventId);
+		$stmt->bindParam('userId', $userId);
+		$stmt->execute();
 	} catch(PDOException $e) {
         	echo '{"error":{"text":' . $e->getMessage() . '}}'; 
     	}
