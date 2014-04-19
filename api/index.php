@@ -82,6 +82,16 @@ $app->post('/DeleteFriend', 'deleteFriend');
 $app->post('/CreateEvent', 'createEvent');
 
 /**
+* Share Event
+*/
+$app->post('/ShareEvent', 'shareEvent');
+
+/**
+* Edit Event
+*/
+$app->post('/EditEvent', 'editEvent');
+
+/**
 * Create Group
 */
 $app->post('/CreateGroup', 'createGroup');
@@ -538,6 +548,129 @@ function createEvent() {
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}'; 
     }
+}
+
+/*
+* This function shares an event with friends by sending an eventRequest to each friend.
+*/
+function shareEvent() {
+	$event = json_decode(Slim::getInstance()->request()->post('event'), true);
+	
+	try {
+		$db = getConnection();
+
+		$sql = "INSERT INTO EventRequest (EventId, UserId) VALUES (:eventId, :userId)";
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam('eventId', $event['eventId']);
+
+		foreach($event['invited'] as $eventRequest) {
+			$sql2 = "SELECT EventRequestId FROM EventRequest WHERE EventId=:eventId AND UserId=:userId";
+			$stmt2 = $db->prepare($sql2);
+			$stmt2->bindParam('eventId', $event['eventId']);
+			$stmt2->bindParam('userId', $eventRequest['friendId']);
+			$stmt2->execute();
+
+			if($stmt2->fetchObject()) {
+				echo "error_request_already_exists_" . $eventRequest['friendId'] . "\n";
+			} else {
+				$stmt->bindParam('userId', $eventRequest['friendId']);
+				$stmt->execute();
+			}
+		}
+
+		$db = null;
+	} catch(PDOException $e) {
+        	echo '{"error":{"text":' . $e->getMessage() . '}}'; 
+    	}
+	
+}
+
+/*
+* A function to edit an event
+*/
+function editEvent() {
+	$event = json_decode(Slim::getInstance()->request()->post('event'), true);
+
+	try {
+		$db = getConnection();
+
+		$sql = "SELECT eventId FROM Events WHERE EventId=:eventId";
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam('eventId', $event['eventId']);
+		$stmt->execute();
+		if(empty($stmt->fetchObject())) {
+			echo "error_event_does_not_exist";
+			return;
+		}
+		
+		$sql = "UPDATE Events SET :columnName=:value WHERE EventId=:eventId";
+		$stmt = $db->prepare($sql);
+
+		if(isset($event['eventName'])) {
+			$sql = "UPDATE Events SET EventName=:eventName WHERE EventId=:eventId";
+			$stmt = $db->prepare($sql);
+			$stmt->bindParam('eventName', $event['eventName']);
+			$stmt->bindParam('eventId', $event['eventId']);
+			$stmt->execute();
+		}
+
+		if(isset($event['description'])) {
+			$sql = "UPDATE Events SET EventDescription=:eventDescription WHERE EventId=:eventId";
+			$stmt = $db->prepare($sql);
+			$stmt->bindParam('eventDescription', $event['description']);
+			$stmt->bindParam('eventId', $event['eventId']);
+			$stmt->execute();
+		}
+
+		if(isset($event['startTime'])) {
+			$sql = "UPDATE Events SET StartTime=:startTime WHERE EventId=:eventId";
+			$stmt = $db->prepare($sql);
+			$stmt->bindParam('startTime', $event['startTime']);
+			$stmt->bindParam('eventId', $event['eventId']);
+			$stmt->execute();
+		}
+
+		if(isset($event['endTime'])) {
+			$sql = "UPDATE Events SET EndTime=:endTime WHERE EventId=:eventId";
+			$stmt = $db->prepare($sql);
+			$stmt->bindParam('endTime', $event['endTime']);
+			$stmt->bindParam('eventId', $event['eventId']);
+			$stmt->execute();
+		}
+
+		if(isset($event['share'])) {
+			$sql = "UPDATE Events SET Share=:share WHERE EventId=:eventId";
+			$stmt = $db->prepare($sql);
+			$stmt->bindParam('share', $event['share']);
+			$stmt->bindParam('eventId', $event['eventId']);
+			$stmt->execute();
+		}
+
+		if(isset($event['invited'])) {
+			$sql = "INSERT INTO EventRequest (EventId, UserId) VALUES (:eventId, :userId)";
+			$stmt = $db->prepare($sql);
+			$stmt->bindParam('eventId', $event['eventId']);
+
+			foreach($event['invited'] as $eventRequest) {
+				$sql2 = "SELECT EventRequestId FROM EventRequest WHERE EventId=:eventId AND UserId=:userId";
+				$stmt2 = $db->prepare($sql2);
+				$stmt2->bindParam('eventId', $event['eventId']);
+				$stmt2->bindParam('userId', $eventRequest['friendId']);
+				$stmt2->execute();
+
+				if($stmt2->fetchObject()) {
+					echo "error_request_already_exists_" . $eventRequest['friendId'] . "\n";
+				} else {
+					$stmt->bindParam('userId', $eventRequest['friendId']);
+					$stmt->execute();
+				}
+			}
+		}
+	
+		$db = null;
+	} catch(PDOException $e) {
+        	echo '{"error":{"text":' . $e->getMessage() . '}}'; 
+    	}
 }
 
 /**
