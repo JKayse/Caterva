@@ -122,6 +122,11 @@ $app->get('/Groups', 'viewGroups');
 $app->get('/Events', 'viewEvents');
 
 /**
+* View Events for Android
+*/
+$app->get('/AndroidEvents', 'viewEvents_Android');
+
+/**
 * View Event Requests
 */
 $app->get('/EventRequests', 'viewEventRequests');
@@ -807,6 +812,28 @@ function viewGroups() {
 */
 function viewEvents() {
 	$userId = $_SESSION['userId'];
+	try {	
+		$db = getConnection();
+	
+		$sql = "SELECT EventId, EventName, UserId as OwnerId, StartTime, EndTime, EventDescription, Share, Cancel FROM Events WHERE UserId=:userId UNION (SELECT e.EventId, e.EventName, e.UserId as OwnerId, e.StartTime, e.EndTime, e.EventDescription, e.Share, e.Cancel FROM Events e INNER JOIN GuestList g ON e.EventId=g.EventId WHERE g.UserId=:userId) ORDER BY StartTime";
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam('userId', $userId);
+		$stmt->execute();
+		$events = $stmt->fetchAll(PDO::FETCH_OBJ);
+		$db = null;
+
+		echo '{"Events": ' . json_encode($events) . '}';
+	} catch(PDOExection $e) {
+       		echo '{"error":{"text":'. $e->getMessage() .'}}';
+    	}	
+}
+
+/*
+* A function to view events for android
+*/
+function viewEvents_Android() {
+	$userId = Slim::getInstance()->request()->post('userId');
+
 	try {	
 		$db = getConnection();
 	
