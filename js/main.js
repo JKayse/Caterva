@@ -108,7 +108,7 @@ $(document).ready(function() {
             var d2 = new Date(eventRequests[i].EndTime);
             var ownerName="";
 
-            $.ajax({url:"api/UserInfo/" + ownerId, async:false, success: function(json){
+            $.ajax({url:"api/UserInfo/" + ownerId, nasyc:false, success: function(json){
                 json = JSON.parse(json);
                 var info = json.User;
                 var firstname = info[0].Firstname;
@@ -1388,7 +1388,7 @@ function cancelEvent(e){
     var ownerId = $(this).parent().attr("ownerId");
     var userId;
 
-    $.ajax({url:"api/LoginStatus", success: function(json){
+    $.ajax({url:"api/LoginStatus", async:false, success: function(json){
         json = JSON.parse(json);
         userId = json.ID;
     }});
