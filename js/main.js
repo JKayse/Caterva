@@ -1394,6 +1394,7 @@ function cancelEvent(e){
     
     if(userId === ownerId){
         var eventId = $(this).parent().attr("eventId");
+        console.log(eventId);
         $.ajax({
             type: "POST",
             url: "api/CancelEvent",
