@@ -1389,14 +1389,12 @@ function cancelEvent(e){
     var userId;
 
     $.ajax({url:"api/LoginStatus", success: function(json){
-         userId = json.ID;
+        json = JSON.parse(json);
+        userId = json.ID;
     }});
-    console.log(userId);
-    consol.log(ownerId);
     
     if(userId === ownerId){
         var eventId = $(this).parent().attr("eventId");
-        console.log(eventId);
         $.ajax({
             type: "POST",
             url: "api/CancelEvent",
