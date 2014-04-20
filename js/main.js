@@ -689,6 +689,8 @@ function viewAttendingEventInformation(){
 function updateFriendsList(){
     $("#friendList").empty();
     $("#friendAdderList").empty();
+    $("#friendEditorList").empty();
+    $("#friendShareList").empty();
 
     $.ajax({url:"api/ViewFriends", success: function(json2){
         json2 = JSON.parse(json2);
@@ -705,6 +707,8 @@ function updateFriendsList(){
                 $("#friendList").append(friend);
                 var friendAdder = "<input type='checkbox' class='friendList' friendId=" + userId + " id='" + userId + "friend' title='Invite' name='invitedFriends'><label for='" + userId + "friend'>"+ firstname +" "+ lastname + "</label><br>";
                 $("#friendAdderList").append(friendAdder);
+                $("#friendEditorList").append(friendAdder);
+                $("#friendShareList").append(friendAdder);
                 $("#flockList button").css("font-size", $(".friendRequest").css("font-size"));
             }});    
         }
