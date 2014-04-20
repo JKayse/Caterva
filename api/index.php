@@ -124,7 +124,7 @@ $app->get('/Events', 'viewEvents');
 /**
 * View Events for Android
 */
-$app->get('/AndroidEvents', 'viewEvents_Android');
+$app->post('/AndroidEvents', 'viewEvents_Android');
 
 /**
 * View Event Requests

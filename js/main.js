@@ -82,7 +82,7 @@ $(document).ready(function() {
 
 
 
-    /*
+    
     $.ajax({url:"api/LoginStatus", success: function(json){
         if(json !== 'null'){
             
@@ -91,7 +91,7 @@ $(document).ready(function() {
             window.location = "index.html";
         }
     }});
-*/
+
 
     $.ajax({url:"api/EventRequests", success: function(json){
         json = JSON.parse(json);
@@ -370,14 +370,14 @@ function searchForFriend(event){
                 username: $("#friendsUsername").val(),
             },
             success: function(json){
-                //json = JSON.parse(json);
-                //var friend = json.Friend;
-                // if(friend.length === 0){
-                //     alert("That username does not exist. Please try Again.");
-                // }
-                //else{
-                    //var friendId = friend[0].userId;
-                    $.ajax({url:"api/UserInfo/" + 1, success: function(json2){
+                json = JSON.parse(json);
+                var friend = json.Friend;
+                if(friend.length === 0){
+                    alert("That username does not exist. Please try Again.");
+                }
+                else{
+                    var friendId = friend[0].userId;
+                    $.ajax({url:"api/UserInfo/" + friendId, success: function(json2){
                         json2 = JSON.parse(json2);
                         var friendInfo = json2.User;
                         var username = friendInfo[0].Username;
@@ -398,7 +398,7 @@ function searchForFriend(event){
                         $("#foundFriend img:not([title='Close'])").height($("#foundFriend img:not([title='Close'])").width());
 
                     }});   
-                //}
+                }
 
             }
     });
@@ -1046,7 +1046,7 @@ function addEditedEvent(e){
 
     event = JSON.stringify(event);
 
-    /*$.ajax({
+    $.ajax({
             type: "POST",
             url: "api/EditEvent",
             data: {
@@ -1060,7 +1060,7 @@ function addEditedEvent(e){
                 $("#eventList").empty();
                 getEvents();
             }
-    });*/
+    });
 
 }
 
@@ -1357,7 +1357,7 @@ function addSharedEvent(e){
     event = JSON.stringify(event);
     console.log(event)
 
-    /*$.ajax({
+    $.ajax({
             type: "POST",
             url: "api/ShareEvent",
             data: {
@@ -1366,7 +1366,7 @@ function addSharedEvent(e){
             success: function(json){
                 $("#shareGuestList").empty();
             }
-    });*/
+    });
 
 }
 
@@ -1384,10 +1384,9 @@ function cancelEvent(e){
     var ownerId = $(this).parent().attr("ownerId");
     var userId;
 
-    /*$.ajax({url:"api/LoginStatus", success: function(json){
+    $.ajax({url:"api/LoginStatus", success: function(json){
          userId = json.ID;
-    }});*/
-    userId = '1';
+    }});
     
     if(userId === ownerId){
         var eventId = $(this).parent().attr("eventId");
@@ -1409,7 +1408,7 @@ function cancelEvent(e){
         var eventValue = $(this).parent().attr("eventId");
         $.ajax({
             type: "POST",
-            url: "api/NotGoing",
+            url: "api/RemoveGuest",
             data: {
                 eventId: eventValue
             },

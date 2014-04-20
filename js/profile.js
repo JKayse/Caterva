@@ -4,14 +4,14 @@ $(document).ready(function() {
     $("main img").width($("main img").height());
     $(document).on('submit', "#imageUpload", uploadImage);
 
-    // $.ajax({url:"api/LoginStatus", success: function(json){
-    //     if(json !== 'null'){
+    $.ajax({url:"api/LoginStatus", success: function(json){
+        if(json !== 'null'){
             
-    //     }
-    //     else{
-    //         window.location = "index.html";
-    //     }
-    // }});
+        }
+        else{
+            window.location = "index.html";
+        }
+    }});
 
     $("#imgInp").change(function(){
             readURL(this);
@@ -23,7 +23,7 @@ function readURL(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();            
         reader.onload = function (e) {
-            $('#target').attr('src', e.target.result);
+            $('maing img').attr('src', e.target.result);
         }
         reader.readAsDataURL(input.files[0]);
     }
