@@ -4,6 +4,8 @@ $(document).ready(function() {
     $(document).on('click', "#addGroup", addGroupPopUp);
     $(document).on('click', ".cancelSearch", closeGroupPopUp);
     $(document).on('submit', "#groupForm", addCreatedGroup);
+    $(document).on('click', ".deleteFriend", deleteFriend);
+    $(document).on('click', ".deleteGroup", deleteGroup);
 
     $('.mouseover').slimScroll({
         height: '83%'
@@ -170,6 +172,34 @@ function updateGroupList(){
             $("#groupList").append(group);    
         }
     }}); 
+}
 
+function deleteFriend(){
+    var friendId;
 
+    $.ajax({
+            type: "POST",
+            url: "api/deleteFriend", asyn: false,
+            data: {
+                friendId: $(this).parent().attr("friendId")
+            },
+            success:function(json){
+                //
+            }
+    });
+}
+
+function deleteGroup() {
+    var groupId;
+
+    $.ajax({
+            type: "POST",
+            url: "api/deleteGroup", asyn: false,
+            data: {
+                groupId: $(this).parent().attr("groupId")
+            },
+            success: function(json){
+                updateGroupList();
+            }
+    });
 }
