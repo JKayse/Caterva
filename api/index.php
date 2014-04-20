@@ -613,7 +613,8 @@ function editEvent() {
 		$stmt = $db->prepare($sql);
 		$stmt->bindParam('eventId', $event['eventId']);
 		$stmt->execute();
-		if(empty($stmt->fetchObject())) {
+        $event = $stmt->fetchObject();
+		if(empty($event)) {
 			echo "error_event_does_not_exist";
 			return;
 		}
