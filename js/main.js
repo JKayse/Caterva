@@ -1391,6 +1391,7 @@ function cancelEvent(e){
     $.ajax({url:"api/LoginStatus", async:false, success: function(json){
         json = JSON.parse(json);
         userId = json.ID;
+        userId = String(userId);
     }});
     
     if(userId === ownerId){
