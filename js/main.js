@@ -1398,7 +1398,7 @@ function cancelEvent(e){
             type: "POST",
             url: "api/CancelEvent",
             data: {
-                eventId: eventValue
+                eventId: eventId
             },
             success: function(json){         
                 eventList = [];
