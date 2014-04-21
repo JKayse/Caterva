@@ -1275,6 +1275,46 @@ function androidViewGroups() {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 }
+/**
+* a function to send emails notifying users on the upcoming events
+*/
+function sendEmails()
+{	
+		try {
+		$db = getConnection();
+        	$EventsQuery = "SELECT EventId, EventName, UserId, StartTime, EndTime 
+		FROM Events WHERE StartTime > (NOW()+INTERVAL 1 DAY) AND StartTime < (NOW()+ INTERVAL 2 DAY)";
+       		$stmt = $db->prepare($EventsQuery);
+        	$stmt->execute();
+		$events = '{"Events": ' . json_encode($stmt->fetchAll(PDO::FETCH_OBJ)) . '}';
+		echo $events;		
+		$events = json_decode($events, true);
+		
+		foreach($events['Events'] as $e){
+			$EventId = $e['EventId'];
+			$GuestQuery = "SELECT u.Firstname, u.Lastname, u.Email FROM Users u INNER JOIN
+			GuestList gl ON u.UserId = gl.UserId AND gl.EventId = :EventId";
+			$stmt2 = $db->prepare($GuestQuery);
+			$stmt2->bindParam('EventId', $EventId);
+			$stmt2->execute();
+			$Guests = '{"Guests": ' . json_encode($stmt2->fetchAll(PDO::FETCH_OBJ)) . '}'; 			echo "</br>" . $Guests;
+			$Guests = json_decode($Guests, true);
+			foreach($Guests['Guests'] as $g){
+				$to = $g['Email'];
+ 				$subject = "Event Reminder";
+ 				$body = "Hi " .  $g['Firstname'] .  " " . $g['Lastname'] .  
+					",</br>You have an event to go to: </br>" .
+					$e['EventName'] . "</br>" . 
+					date('F j, Y, g:i a', $e['StartTime']) . "</br>" .
+					date('F j, Y, g:i a',$e['EndTime']) . "</br>" .
+					"Thank you for using Flock";
+				mail($to, $subject, $body);
+			}
+		}
+	} catch(PDOExection $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+    	}	
+}
 
 
 
