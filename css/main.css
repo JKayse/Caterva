@@ -229,9 +229,22 @@ main div div div button:hover{
     height:97%%;
   }
 
-  #eventList{
+  #totalEventList{
     height: 85%;
   }
+
+  #eventList{
+    height: 100%;
+  }
+
+  #eventCalendarList{
+    padding-left: 8%;
+    height: 85%;
+    display:none;
+    padding-top: 5%;
+  }
+
+
 
   .left img{
     float:left;
@@ -411,7 +424,7 @@ textarea{
     display: none;
 }
 
-#eventInformation h4, #eventInformation h3{
+#eventInformation h4, #eventInformation h3, #currentEvents h3, #currentEvents h4, #currentEvents h2{
     display: inline-block;
 }
 
@@ -546,4 +559,8 @@ textarea{
   border-radius: 100%;
   margin-right: auto;
   margin-left: auto;
+}
+
+#calendarEventsInfo{
+  display: none;
 }

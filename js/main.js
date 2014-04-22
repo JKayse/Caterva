@@ -66,9 +66,13 @@ $(document).ready(function() {
     $(document).on('submit', "#eventShare", addSharedEvent);
 
     $(document).on('click', ".cancelThisEvent", cancelEvent);
+    $(document).on('click', "#prevMonth", updateCalendar);
+    $(document).on('click', "#nextMonth", updateCalendar);
+
+    $(document).on('click', ".eventHere", showCalendarInfo);
+    $(document).on('click', ".closeCalendarEventsInfo", hideCalendarInfo);
     
     getEvents();
-    
     
 
 
@@ -108,7 +112,7 @@ $(document).ready(function() {
             var d2 = new Date(eventRequests[i].EndTime);
             var ownerName="";
 
-            $.ajax({url:"api/UserInfo/" + ownerId, nasyc:false, success: function(json){
+            $.ajax({url:"api/UserInfo/" + ownerId, async:false, success: function(json){
                 json = JSON.parse(json);
                 var info = json.User;
                 var firstname = info[0].Firstname;
@@ -724,6 +728,8 @@ function toggleItem(){
     $("#list").next().toggleClass('notSelected');
     $("#calendar").next().toggleClass('selected');
     $("#calendar").next().toggleClass('notSelected');
+    $("#totalEventList").toggle();
+    $("#eventCalendarList").toggle();
 
 }
 
@@ -1231,6 +1237,7 @@ function getEvents(){
             $("#nextEvents").css('cursor', 'auto');
         }
 
+        addEventstoCalendar();
 
     }}); 
 }
@@ -1455,4 +1462,50 @@ function closeRequestInfo(){
         $("#popUp").hide();
     $("#requestedFriendInfo").hide();
 
+}
+
+function addEventstoCalendar(){
+    for(var i = 0; i < eventList.length; i++){
+        var element = document.getElementById(eventList[i].startDate);
+        if(element != null){
+            $(element).addClass("eventHere");
+            var eventBox = $(element).children().eq(1)
+            var num = eventBox.attr("numEvents");
+            var currentEvents = eventBox.attr("events");
+            num++;
+            eventBox.attr("numEvents", num);
+            eventBox.attr("events", currentEvents + i + ",");
+            console.log(eventList[i].startDate);
+            if(num === 1){
+                eventBox.children().html(num + " Event");
+            }
+            else{
+                eventBox.children().html(num + " Events");
+            }
+
+        }
+    }
+}
+
+function updateCalendar(){
+    addEventstoCalendar();
+}
+
+function showCalendarInfo(){
+    $("#calendarEventsInfo").show();
+    $("#popUp").show(); 
+    $("#blackScreenofDeath").show();
+    var events = $(this).children().eq(1).attr("events");
+    var event = events.split(",");
+    for(var k = 0; k < event.length -1; k++){
+        $("#currentEvents").append("<h2>" + eventList[event[k]].eventName + "</h2><br><h4>Hosted By: " + eventList[event[k]].ownerName + "</h4><br><h4>Description: " + eventList[event[k]].description + "</h4><br><h4>Start: " + eventList[event[k]].startDate + " " + eventList[event[k]].startTime + "</h4><br><h4>End: " + eventList[event[k]].endDate + " " + eventList[event[k]].endTime + "</h4><br><hr>");
+    }
+
+}
+
+function hideCalendarInfo(){
+    $("#calendarEventsInfo").hide();
+    $("#popUp").hide(); 
+    $("#blackScreenofDeath").hide();
+    $("#currentEvents").empty();
 }
