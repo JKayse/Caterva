@@ -22,12 +22,12 @@
 
         <main>
             <img src="img/FlockLogo1.png" alt="Flock Logo" title="Flock">
-            <h1>Amy Sherwood's Profile</h1>
-            <h2>Username: BlueBird</h2>
-            <h3>Email: ASherwood@smu.edu</h3>
-            <a id="editProfile">Edit Profile</a>
+            <h1 id = "name">Amy Sherwood's Profile</h1>
+            <h2 id = "userName">Username: BlueBird</h2>
+            <h3 id = "email">Email: ASherwood@smu.edu</h3>
+            <button class="button" id="editProfile" type="button">Edit Profile</button>
             <h2>About Me:</h2>
-            <textarea wrap="hard" name="profile" rows="5%" cols="45%" title ="Profile" id="aboutMe">Hear lies a description.</textarea>
+            <textarea wrap="hard" name="profile" rows="5%" cols="45%" title ="Profile" id="aboutMe">Here lies a description.</textarea>
                
             <form id="imageUpload" action="api/AddPicture" method="POST" enctype="multipart/form-data">
                 <input type='file' name='image' accept="image/x-png, image/gif, image/jpeg, image/jpg" id="imgInp" />
