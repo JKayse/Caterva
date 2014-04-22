@@ -6,6 +6,7 @@ $(document).ready(function() {
     $(document).on('submit', "#groupForm", addCreatedGroup);
     $(document).on('click', ".deleteFriend", deleteFriend);
     $(document).on('click', ".deleteGroup", deleteGroup);
+    $(document).on('click', ".groupie", editGroup);
 
     $('.mouseover').slimScroll({
         height: '83%'
@@ -202,4 +203,42 @@ function deleteGroup() {
                 updateGroupList();
             }
     });
+}
+
+function editGroup() {
+    event.preventDefault();
+    var element = document.getElementById('groupHeader');
+    element.innerHTML = "Edit Group";
+
+    var groupName = $(this).parent().attr("groupName");
+    document.getElementById('groupName').placeholder = "" + groupName;
+
+    var friendsList = [];
+    var group = {};
+    
+
+    if(groupName !== $("#groupName").val()){
+        group.name = $("#groupName").val();
+
+        $.ajax({
+            type: "POST",
+            url: "api/changeGroupName",
+            data: {
+                groupname: group.name
+            },
+            success: function(json){
+                if(json === "error_groupName"){
+                    alert("That name already exists. Please enter a new name.");
+                }
+                else{          
+                    $("#blackScreenofDeath").hide();
+                    $("#popUp").hide();
+                    
+                    $("#groupName").val("");
+                    $(".friendList").prop('checked', false);
+                    updateGroupList();
+                }
+            }
+        });
+    }
 }
