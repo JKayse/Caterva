@@ -9,9 +9,11 @@
         <link rel="icon" type="image/png" href="img/flock_logo_image.png">
         <link rel="stylesheet" type="text/css" href="css/main.css">
         <link rel="stylesheet" type="text/css" href="css/header.css">
+        <link rel="stylesheet" type="text/css" href="css/calendar.css">
         <link rel="stylesheet" href="css/style.css">
         <script src="//code.jquery.com/jquery-1.9.1.js"></script>
         <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+        <script type="text/javascript" src="js/calendar.js"></script>
         <script type="text/javascript" src="js/main.js"></script>
         <script type="text/javascript" src="js/header.js"></script>
         <script type="text/javascript" src="js/jquery.slimscroll.min.js"></script>
@@ -57,11 +59,32 @@
                       <span id="switch" class="switch-selection-left"></span>
                     </div>
                     <h2>Upcoming Events</h2>
-                    <img src="img/arrow3.png" id="prevEvents" alt="Up Arrow" title="Previous three events.">
-                    <div id="eventList">
-                        
+                    <div id="totalEventList">
+                        <img src="img/arrow3.png" id="prevEvents" alt="Up Arrow" title="Previous three events.">
+                        <div id="eventList">
+                            
+                        </div>
+                        <img src="img/arrow3.png" id="nextEvents" alt="Down Arrow" title="Next three events.">
                     </div>
-                    <img src="img/arrow3.png" id="nextEvents" alt="Down Arrow" title="Next three events.">
+                    <div id="eventCalendarList">
+                        <img src="img/arrow3.png" id="prevMonth" alt="Left Arrow" title="Previous month.">
+                        <img src="img/arrow3.png" id="nextMonth" alt="Right Arrow" title="Next month.">
+                        <h2 id="month">April</h2>
+                        <table class="calendar">
+                            <tbody>
+                                <tr class="days">
+                                    <td><div><h4>S</h4></div></td>
+                                    <td><div><h4>M</h4></div></td>
+                                    <td><div><h4>T</h4></div></td>
+                                    <td><div><h4>W</h4></div></td>
+                                    <td><div><h4>T</h4></div></td>
+                                    <td><div><h4>F</h4></div></td>
+                                    <td><div><h4>S</h4></div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                   
                 </div>
                 
             </section>
@@ -296,7 +319,15 @@
                         
                         <img id="requestedFriendPicture" src="img/FlockLogo1.png" alt="Flock Logo" title="Flock">     
                         <h3>BlueBird wants to be your friend!</h3>           
-                    </div>                              
+                    </div>     
+
+                    <div id="calendarEventsInfo">
+                        <img src="img/close.png" class="closeCalendarEventsInfo closePopUp" alt="Close" title="Close">
+                        <h2>Event Information</h2>
+                        <hr>    
+                        <div id="currentEvents">
+                        </div>        
+                    </div>                          
                 </div> 
             </div>
     </body>

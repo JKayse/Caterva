@@ -1,4 +1,72 @@
-#pictureTest{
+#eventCalendarList h2, #eventCalendarList h4{
+    margin:0px 5px 0px 5px;
+    display: inline;
+    text-align: center;
+}
+
+.eventBox h4{
+    display: block;
+}
+
+.eventBox{
     position: absolute;
-    top: -1000px;
+    top:30%;
+    padding-top: 5px;
+    left: 5%;
+}
+
+
+.date h3{
+    margin: 0px;
+}
+
+.date{
+    display: inline-block;
+    position: absolute;
+    top: 0px;
+}
+
+td{
+    height: 60px;
+    width: 100px;
+    background-color: rgb(248, 252, 251);
+    border-color: rgb(178, 207, 245);
+    border-width: 2px;
+    border-style: solid;
+    position: relative;
+}
+
+.days{
+    text-align: center;
+}
+
+table{
+    border-collapse:collapse;
+}
+
+
+/*Add to td*/
+.eventHere{
+    background-color: rgb(178, 207, 245);
+}
+
+.days td{
+    background-color: rgb(153, 186, 255);
+}
+
+.current{
+    background-color: #CCC;
+}
+
+#prevMonth{
+    height: 4%;
+}
+
+#nextMonth{
+    height: 4%;
+    -webkit-transform: rotate(180deg);
+}
+
+.eventHere:hover{
+    background-color: rgb(65, 106, 190);
 }
