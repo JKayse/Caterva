@@ -101,6 +101,11 @@ $app->post('/CancelEvent', 'cancelEvent');
 */
 $app->post('/RemoveGuest', 'removeGuest');
 
+/*
+* Respond to Event Request
+*/
+$app->post('/RespondEventRequest', 'respondToEventRequest');
+
 /**
 * Create Group
 */
@@ -722,6 +727,41 @@ function removeGuest() {
 		$stmt->bindParam('userId', $userId);
 		$stmt->execute();
 	} catch(PDOException $e) {
+        	echo '{"error":{"text":' . $e->getMessage() . '}}'; 
+    	}
+}
+
+/*
+* A function to respond to an event request
+*/
+function respondToEventRequest() {
+	$requestId = Slim::getInstance()->request()->post('eventRequestId');
+	$response = Slim::getInstance()->request()->post('response');
+
+	try {
+		$db = getConnection();
+
+		if($request = 1) {
+			$sql = "SELECT EventId, UserId FROM EventRequest WHERE EventRequestId=:requestId";
+			$stmt = $db->prepare($sql);
+			$stmt->bindParam('requestId', $requestId);
+			$stmt->execute();
+			$request = $stmt->fetchObject();
+			$eventId = $request->EventId;
+			$userId = $request->UserId;
+
+			$sql = "INSERT INTO GuestList (EventId, UserId) VALUES (:eventId, :userId)";
+			$stmt = $db->prepare($sql);
+			$stmt->bindParam('eventId', $eventId);
+			$stmt->bindParam('userId', $userId);
+			$stmt->execute();
+		}
+		
+		$sql = "DELETE FROM EventRequest WHERE EventRequestId=:requestId";
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam('requestId', $requestId);
+		$stmt->execute();
+	}  catch(PDOException $e) {
         	echo '{"error":{"text":' . $e->getMessage() . '}}'; 
     	}
 }
