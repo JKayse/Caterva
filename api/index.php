@@ -736,7 +736,7 @@ function removeGuest() {
 */
 function respondToEventRequest() {
 	$requestId = Slim::getInstance()->request()->post('eventRequestId');
-	$response = Slim::getInstance()->request()->post('response');
+	$response = Slim::getInstance()->request()->post('going');
 
 	try {
 		$db = getConnection();
