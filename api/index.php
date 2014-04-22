@@ -390,6 +390,7 @@ function searchFriend()
     echo '{"error":{"text":'. $e->getMessage() .'}}'; 
     }   
 }
+
 /**
 * A function that adds a friend request
 */
@@ -397,13 +398,41 @@ function addFriendRequest()
 {
     $userId = $_SESSION['userId'];
     $friendId = Slim::getInstance()->request()->post('friendId');
-    $insertFriendQuery2 = "INSERT INTO FriendRequest(userId, friendId) VALUE(:userId, :friendId)";
+    
         try {
             $db = getConnection();
-            $stmt = $db->prepare($insertFriendQuery2);
+
+	    $sql = "SELECT FriendRequestId FROM FriendRequest WHERE UserId=:friendId AND FriendId=:userId";
+	    $stmt = $db->prepare($sql);
             $stmt->bindParam("userId",$userId);
             $stmt->bindParam("friendId",$friendId);
             $stmt->execute();
+	    $requestId = $stmt->fetchObject();
+	    if($requestId) {
+		$insertFriend1 = "INSERT INTO FriendsList(UserId, FriendId) VALUE(:friendId, :userId)";
+		$insertFriend2 = "INSERT INTO FriendsList(UserId, FriendId) VALUE(:userId, :friendId)";
+		$deleteRequest = "DELETE FROM FriendRequest WHERE FriendRequestId=:requestId";
+
+		$stmt = $db->prepare($insertFriend1);
+		$stmt->bindParam("friendId", $friendId);
+		$stmt->bindParam("userId", $userId);
+		$stmt->execute();
+
+		$stmt = $db->prepare($insertFriend2);
+		$stmt->bindParam("userId", $userId);
+		$stmt->bindParam("friendId", $friendId);
+		$stmt->execute();
+
+		$stmt = $db->prepare($deleteRequest);
+		$stmt->bindParam('requestId', $requestId);
+		$stmt->execute();
+	    } else {
+		$sql = "INSERT INTO FriendRequest(userId, friendId) VALUE(:userId, :friendId)";
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam("userId",$userId);
+		$stmt->bindParam("friendId",$friendId);
+		$stmt->execute();
+	    }
             $db = null;
         } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}'; 
@@ -1092,13 +1121,41 @@ function androidAddFriendRequest()
 {
     $userId = Slim::getInstance()->request()->post('id');
     $friendId = Slim::getInstance()->request()->post('friendId');
-    $insertFriendQuery2 = "INSERT INTO FriendRequest(userId, friendId) VALUE(:userId, :friendId)";
+    
         try {
             $db = getConnection();
-            $stmt = $db->prepare($insertFriendQuery2);
+
+	    $sql = "SELECT FriendRequestId FROM FriendRequest WHERE UserId=:friendId AND FriendId=:userId";
+	    $stmt = $db->prepare($sql);
             $stmt->bindParam("userId",$userId);
             $stmt->bindParam("friendId",$friendId);
             $stmt->execute();
+	    $requestId = $stmt->fetchObject();
+	    if($requestId) {
+		$insertFriend1 = "INSERT INTO FriendsList(UserId, FriendId) VALUE(:friendId, :userId)";
+		$insertFriend2 = "INSERT INTO FriendsList(UserId, FriendId) VALUE(:userId, :friendId)";
+		$deleteRequest = "DELETE FROM FriendRequest WHERE FriendRequestId=:requestId";
+
+		$stmt = $db->prepare($insertFriend1);
+		$stmt->bindParam("friendId", $friendId);
+		$stmt->bindParam("userId", $userId);
+		$stmt->execute();
+
+		$stmt = $db->prepare($insertFriend2);
+		$stmt->bindParam("userId", $userId);
+		$stmt->bindParam("friendId", $friendId);
+		$stmt->execute();
+
+		$stmt = $db->prepare($deleteRequest);
+		$stmt->bindParam('requestId', $requestId);
+		$stmt->execute();
+	    } else {
+		$sql = "INSERT INTO FriendRequest(userId, friendId) VALUE(:userId, :friendId)";
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam("userId",$userId);
+		$stmt->bindParam("friendId",$friendId);
+		$stmt->execute();
+	    }
             $db = null;
         } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}'; 
