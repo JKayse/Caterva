@@ -73,8 +73,6 @@ $(document).ready(function() {
             $("#groupList").append(group);    
         }
     }}); 
-
-
 });
 
 
@@ -83,6 +81,15 @@ function addGroupPopUp(){
     $("#popUp").show();
 }
 
+function editGroupPopUp() {
+    var groupName = $(this).parent().attr("groupName");
+    document.getElementById('groupName').placeholder = "" + groupName;
+    var groupMembers = $(this).parent().attr("groupMembers");
+    var friends = $(".friendList");
+
+    $("#blackScreenofDeath").show();
+    $("#editPopUp").show();
+}
 
 function closeGroupPopUp(){
     $("#blackScreenofDeath").hide();
@@ -92,20 +99,24 @@ function closeGroupPopUp(){
     $(".friendList").prop('checked', false);
 }
 
+function closeEditGroupPopUp(){
+    $("#blackScreenofDeath").hide();
+    $("#editPopUp").hide();
+
+    $("#editedGroupName").val("");
+    $(".friendList").prop('checked', false);
+}
 
 function addCreatedGroup(){
 
     event.preventDefault();
     var friendsList = [];
-    var group = {};
-    
+    var group = {}; 
 
     group.name = $("#groupName").val();
 
     var numFriends =0;
     var friends = $(".friendList");
-
-
 
     for(var i = 0; i < friends.size(); i++){
         var friend = {};
@@ -205,13 +216,8 @@ function deleteGroup() {
     });
 }
 
-/*function editGroupPopUp() {
+function editGroup() {
     event.preventDefault();
-    var element = document.getElementById('groupHeader');
-    element.innerHTML = "Edit Group";
-
-    var groupName = $(this).parent().attr("groupName");
-    document.getElementById('groupName').placeholder = "" + groupName;
 
     var friendsList = [];
     var group = {};
@@ -230,7 +236,7 @@ function deleteGroup() {
                     break friends;
                 }
             }
-
+ */
 
     if(groupName !== $("#groupName").val()){
         group.name = $("#groupName").val();
@@ -247,7 +253,7 @@ function deleteGroup() {
                 }
                 else{          
                     $("#blackScreenofDeath").hide();
-                    $("#popUp").hide();
+                    $("#editPopUp").hide();
                     
                     $("#groupName").val("");
                     $(".friendList").prop('checked', false);
@@ -255,5 +261,5 @@ function deleteGroup() {
                 }
             }
         });
-    }*/
+    }
 }

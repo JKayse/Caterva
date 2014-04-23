@@ -12,3 +12,7 @@ main h1{
     margin: 0px;
     margin-left: 5%;
 }
+
+#editProfile, #imageUpload{
+	visibility: none;
+}
