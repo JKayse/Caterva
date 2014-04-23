@@ -1409,7 +1409,7 @@ function sendEmails()
 		try {
 		$db = getConnection();
         	$EventsQuery = "SELECT EventId, EventName, UserId, StartTime, EndTime 
-		FROM Events WHERE StartTime > (NOW()+INTERVAL 1 DAY) AND StartTime < (NOW()+ INTERVAL 2 DAY)";
+		FROM Events WHERE StartTime < (NOW()+INTERVAL 1 DAY) AND StartTime > NOW()";
        		$stmt = $db->prepare($EventsQuery);
         	$stmt->execute();
 		$events = '{"Events": ' . json_encode($stmt->fetchAll(PDO::FETCH_OBJ)) . '}';
@@ -1434,7 +1434,11 @@ function sendEmails()
 					date('F j, Y, g:i a', $e['StartTime']) . "</br>" .
 					date('F j, Y, g:i a',$e['EndTime']) . "</br>" .
 					"Thank you for using Flock";
-				mail($to, $subject, $body);
+				if (mail($to, $subject, $body)) {
+   					echo("<p>Email successfully sent!</p>");
+  				} else {
+   					echo("<p>Email delivery failed…</p>");
+  				}
 			}
 		}
 	} catch(PDOExection $e) {
