@@ -8,6 +8,7 @@ $(document).ready(function() {
     $(document).on('click', ".deleteGroup", deleteGroup);
     $(document).on('click', ".groupie", editGroupPopUp);
     $(document).on('click', ".cancelEdit", closeEditGroupPopUp);
+    $(document).on('submit', "#groupEditForm", editGroup);
 
     $('.mouseover').slimScroll({
         height: '83%'
@@ -96,6 +97,7 @@ function editGroupPopUp() {
     for(var i = 0; i < friendList.length; i++)
     {
         $("#" + friendList[i] + "friendEdit").prop('checked', true);
+        $("#" + friendList[i] + "friendEdit").attr("original", 1);
     }
 
     $("#blackScreenofDeath").show();
@@ -239,13 +241,12 @@ function editGroup() {
     var friendsList = [];
     var group = {};
     
-    var friendstoAdd="";
     var friendsList = $(".friendList");
-    var groupMembers = $(".groupMembers")
+    var groupMembers = $(".groupMembers");
 
     for(var i = 0; i < friendsList.size(); i++){
         friends:
-        if($(".friendList").eq(i).prop('checked') === true){
+        if(($(".friendList").eq(i).prop('checked') === true) && ($(".friendList").eq(i).attr('original') === 1){
             var friendId = $(".friendList").eq(i).attr("friendId");
             for(var j = 0; j < groupMembers.size();j++){
                 var id = groupMembers.eq(j).attr("friendId");
