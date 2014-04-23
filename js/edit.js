@@ -82,6 +82,7 @@ function addGroupPopUp(){
     $("#blackScreenofDeath").show();
     $("#popUp").show();
     $("#editAndCreateGroups").show();
+    $("#editPopUp").hide();
 }
 
 function editGroupPopUp() {
@@ -93,6 +94,7 @@ function editGroupPopUp() {
     $("#blackScreenofDeath").show();
     $("#popUp").show();
     $("#editPopUp").show();
+    $("#editAndCreateGroups").hide();
 }
 
 function closeGroupPopUp(){
