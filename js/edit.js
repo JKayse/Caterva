@@ -6,7 +6,7 @@ $(document).ready(function() {
     $(document).on('submit', "#groupForm", addCreatedGroup);
     $(document).on('click', ".deleteFriend", deleteFriend);
     $(document).on('click', ".deleteGroup", deleteGroup);
-    $(document).on('click', ".groupie", editGroup);
+    $(document).on('click', ".groupie", editGroupPopUp);
 
     $('.mouseover').slimScroll({
         height: '83%'
@@ -205,7 +205,7 @@ function deleteGroup() {
     });
 }
 
-function editGroup() {
+/*function editGroupPopUp() {
     event.preventDefault();
     var element = document.getElementById('groupHeader');
     element.innerHTML = "Edit Group";
@@ -218,7 +218,7 @@ function editGroup() {
     
     var friendstoAdd="";
     var friendsList = $(".friendList");
-    
+
     /* var groupMembers = $(".groupMembers");
     for(var i = 0; i < friendsList.size(); i++){
         friends:
@@ -230,7 +230,7 @@ function editGroup() {
                     break friends;
                 }
             }
-*/
+
 
     if(groupName !== $("#groupName").val()){
         group.name = $("#groupName").val();
@@ -255,5 +255,5 @@ function editGroup() {
                 }
             }
         });
-    }
+    }*/
 }

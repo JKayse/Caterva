@@ -15,8 +15,6 @@
         <link rel="icon" type="image/png" href="img/flock_logo_image.png">
     </head>
 
-    
-
     <body>
         <header></header>
 
@@ -28,9 +26,11 @@
             <!-- should only be visible when viewing own profile page -->
             <button class="button" id="editProfile" type="button">Edit Profile</button>
             <h2>About Me:</h2>
-            
+            <p id = "aboutMe">Here lies a description</p>
+
             <!-- this should be a paragraph with a description of the user. Change to text area when editing this description <textarea wrap="hard" name="profile" rows="5%" cols="45%" title ="Profile" id="aboutMe">Here lies a description.</textarea> -->
-               
+            
+            <!-- should only be visible when viewing own profile page -->   
             <form id="imageUpload" action="api/AddPicture" method="POST" enctype="multipart/form-data">
                 <input type='file' name='image' accept="image/x-png, image/gif, image/jpeg, image/jpg" id="imgInp" />
                 <br>

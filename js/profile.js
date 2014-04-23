@@ -69,8 +69,8 @@ function populatePage () {
                 if(pictureName === null){
                     pictureName = "FlockLogo1.png";
                 }
-                document.getElementById('name').innerHTML = firstname + " " + lastname;
-                document.getElementById('userName').innerHTML = userName;
-                document.getElementById('email').innerHTML = email;
+                document.getElementById('name').innerHTML = firstname + " " + lastname + "'s Profile";
+                document.getElementById('userName').innerHTML = "Username: " + userName;
+                document.getElementById('email').innerHTML = "Email: " + email;
             }});
 }
