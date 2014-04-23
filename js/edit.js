@@ -205,8 +205,7 @@ function deleteFriend(){
                 friendId: $(this).parent().attr("friendId")
             },
             success:function(json){
-                console.log(thing);
-                $(thing).parent().remove();
+                updateFriendList();
             }
     });
 }
@@ -275,3 +274,29 @@ function editGroup() {
         });
     }
 }
+
+function updateFriendList() {
+    $("#friendList").empty();
+    $("#listOfFriends").empty();
+    $("#editedListOfFriends").empty();
+
+   $.ajax({url:"api/ViewFriends", success: function(json2){
+        json2 = JSON.parse(json2);
+        var friends = json2.FriendsList;
+        for(var i = 0; i < friends.length ; i++){
+            var friendId = friends[i].FriendId;
+            $.ajax({url:"api/UserInfo/" + friendId, success: function(json){
+                json = JSON.parse(json);
+                var friendInfo = json.User;
+                var firstname = friendInfo[0].Firstname;
+                var lastname = friendInfo[0].Lastname;
+                var userId = friendInfo[0].UserId;
+                var friend = "<div class='friendie' friendId=" + userId+ "><img src='img/close2.png' class='deleteFriend' alt='Delete' title='Delete'><h3>" + firstname +" "+ lastname + "</h3></div>";
+                $("#friendList").append(friend);
+                var friendAdder = "<input type='checkbox' class='friendList' friendId=" + userId + " id='" + userId + "friend' title='Add Friend' name='Add Friends'><label for='" + userId + "friend'>"+ firstname +" "+ lastname + "</label><br>";
+                $("#listOfFriends").append(friendAdder);
+                $("#editedListOfFriends").append(friendAdder);
+            }});    
+        }
+
+    }});}
