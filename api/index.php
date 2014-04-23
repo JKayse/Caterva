@@ -1423,7 +1423,8 @@ function sendEmails()
 			$stmt2 = $db->prepare($GuestQuery);
 			$stmt2->bindParam('EventId', $EventId);
 			$stmt2->execute();
-			$Guests = '{"Guests": ' . json_encode($stmt2->fetchAll(PDO::FETCH_OBJ)) . '}'; 		
+			$Guests = '{"Guests": ' . json_encode($stmt2->fetchAll(PDO::FETCH_OBJ)) . '}';
+			echo "</br></br>" . $Guests; 		
 			$Guests = json_decode($Guests, true);
 			foreach($Guests['Guests'] as $g){
 				$to = $g['Email'];
@@ -1434,10 +1435,12 @@ function sendEmails()
 					date('F j, Y, g:i a', $e['StartTime']) . "</br>" .
 					date('F j, Y, g:i a',$e['EndTime']) . "</br>" .
 					"Thank you for using Flock";
+				echo "</br>" . $to . "</br>" . $subject;
+				echo "</br>" . $body . "</br>";
 				if (mail($to, $subject, $body)) {
-   					echo("<p>Email successfully sent!</p>");
+   					echo("</br>Email successfully sent!");
   				} else {
-   					echo("<p>Email delivery failed…</p>");
+   					echo("</br>Email delivery failed…");
   				}
 			}
 		}
