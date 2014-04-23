@@ -1,4 +1,4 @@
 <?
-    require "api/index.php";
+    include "api/index.php";
     sendEmails();
 ?>
