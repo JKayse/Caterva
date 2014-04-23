@@ -90,6 +90,8 @@ function addGroupPopUp(){
 function editGroupPopUp() {
     var groupName = $(this).children().eq(1).html();
     $('#editedGroupName').val(groupName);
+    var groupId = $(this).attr("groupId");
+    $('#editedGroupName').attr("editGroupId", groupId);
 
     var friends = $(this).attr("friendIds");
     var friendList = friends.split(", ");
@@ -122,6 +124,7 @@ function closeEditGroupPopUp(){
 
     $("#editedGroupName").val("");
     $(".friendList").prop('checked', false);
+    
 }
 
 function addCreatedGroup(){
@@ -237,50 +240,56 @@ function deleteGroup(e) {
 
 function editGroup() {
     event.preventDefault();
-
-    var friendsList = [];
-    var group = {};
     
+    var editGroupId = $("#editedGroupName").attr("editGroupId");
+    var groupName = $("#editedGroupName").val();
     var friendsList = $(".friendList");
-    var groupMembers = $(".groupMembers");
 
     for(var i = 0; i < friendsList.size(); i++){
-        friends:
+        var friendId = $(".friendList").eq(i).attr("friendId");
         if(($(".friendList").eq(i).prop('checked') === true) && ($(".friendList").eq(i).attr('original') === 1){
-            var friendId = $(".friendList").eq(i).attr("friendId");
-            for(var j = 0; j < groupMembers.size();j++){
-                var id = groupMembers.eq(j).attr("friendId");
-                if(id === friendId ){
-                    break friends;
-                }
-            }
+            ;        
+        }
+        else{
+
+            $.ajax({
+            type: "POST",
+            url: "api/AddGroupMembers",
+            data: {
+                userId: friendId,
+                groupId: editGroupId 
+            }});
+
+        }
+        if(($(".friendList").eq(i).prop('checked') === false) && ($(".friendList").eq(i).attr('original') === 1){
+            $.ajax({
+            type: "POST",
+            url: "api/DeleteGroupMembers",
+            data: {
+                userId: friendId,
+                groupId: editGroupId 
+            }});       
         }
     }
 
-    if(groupName !== $("#groupName").val()){
-        group.name = $("#groupName").val();
+    $.ajax({
+        type: "POST",
+        url: "api/ChangeGroupName",
+        data: {
+            groupname: groupName,
+            groupId:  editGroupId
+        },
+        success: function(json){
+        
+            $("#blackScreenofDeath").hide();
+            $("#editPopUp").hide();
+            
+            $("#groupName").val("");
+            $(".friendList").prop('checked', false);
+            updateGroupList();
+        }
+    });
 
-        $.ajax({
-            type: "POST",
-            url: "api/ChangeGroupName",
-            data: {
-                groupname: group.name
-            },
-            success: function(json){
-                if(json === "error_groupName"){
-                    alert("That name already exists. Please enter a new name.");
-                }
-                else{          
-                    $("#blackScreenofDeath").hide();
-                    $("#editPopUp").hide();
-                    
-                    $("#groupName").val("");
-                    $(".friendList").prop('checked', false);
-                    updateGroupList();
-                }
-            }
-        });
-    }
 }
 
 function updateFriendList() {
