@@ -544,6 +544,7 @@ function sendFriendRequest(){
                 $("#popUp").hide(); 
                 $("#blackScreenofDeath").hide(); 
                 $("#foundFriend").hide(); 
+                updateFriendsList();
 
             }
     });
