@@ -106,6 +106,11 @@ $app->post('/RemoveGuest', 'removeGuest');
 */
 $app->post('/RespondEventRequest', 'respondToEventRequest');
 
+/*
+* Delete Old Events
+*/
+$app->post('/DeleteOldEvents', 'deleteOldEvents');
+
 /**
 * Create Group
 */
@@ -761,6 +766,7 @@ function cancelEvent() {
 		$stmt = $db->prepare($sql);
 		$stmt->bindParam('eventId', $eventId);
 		$stmt->execute();
+		$db = null;
 	} catch(PDOException $e) {
         	echo '{"error":{"text":' . $e->getMessage() . '}}'; 
     	}
@@ -781,6 +787,7 @@ function removeGuest() {
 		$stmt->bindParam('eventId', $eventId);
 		$stmt->bindParam('userId', $userId);
 		$stmt->execute();
+		$db = null;
 	} catch(PDOException $e) {
         	echo '{"error":{"text":' . $e->getMessage() . '}}'; 
     	}
@@ -816,6 +823,42 @@ function respondToEventRequest() {
 		$stmt = $db->prepare($sql);
 		$stmt->bindParam('requestId', $requestId);
 		$stmt->execute();
+		$db = null;
+	}  catch(PDOException $e) {
+        	echo '{"error":{"text":' . $e->getMessage() . '}}'; 
+    	}
+}
+
+/*
+* A function to delete events that have already ended
+*/
+function deleteOldEvents() {
+	try {
+		$db = getConnection();
+		$sql = "SELECT EventId FROM Events WHERE EndTime<NOW()";
+		$stmt = $db->prepare($sql);
+		$stmt->execute();
+		$oldEvents = $stmt->fetchAll(PDO::FETCH_OBJ);
+		
+		foreach($oldEvents as $event) {
+			$deleteGuestList = "DELETE FROM GuestList WHERE EventId=:eventId";
+			$deleteEventRequests = "DELETE FROM EventRequest WHERE EventId=:eventId";
+			$deleteEvent = "DELETE FROM Events WHERE EventId=:eventId";
+			
+			$stmt = $db->prepare($deleteGuestList);
+			$stmt->bindParam('eventId', $event->EventId);
+			$stmt->execute();
+
+			$stmt = $db->prepare($deleteEventRequests);
+			$stmt->bindParam('eventId', $event->EventId);
+			$stmt->execute();
+
+			$stmt = $db->prepare($deleteEvent);
+			$stmt->bindParam('eventId', $event->EventId);
+			$stmt->execute();
+		}
+
+		$db = null;
 	}  catch(PDOException $e) {
         	echo '{"error":{"text":' . $e->getMessage() . '}}'; 
     	}
