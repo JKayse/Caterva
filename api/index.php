@@ -1423,7 +1423,7 @@ function sendEmails()
 			$stmt2 = $db->prepare($GuestQuery);
 			$stmt2->bindParam('EventId', $EventId);
 			$stmt2->execute();
-			$Guests = '{"Guests": ' . json_encode($stmt2->fetchAll(PDO::FETCH_OBJ)) . '}'; 			echo "</br>" . $Guests;
+			$Guests = '{"Guests": ' . json_encode($stmt2->fetchAll(PDO::FETCH_OBJ)) . '}'; 		
 			$Guests = json_decode($Guests, true);
 			foreach($Guests['Guests'] as $g){
 				$to = $g['Email'];
