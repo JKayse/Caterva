@@ -204,7 +204,7 @@ function deleteFriend(){
                 friendId: $(this).parent().attr("friendId")
             },
             success:function(json){
-                $(this).parent().remove();
+                $(this).remove();
             }
     });
 }
