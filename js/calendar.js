@@ -173,10 +173,12 @@ function getNextMonth(){
     var extra ="";
     var currentMonthValue;
     var startMonth;
+    var startYear;
 
     currentDate = new Date();
     current = currentDate.getDate();
     startMonth = currentDate.getMonth();
+    startYear = currentDate.getFullYear();
 
     var tbody = $("tbody");
 
@@ -254,7 +256,7 @@ function getNextMonth(){
         if(currentDayString < 10){
             currentDayString = "0" + currentDayString;
         }
-        if(currentDay === current && startMonth === currentMonth){
+        if(currentDay === current && startMonth === currentMonth && startYear === currentYear){
                 extra = "class='current'";
         }
         else{
@@ -274,7 +276,7 @@ function getNextMonth(){
             if(currentDayString < 10){
                 currentDayString = "0" + currentDayString;
             }
-            if(currentDay === current && startMonth === currentMonth){
+            if(currentDay === current && startMonth === currentMonth &&  startYear === currentYear){
                 extra = "class='current'";
             }
             else{
@@ -298,7 +300,7 @@ function getNextMonth(){
         if(currentDayString < 10){
             currentDayString = "0" + currentDayString;
         }
-        if(currentDay === current && startMonth === currentMonth){
+        if(currentDay === current && startMonth === currentMonth &&  startYear === currentYear){
                 extra = "class='current'";
         }
         else{
@@ -326,6 +328,7 @@ function getPrevMonth(){
     var currentMonthString;
     var extra ="";
     var currentMonthValue;
+    var startYear;
 
     var tbody = $("tbody");
 
@@ -334,6 +337,8 @@ function getPrevMonth(){
     currentDate = new Date();
     current = currentDate.getDate();
     startMonth = currentDate.getMonth();
+    startYear = currentDate.getFullYear();
+
 
     if(currentMonth === -1){
         currentMonth = 11;
@@ -407,7 +412,7 @@ function getPrevMonth(){
         if(currentDayString < 10){
             currentDayString = "0" + currentDayString;
         }
-        if(currentDay === current && startMonth === currentMonth){
+        if(currentDay === current && startMonth === currentMonth &&  startYear === currentYear){
                 extra = "class='current'";
         }
         else{
@@ -427,7 +432,7 @@ function getPrevMonth(){
             if(currentDayString < 10){
                 currentDayString = "0" + currentDayString;
             }
-            if(currentDay === current && startMonth === currentMonth){
+            if(currentDay === current && startMonth === currentMonth &&  startYear === currentYear){
                 extra = "class='current'";
             }
             else{
@@ -451,7 +456,7 @@ function getPrevMonth(){
         if(currentDayString < 10){
             currentDayString = "0" + currentDayString;
         }
-        if(currentDay === current && startMonth === currentMonth){
+        if(currentDay === current && startMonth === currentMonth &&  startYear === currentYear){
                 extra = "class='current'";
         }
         else{

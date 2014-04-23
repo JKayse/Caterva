@@ -603,9 +603,9 @@ function updateEventRequest(e){
         going=0;
     }
     
-    /*$.ajax({
+    $.ajax({
             type: "POST",
-            url: "api/AddFriend", asyn:false,
+            url: "api/RespondEventRequest", asyn:false,
             data: {
                 eventRequestId: $(this).parent().children().eq(0).attr("eventRequestId"),
                 going: going
@@ -615,7 +615,7 @@ function updateEventRequest(e){
                 $("#eventList").empty();
                 getEvents();
             }
-    });*/
+    });
 
     $(this).parent().remove();
 }
@@ -1465,6 +1465,8 @@ function closeRequestInfo(){
 }
 
 function addEventstoCalendar(){
+    $(".eventBox").attr("numEvents", "0");
+    $(".eventBox").attr("events", "");
     for(var i = 0; i < eventList.length; i++){
         var element = document.getElementById(eventList[i].startDate);
         if(element != null){

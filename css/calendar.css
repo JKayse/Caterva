@@ -69,4 +69,5 @@ table{
 
 .eventHere:hover{
     background-color: rgb(65, 106, 190);
+    cursor: pointer;
 }
