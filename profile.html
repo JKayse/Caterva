@@ -25,9 +25,11 @@
             <h1 id = "name">Amy Sherwood's Profile</h1>
             <h2 id = "userName">Username: BlueBird</h2>
             <h3 id = "email">Email: ASherwood@smu.edu</h3>
+            <!-- should only be visible when viewing own profile page -->
             <button class="button" id="editProfile" type="button">Edit Profile</button>
             <h2>About Me:</h2>
-            <textarea wrap="hard" name="profile" rows="5%" cols="45%" title ="Profile" id="aboutMe">Here lies a description.</textarea>
+            
+            <!-- this should be a paragraph with a description of the user. Change to text area when editing this description <textarea wrap="hard" name="profile" rows="5%" cols="45%" title ="Profile" id="aboutMe">Here lies a description.</textarea> -->
                
             <form id="imageUpload" action="api/AddPicture" method="POST" enctype="multipart/form-data">
                 <input type='file' name='image' accept="image/x-png, image/gif, image/jpeg, image/jpg" id="imgInp" />

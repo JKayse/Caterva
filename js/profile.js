@@ -49,11 +49,15 @@ function uploadImage(e){
 
 }
 
-function editProfile () {
-    
+/*function editProfile () {
+    var newDescription = "";
+
+
 }
+*/
 
 function populatePage () {
+    var userId = 
     $.ajax({url:"api/UserInfo/" + event.ownerId, async:false, success: function(json){
                 json = JSON.parse(json);
                 var info = json.User;
