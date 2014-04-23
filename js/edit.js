@@ -248,7 +248,7 @@ function editGroup() {
     for(var i = 0; i < friendsList.size(); i++){
         var friendId = $(".friendList").eq(i).attr("friendId");
         if(($(".friendList").eq(i).attr('checked')) && ($(".friendList").eq(i).attr('original') === 1)){
-            ;        
+            console.log(friendId + "HI");        
         }
         else{
 
@@ -259,7 +259,7 @@ function editGroup() {
                 userId: friendId,
                 groupId: editGroupId 
             }});
-
+            console.log(friendId + "hello");    
         }
         if(!($(".friendList").eq(i).attr('checked')) && ($(".friendList").eq(i).attr('original') === 1)){
             $.ajax({
@@ -268,7 +268,8 @@ function editGroup() {
             data: {
                 userId: friendId,
                 groupId: editGroupId 
-            }});       
+            }});
+            console.log(friendId + "ajdkas");    
         }
     }
 
