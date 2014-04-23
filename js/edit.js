@@ -45,6 +45,7 @@ $(document).ready(function() {
                 $("#friendList").append(friend);
                 var friendAdder = "<input type='checkbox' class='friendList' friendId=" + userId + " id='" + userId + "friend' title='Add Friend' name='Add Friends'><label for='" + userId + "friend'>"+ firstname +" "+ lastname + "</label><br>";
                 $("#listOfFriends").append(friendAdder);
+                $("#editedListOfFriends").append(friendAdder);
             }});    
         }
 
@@ -86,7 +87,7 @@ function addGroupPopUp(){
 function editGroupPopUp() {
     var groupName = $(this).parent().attr("groupName");
     document.getElementById('groupName').placeholder = "" + groupName;
-    $(".groupMembers") = $(this).parent().attr("groupMembers");
+    var groupMembers = $(this).parent().attr("groupMembers");
     var friends = $(".friendList");
 
     $("#blackScreenofDeath").show();
@@ -196,7 +197,7 @@ function deleteFriend(){
 
     $.ajax({
             type: "POST",
-            url: "api/deleteFriend", asyn: false,
+            url: "api/DeleteFriend", asyn: false,
             data: {
                 friendId: $(this).parent().attr("friendId")
             },
@@ -211,7 +212,7 @@ function deleteGroup() {
 
     $.ajax({
             type: "POST",
-            url: "api/deleteGroup", asyn: false,
+            url: "api/DeleteGroup", asyn: false,
             data: {
                 groupId: $(this).parent().attr("groupId")
             },
@@ -249,7 +250,7 @@ function editGroup() {
 
         $.ajax({
             type: "POST",
-            url: "api/changeGroupName",
+            url: "api/ChangeGroupName",
             data: {
                 groupname: group.name
             },
