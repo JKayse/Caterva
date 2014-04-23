@@ -1460,11 +1460,15 @@ function sendEmails()
 		$events = json_decode($events, true);
 		
 		foreach($events['Events'] as $e){
-			$EventId = $e['EventId'];
+			$eventId = $e['EventId'];
+			$startTime = $e['StartTime'];
+			$endTime = $e['EndTime'];
 			$GuestQuery = "SELECT u.Firstname, u.Lastname, u.Email FROM Users u INNER JOIN
-			GuestList gl ON u.UserId = gl.UserId AND gl.EventId = :EventId";
+			GuestList gl ON u.UserId = gl.UserId AND gl.EventId = :eventId UNION SELECT
+			u2.Firstname, u2.Lastname, u2.Email FROM Users u2 INNER JOIN Events e2 ON
+			u2.UserId = e2.UserId WHERE e2.EventId = :eventId";
 			$stmt2 = $db->prepare($GuestQuery);
-			$stmt2->bindParam('EventId', $EventId);
+			$stmt2->bindParam('eventId', $eventId);
 			$stmt2->execute();
 			$Guests = '{"Guests": ' . json_encode($stmt2->fetchAll(PDO::FETCH_OBJ)) . '}';
 			echo "</br></br>" . $Guests; 		
@@ -1473,10 +1477,10 @@ function sendEmails()
 				$to = $g['Email'];
  				$subject = "Event Reminder";
  				$body = "Hi " .  $g['Firstname'] .  " " . $g['Lastname'] .  
-					",</br>You have an event to go to: </br>" .
-					$e['EventName'] . "</br>" . 
-					date('F j, Y, g:i a', $e['StartTime']) . "</br>" .
-					date('F j, Y, g:i a',$e['EndTime']) . "</br>" .
+					",\nYou have an event to go to: \n" .
+					$e['EventName'] . "\n" . 
+					$e['StartTime'] . "\n" .
+					$e['EndTime'] . "\n" .
 					"Thank you for using Flock";
 				echo "</br>" . $to . "</br>" . $subject;
 				echo "</br>" . $body . "</br>";
@@ -1489,7 +1493,7 @@ function sendEmails()
 		}
 	} catch(PDOExection $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
-    	}	
+    	}
 }
 
 
