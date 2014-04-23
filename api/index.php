@@ -770,7 +770,7 @@ function respondToEventRequest() {
 	try {
 		$db = getConnection();
 
-		if($request = 1) {
+		if($response = 1) {
 			$sql = "SELECT EventId, UserId FROM EventRequest WHERE EventRequestId=:requestId";
 			$stmt = $db->prepare($sql);
 			$stmt->bindParam('requestId', $requestId);
