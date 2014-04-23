@@ -210,7 +210,7 @@ function deleteFriend(){
 }
 
 function deleteGroup(e) {
-    e.stopPropogation();
+    e.stopPropagation();
     var groupId;
 
     $.ajax({
