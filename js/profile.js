@@ -49,16 +49,28 @@ function uploadImage(e){
 
 }
 
-/*function editProfile () {
-    var newDescription = "";
+function editProfile () {
+    var newDescription;
+    var newEmail;
 
-
+     $.ajax({
+        url: 'api/EditProfile',
+        type: 'POST',
+        data: {
+            email: newEmail,
+            description: newDescription,
+        },
+        contentType: false,
+        processData: false,
+        success: function () {
+            alert("The image was successfully uploaded!");
+        }
+    });
 }
-*/
 
 function populatePage () {
-    var userId = 
-    $.ajax({url:"api/UserInfo/" + event.ownerId, async:false, success: function(json){
+    var userId = 1;
+    $.ajax({url:"api/UserInfo/" + userId, async:false, success: function(json){
                 json = JSON.parse(json);
                 var info = json.User;
                 var firstname = info[0].Firstname;
