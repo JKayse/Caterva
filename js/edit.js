@@ -87,7 +87,7 @@ function addGroupPopUp(){
 
 function editGroupPopUp() {
     var groupName = $(this).children().eq(1).html();
-    document.getElementById('editedGroupName').val = groupName;
+    $('#editedGroupName').val = groupName;
 
     $("#blackScreenofDeath").show();
     $("#popUp").show();
