@@ -199,12 +199,12 @@ function deleteFriend(){
 
     $.ajax({
             type: "POST",
-            url: "api/DeleteFriend", asyn: false,
+            url: "api/DeleteFriend", async: false,
             data: {
                 friendId: $(this).parent().attr("friendId")
             },
             success:function(json){
-                (this).parent().remove();
+                $(this).parent().remove();
             }
     });
 }
@@ -215,7 +215,7 @@ function deleteGroup(e) {
 
     $.ajax({
             type: "POST",
-            url: "api/DeleteGroup", asyn: false,
+            url: "api/DeleteGroup", async: false,
             data: {
                 groupId: $(this).parent().attr("groupId")
             },
