@@ -1468,6 +1468,7 @@ function closeRequestInfo(){
 function addEventstoCalendar(){
     $(".eventBox").attr("numEvents", "0");
     $(".eventBox").attr("events", "");
+    $(".eventBox").children().html("");
     $(".eventHere").removeClass("eventHere");
     for(var i = 0; i < eventList.length; i++){
         var element = document.getElementById(eventList[i].startDate);
