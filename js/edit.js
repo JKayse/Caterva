@@ -216,6 +216,21 @@ function editGroup() {
     var friendsList = [];
     var group = {};
     
+    var friendstoAdd="";
+    var friendsList = $(".friendList");
+    
+    /* var groupMembers = $(".groupMembers");
+    for(var i = 0; i < friendsList.size(); i++){
+        friends:
+        if($(".friendList").eq(i).prop('checked') === true){
+            var friendId = $(".friendList").eq(i).attr("friendId");
+            for(var j = 0; j < groupMembers.size();j++){
+                var id = groupMembers.eq(j).attr("friendId");
+                if(id === friendId ){
+                    break friends;
+                }
+            }
+*/
 
     if(groupName !== $("#groupName").val()){
         group.name = $("#groupName").val();
