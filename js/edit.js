@@ -249,7 +249,7 @@ function editGroup() {
         var friendId = $(".friendList").eq(i).attr("friendId");
         if(($(".friendList").eq(i).prop('checked') === true) && ($(".friendList").eq(i).attr('original') === 1)){    
         }
-        else if(($(".friendList").eq(i).prop('checked') === true)){
+        else if(($(".friendList").eq(i).prop('checked') === true) && !($(".friendList").eq(i).attr('original') === 1)){
 
             $.ajax({
             type: "POST",
