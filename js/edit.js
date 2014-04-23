@@ -7,6 +7,7 @@ $(document).ready(function() {
     $(document).on('click', ".deleteFriend", deleteFriend);
     $(document).on('click', ".deleteGroup", deleteGroup);
     $(document).on('click', ".groupie", editGroupPopUp);
+    $(document).on('click', ".cancelEdit", closeEditGroupPopUp);
 
     $('.mouseover').slimScroll({
         height: '83%'
@@ -79,21 +80,24 @@ $(document).ready(function() {
 function addGroupPopUp(){
     $("#blackScreenofDeath").show();
     $("#popUp").show();
+    $("#editAndCreateGroups").show();
 }
 
 function editGroupPopUp() {
     var groupName = $(this).parent().attr("groupName");
     document.getElementById('groupName').placeholder = "" + groupName;
-    var groupMembers = $(this).parent().attr("groupMembers");
+    $(".groupMembers") = $(this).parent().attr("groupMembers");
     var friends = $(".friendList");
 
     $("#blackScreenofDeath").show();
+    $("#popUp").show();
     $("#editPopUp").show();
 }
 
 function closeGroupPopUp(){
     $("#blackScreenofDeath").hide();
     $("#popUp").hide();
+    $("editAndCreateGroups").hide();
 
     $("#groupName").val("");
     $(".friendList").prop('checked', false);
@@ -101,6 +105,7 @@ function closeGroupPopUp(){
 
 function closeEditGroupPopUp(){
     $("#blackScreenofDeath").hide();
+    $("#popUp").hide();
     $("#editPopUp").hide();
 
     $("#editedGroupName").val("");
@@ -224,8 +229,8 @@ function editGroup() {
     
     var friendstoAdd="";
     var friendsList = $(".friendList");
+    var groupMembers = $(".groupMembers")
 
-    /* var groupMembers = $(".groupMembers");
     for(var i = 0; i < friendsList.size(); i++){
         friends:
         if($(".friendList").eq(i).prop('checked') === true){
@@ -236,7 +241,8 @@ function editGroup() {
                     break friends;
                 }
             }
- */
+        }
+    }
 
     if(groupName !== $("#groupName").val()){
         group.name = $("#groupName").val();
