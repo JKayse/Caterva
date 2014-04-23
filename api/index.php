@@ -1100,7 +1100,7 @@ function addPicture()
 */
 function androidViewFriends(){
     $userId = Slim::getInstance()->request()->post('id');   
-    $sql = "SELECT fl.FriendId, u.Firstname, u.Lastname FROM FriendsList fl INNER JOIN Users u ON fl.FriendId=u.UserId WHERE UserId = :userId";
+    $sql = "SELECT fl.FriendId, u.Firstname, u.Lastname FROM FriendsList fl INNER JOIN Users u ON fl.FriendId=u.UserId WHERE fl.UserId = :userId";
     try {
             $db = getConnection();
             $stmt = $db->prepare($sql);
