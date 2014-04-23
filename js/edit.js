@@ -87,7 +87,15 @@ function addGroupPopUp(){
 
 function editGroupPopUp() {
     var groupName = $(this).children().eq(1).html();
-    $('#editedGroupName').val = groupName;
+    $('#editedGroupName').val(groupName);
+
+    var friends = $(this).attr("friendIds");
+    var friendList = friends.split(", ");
+
+    for(var i = 0; i < friendList.length; i++)
+    {
+        $("#" + friendList[i] + "friend").prop('checked', true);
+    }
 
     $("#blackScreenofDeath").show();
     $("#popUp").show();
