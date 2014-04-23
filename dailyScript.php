@@ -1,5 +1,5 @@
 <?php
     include "api/index.php";
-    //sendEmails();
+    sendEmails();
     deleteOldEvents();
 ?>

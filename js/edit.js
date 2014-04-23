@@ -247,7 +247,7 @@ function editGroup() {
 
     for(var i = 0; i < friendsList.size(); i++){
         var friendId = $(".friendList").eq(i).attr("friendId");
-        if(($(".friendList").eq(i).attr('checked')) && ($(".friendList").eq(i).attr('original') === 1)){
+        if(($(".friendList").eq(i).prop('checked') === true) && ($(".friendList").eq(i).attr('original') === 1)){
             console.log(friendId + "HI");        
         }
         else{
@@ -261,7 +261,7 @@ function editGroup() {
             }});
             console.log(friendId + "hello");    
         }
-        if(!($(".friendList").eq(i).attr('checked')) && ($(".friendList").eq(i).attr('original') === 1)){
+        if(($(".friendList").eq(i).prop('checked') === false) && ($(".friendList").eq(i).attr('original') === 1)){
             $.ajax({
             type: "POST",
             url: "api/DeleteGroupMembers",
