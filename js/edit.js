@@ -204,12 +204,13 @@ function deleteFriend(){
                 friendId: $(this).parent().attr("friendId")
             },
             success:function(json){
-                //
+                (this).parent().remove();
             }
     });
 }
 
-function deleteGroup() {
+function deleteGroup(e) {
+    e.stopPropogation();
     var groupId;
 
     $.ajax({
