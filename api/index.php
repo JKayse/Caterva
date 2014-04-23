@@ -163,6 +163,10 @@ $app->post('/DeleteGroup', 'deleteGroup');
 $app->post('/AddPicture', 'addPicture');
 
 /**
+*
+*/
+$app->post('/EditProfile', 'editProfile');
+/**
 * Android Versions of some of the functions listed above
 */
 $app->post('/AndroidViewFriends', 'androidViewFriends');
@@ -387,6 +391,28 @@ function searchFriend()
         $db = null;	
 	echo '{"Friend": ' . json_encode($friendId) . '}';
     } catch(PDOException $e) {
+    echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+    }   
+}
+
+/**
+* A function that edits a person's profile
+*/
+function editProfile()
+{
+	$userId = $_SESSION['userId'];	
+	$email = Slim::getInstance()->request()->post('email');
+	$description = Slim::getInstance()->request()->post('description');
+	$sql = "UPDATE Users SET Email = :email, Description = :description WHERE UserId = :userId"; 
+	try{
+		$db = getConnection();
+		$stmt = $db->prepare($sql);
+        	$stmt->bindParam("email",$email);
+		$stmt->bindParam("description", $description);
+		$stmt->bindParam("userId", $userId);
+        	$stmt->execute();
+
+	} catch(PDOException $e) {
     echo '{"error":{"text":'. $e->getMessage() .'}}'; 
     }   
 }
@@ -966,11 +992,14 @@ function viewGroupMembers($groupId) {
 */
 function addGroupMembers()
 {
-	$GroupMembers = Slim::getInstance()->request()->post('groupmembers');
+	$groupId = Slim::getInstance()->request()->post('groupId');
+	$userId = Slim::getInstance()->request()->post('userId');
 	$sql = "INSERT INTO GroupList (GroupId, UserId) VALUES (:groupId, :userId)";
 	try {
             $db = getConnection();
-            $stmt = $db->prepare($DeleteQuery);
+            $stmt = $db->prepare($sql);
+	    $stmt->bindParam('groupId', $groupId);
+	    $stmt->bindParam('userId', $userId);
             $stmt->execute();
             $db = null;
         } catch(PDOException $e) {
@@ -1421,7 +1450,7 @@ function sendEmails()
 function getConnection() {
     $dbhost="localhost";
     $dbuser="root";
-    $dbpass="halomastercheif";
+    $dbpass="halomasterchief";
     $dbname="Flock";
     $dbh = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);  
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
