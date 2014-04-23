@@ -666,11 +666,11 @@ function viewAttendingEventInformation(){
 
     $("#eventInformation").attr('eventId', eventId);
 
-    // $.ajax({url:"api/LoginStatus", success: function(json){
-    //     userId = json.ID;
-    // }});
-    userId = '1';
-    //will replace with the real user id later.
+    $.ajax({url:"api/LoginStatus", async:false, success: function(json){
+        json = JSON.parse(json);
+        userId = json.ID;
+        userId = String(userId);
+    }});
 
     var imageChosen ="";
     console.log(clicked.attr('ownerId'));
