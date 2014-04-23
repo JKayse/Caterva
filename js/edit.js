@@ -196,6 +196,7 @@ function updateGroupList(){
 
 function deleteFriend(){
     var friendId;
+    var thing = this;
 
     $.ajax({
             type: "POST",
@@ -204,8 +205,8 @@ function deleteFriend(){
                 friendId: $(this).parent().attr("friendId")
             },
             success:function(json){
-                console.log(this);
-                $(this).remove();
+                console.log(thing);
+                $(thing).parent().remove();
             }
     });
 }
