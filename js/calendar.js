@@ -81,7 +81,7 @@ function createCalendar(){
         totalNumberDays = 31;
     }
 
-    if(currentYear%4 === 0 && currentMonth === 1){
+    if(currentYear%4 === 0 && currentMonthString === "February"){
         totalNumberDays= 29;
     }
 
@@ -244,7 +244,7 @@ function getNextMonth(){
         totalNumberDays = 31;
     }
 
-    if(currentYear%4 === 0 && currentMonth === 1){
+    if(currentYear%4 === 0 && currentMonthString === "February"){
         totalNumberDays= 29;
     }
 
@@ -404,7 +404,7 @@ function getPrevMonth(){
         totalNumberDays = 31;
     }
 
-    if(currentYear%4 === 0 && currentMonth === 1){
+    if(currentYear%4 === 0 && currentMonthString === "February"){
         totalNumberDays= 29;
     }
 
