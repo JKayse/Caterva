@@ -94,7 +94,7 @@ function getQueryVariable(variable) {
         populatePage(pair[1]);
         }
 
-    .ajax({url:"api/LoginStatus", success: function(json){
+    $.ajax({url:"api/LoginStatus", success: function(json){
         if(json !== 'null'){
             var json = JSON.parse(json);
             var userId = json.ID;
@@ -105,5 +105,4 @@ function getQueryVariable(variable) {
         }
     }});
     populatePage()
-}
 }
