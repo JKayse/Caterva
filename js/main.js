@@ -363,8 +363,7 @@ function goToEditPage(){
 
 function goToProfilePage(){
     var friendId = $(this).attr("friendId");
-    var url = "profile.html?ID=" + friendId;
-    window.location = url;
+    window.location = "profile.html?ID=" + friendId;
 }
 
 function addFriend(){

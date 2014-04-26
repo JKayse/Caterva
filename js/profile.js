@@ -88,15 +88,11 @@ function populatePage (userId) {
 
 function getQueryVariable(variable) {
     var query = window.location.search.substring(1);
-    var vars = query.split("&amp;");
-
-    for (var i=0;i&lt;vars.length;i++) {
-      var pair = vars[i].split("=");
+    var pair = query.split("=");
       
-        if (pair[0] == variable) {
+    if (pair[0] == variable) {
         populatePage(pair[1]);
         }
-    }
 
     .ajax({url:"api/LoginStatus", success: function(json){
         if(json !== 'null'){
