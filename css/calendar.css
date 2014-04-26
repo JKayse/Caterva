@@ -64,7 +64,6 @@ table{
 
 #nextMonth{
     height: 4%;
-    -webkit-transform: rotate(180deg);
 }
 
 .eventHere:hover{

@@ -71,6 +71,12 @@ $(document).ready(function() {
 
     $(document).on('click', ".eventHere", showCalendarInfo);
     $(document).on('click', ".closeCalendarEventsInfo", hideCalendarInfo);
+
+    $(document).on('click', "#eventDate", updateEndDate);
+    $(document).on('click', "#blackScreenofDeath", closeEverything);
+
+
+
     
     getEvents();
     
@@ -231,9 +237,12 @@ $(document).ready(function() {
                 var friend = "<button class='friend' type='button' friendId=" + userId + ">"+ firstname +" "+ lastname+ "</button>";
                 $("#friendList").append(friend);
                 var friendAdder = "<input type='checkbox' class='friendList' friendId=" + userId + " id='" + userId + "friend' title='Invite' name='invitedFriends'><label for='" + userId + "friend'>"+ firstname +" "+ lastname + "</label><br>";
+                var friendEditAdder = "<input type='checkbox' class='friendList' friendId=" + userId + " id='" + userId + "friendEdit' title='Invite' name='invitedFriends'><label for='" + userId + "friendEdit'>"+ firstname +" "+ lastname + "</label><br>";
+                var friendShareAdder = "<input type='checkbox' class='friendList' friendId=" + userId + " id='" + userId + "friendShare' title='Invite' name='invitedFriends'><label for='" + userId + "friendShare'>"+ firstname +" "+ lastname + "</label><br>";
+
                 $("#friendAdderList").append(friendAdder);
-                $("#friendEditorList").append(friendAdder);
-                $("#friendShareList").append(friendAdder);
+                $("#friendEditorList").append(friendEditAdder);
+                $("#friendShareList").append(friendShareAdder);
             }});    
         }
 
@@ -255,6 +264,9 @@ $(document).ready(function() {
 
             var group = "<button class='groupButton' type='button' groupId=" + groupId + ">" + groupName + " </button><div class='groupMembers' groupId=" + groupId + ">";
             var groupAdder = "<input type='checkbox' class='groupList' id='" + groupId + "Group' friends='";
+            var groupEditAdder = "<input type='checkbox' class='groupList' id='" + groupId + "GroupEdit' friends='";
+            var groupShareAdder = "<input type='checkbox' class='groupList' id='" + groupId + "GroupShare' friends='";
+
             friendList = "";
             friendIdList = "";
             for(var j = 0; j < friends.length ; j++){
@@ -266,7 +278,6 @@ $(document).ready(function() {
                     var firstname = friendInfo[0].Firstname;
                     var lastname = friendInfo[0].Lastname;
                     var userId = friendInfo[0].UserId;
-
                     group = group + "<button class='friend' type='button' friendId=" + userId + ">" + firstname + " " + lastname + "</button>";
                     friendList = friendList + ", " + firstname + " " + lastname;
                     friendIdList = friendIdList + ", " + userId;
@@ -278,11 +289,13 @@ $(document).ready(function() {
             friendList = friendList.substring(2);
             friendIdList = friendIdList.substring(2);
 
-            groupAdder = groupAdder + friendList + "' friendIds= '" + friendIdList + "' title ='Invite' name='invitedGroups'><label for=" + groupId + "Group'>" + groupName + "</label><br>";
+            groupAdder = groupAdder + friendList + "' friendIds= '" + friendIdList + "' title ='Invite' name='invitedGroups'><label for='" + groupId + "Group'>" + groupName + "</label><br>";
+            groupEditAdder = groupEditAdder + friendList + "' friendIds= '" + friendIdList + "' title ='Invite' name='invitedGroups'><label for='" + groupId + "GroupEdit'>" + groupName + "</label><br>";
+            groupShareAdder = groupShareAdder + friendList + "' friendIds= '" + friendIdList + "' title ='Invite' name='invitedGroups'><label for='" + groupId + "GroupShare'>" + groupName + "</label><br>";
 
             $("#groupAdderList").append(groupAdder);
-            $("#groupEditorList").append(groupAdder);
-            $("#groupShareList").append(groupAdder);
+            $("#groupEditorList").append(groupEditAdder);
+            $("#groupShareList").append(groupShareAdder);
             $("#groupList").append(group);
         }
 
@@ -349,7 +362,9 @@ function goToEditPage(){
 }
 
 function goToProfilePage(){
-    window.location = "profile.html";
+    var friendId = $(this).attr("friendId");
+    var url = "profile.html?ID=" + friendId;
+    window.location = url;
 }
 
 function addFriend(){
@@ -711,9 +726,12 @@ function updateFriendsList(){
                 var friend = "<button class='friend' type='button' friendId=" + userId + ">"+ firstname +" "+ lastname+ "</button>";
                 $("#friendList").append(friend);
                 var friendAdder = "<input type='checkbox' class='friendList' friendId=" + userId + " id='" + userId + "friend' title='Invite' name='invitedFriends'><label for='" + userId + "friend'>"+ firstname +" "+ lastname + "</label><br>";
+                 var friendEditAdder = "<input type='checkbox' class='friendList' friendId=" + userId + " id='" + userId + "friendEdit' title='Invite' name='invitedFriends'><label for='" + userId + "friendEdit'>"+ firstname +" "+ lastname + "</label><br>";
+                var friendShareAdder = "<input type='checkbox' class='friendList' friendId=" + userId + " id='" + userId + "friendShare' title='Invite' name='invitedFriends'><label for='" + userId + "friendShare'>"+ firstname +" "+ lastname + "</label><br>";
+
                 $("#friendAdderList").append(friendAdder);
-                $("#friendEditorList").append(friendAdder);
-                $("#friendShareList").append(friendAdder);
+                $("#friendEditorList").append(friendEditAdder);
+                $("#friendShareList").append(friendShareAdder);
                 $("#flockList button").css("font-size", $(".friendRequest").css("font-size"));
             }});    
         }
@@ -1460,7 +1478,7 @@ function getFriendRequestInfo(){
 
 function closeRequestInfo(){
     $("#blackScreenofDeath").hide();
-        $("#popUp").hide();
+    $("#popUp").hide();
     $("#requestedFriendInfo").hide();
 
 }
@@ -1514,3 +1532,45 @@ function hideCalendarInfo(){
     $("#blackScreenofDeath").hide();
     $("#currentEvents").empty();
 }
+
+function updateEndDate(){
+    $("#eventDateEnd").val($("#eventDate").val());
+}
+
+function closeEverything(){
+    $("#calendarEventsInfo").hide(); 
+    $("#popUp").hide(); 
+    $("#blackScreenofDeath").hide();
+    $("#currentEvents").empty();
+    $("#requestedFriendInfo").hide();
+    $("#enterEvent").hide();
+    $("#friendSearchForm").hide();
+    $("#friendSearch").hide();
+    $("#friendsUsername").val("");
+    $("#eventTitle").val("");
+    $("#eventDescription").val("");
+    $("#eventDate").val("");
+    $("#eventDateEnd").val("");
+    $("#eventTimeStart").val("");
+    $("#eventTimeEnd").val("");
+    $("#eventGuestList").empty();
+    $("#enterFriend").hide(); 
+    $("#foundFriend").hide();
+    $("#enterFriend form").hide();  
+    $("#eventInformation").hide();
+    $("#editDescription").val("");
+    $("#editGuestList").empty();
+    $("#editEvent").hide();
+    $("#editFriendsOptions").hide();
+    $("#editGroupsOptions").hide();
+    $("#shareEvent").hide();
+    $("#shareFriendsOptions").hide();
+    $("#shareGroupsOptions").hide();
+    $(".friendList").prop('checked', false);
+    $(".groupList").prop('checked', false);
+    $("#allowShareEvent").prop('checked', false);
+    $("#addFriendsOptions").hide();
+    $("#addGroupsOptions").hide();
+
+}
+
