@@ -72,7 +72,7 @@ $(document).ready(function() {
     $(document).on('click', ".eventHere", showCalendarInfo);
     $(document).on('click', ".closeCalendarEventsInfo", hideCalendarInfo);
 
-    $(document).on('click', "#eventDate", updateEndDate);
+    $(document).on('change', "#eventDate", updateEndDate);
 
 
 
