@@ -70,3 +70,11 @@ table{
     background-color: rgb(65, 106, 190);
     cursor: pointer;
 }
+
+.canceledCalendar{
+    position: absolute;
+    -webkit-transform: rotate(-9deg);
+    width:50%;
+    margin-top: 2%;
+    margin-bottom:2%;
+}

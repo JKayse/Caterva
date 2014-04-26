@@ -1520,7 +1520,11 @@ function showCalendarInfo(){
     var events = $(this).children().eq(1).attr("events");
     var event = events.split(",");
     for(var k = 0; k < event.length -1; k++){
-        $("#currentEvents").append("<h2>" + eventList[event[k]].eventName + "</h2><br><h4>Hosted By: " + eventList[event[k]].ownerName + "</h4><br><h4>Description: " + eventList[event[k]].description + "</h4><br><h4>Start: " + eventList[event[k]].startDate + " " + eventList[event[k]].startTime + "</h4><br><h4>End: " + eventList[event[k]].endDate + " " + eventList[event[k]].endTime + "</h4><br><hr>");
+        var canceled = "";
+        if(eventList[event[k]].cancel === '1'){
+            canceled = "<img src='img/canceled2.png' class='canceledCalendar'alt='canceled' title='canceled'>"
+        }
+        $("#currentEvents").append(canceled + "<h2>" + eventList[event[k]].eventName + "</h2><br><h4>Hosted By: " + eventList[event[k]].ownerName + "</h4><br><h4>Description: " + eventList[event[k]].description + "</h4><br><h4>Start: " + eventList[event[k]].startDate + " " + eventList[event[k]].startTime + "</h4><br><h4>End: " + eventList[event[k]].endDate + " " + eventList[event[k]].endTime + "</h4><br><hr>");
     }
 
 }
