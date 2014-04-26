@@ -3,11 +3,11 @@ $(document).ready(function() {
     $("header").load("header.html");
     $("main img").width($("main img").height());
     $(document).on('submit', "#imageUpload", uploadImage);
-    $(document).on('click', "#editProfile", editProfile)
+    //$(document).on('click', "#editProfile", editProfile)
 
     $.ajax({url:"api/LoginStatus", success: function(json){
         if(json !== 'null'){
-            populatePage();
+            getQueryVariable("ID");
         }
         else{
             window.location = "index.html";
@@ -63,13 +63,12 @@ function editProfile () {
         contentType: false,
         processData: false,
         success: function () {
-            alert("The image was successfully uploaded!");
+            //alert("The image was successfully uploaded!");
         }
     });
 }
 
-function populatePage () {
-    var userId = 1;
+function populatePage (userId) {
     $.ajax({url:"api/UserInfo/" + userId, async:false, success: function(json){
                 json = JSON.parse(json);
                 var info = json.User;
@@ -85,4 +84,30 @@ function populatePage () {
                 document.getElementById('userName').innerHTML = "Username: " + userName;
                 document.getElementById('email').innerHTML = "Email: " + email;
             }});
+}
+
+function getQueryVariable(variable) {
+    var query = window.location.search.substring(1);
+    var vars = query.split("&amp;");
+
+    for (var i=0;i&lt;vars.length;i++) {
+      var pair = vars[i].split("=");
+      
+        if (pair[0] == variable) {
+        populatePage(pair[1]);
+        }
+    }
+
+    .ajax({url:"api/LoginStatus", success: function(json){
+        if(json !== 'null'){
+            var json = JSON.parse(json);
+            var userId = json.ID;
+            populatePage(userId);
+        }
+        else{
+            window.location = "index.html";
+        }
+    }});
+    populatePage()
+}
 }
