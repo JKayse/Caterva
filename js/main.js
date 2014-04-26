@@ -349,7 +349,9 @@ function goToEditPage(){
 }
 
 function goToProfilePage(){
-    window.location = "profile.html";
+    var friendId = $(this).attr("friendId");
+    var url = "profile.html?ID=" + friendId;
+    window.location = url;
 }
 
 function addFriend(){
