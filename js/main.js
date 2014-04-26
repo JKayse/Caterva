@@ -73,7 +73,6 @@ $(document).ready(function() {
     $(document).on('click', ".closeCalendarEventsInfo", hideCalendarInfo);
 
     $(document).on('click', "#eventDate", updateEndDate);
-    $(document).on('click', "#blackScreenofDeath", closeEverything);
 
 
 
@@ -363,7 +362,8 @@ function goToEditPage(){
 
 function goToProfilePage(){
     var friendId = $(this).attr("friendId");
-    window.location = "profile.html?ID=" + friendId;
+    var url = "profile.html?ID=" + friendId;
+    window.location = url;
 }
 
 function addFriend(){
