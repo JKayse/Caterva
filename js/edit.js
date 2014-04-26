@@ -9,6 +9,7 @@ $(document).ready(function() {
     $(document).on('click', ".groupie", editGroupPopUp);
     $(document).on('click', ".cancelEdit", closeEditGroupPopUp);
     $(document).on('submit', "#groupEditForm", editGroup);
+    $(document).on('click', "#blackScreenofDeath", closeEverything);
 
     $('.mouseover').slimScroll({
         height: '83%'
@@ -315,4 +316,17 @@ function updateFriendList() {
             }});    
         }
 
-    }});}
+    }});
+}
+
+
+function closeEverything(){
+    $("#editAndCreateGroups").hide();
+    $("#editPopUp").hide();
+    $("#blackScreenofDeath").hide();
+    $("#popUp").hide();
+    $("#groupName").val("");
+    $(".friendList").prop('checked', false);
+    $("#editedGroupName").val("");
+    $(".friendList").prop('checked', false);
+}

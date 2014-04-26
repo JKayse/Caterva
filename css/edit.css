@@ -109,6 +109,7 @@ img, .groupie, .friendie{
     top:170px;
     left:50%;
     margin-left: -200px;
+    z-index: 51;
 }
 
 .closePopUp{
