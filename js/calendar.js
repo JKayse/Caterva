@@ -81,6 +81,10 @@ function createCalendar(){
         totalNumberDays = 31;
     }
 
+    if(currentYear%4 === 0 && currentMonth === 1){
+        totalNumberDays= 29;
+    }
+
     $("#month").html(currentMonthString + " " + currentYear);
 
     
@@ -240,6 +244,10 @@ function getNextMonth(){
         totalNumberDays = 31;
     }
 
+    if(currentYear%4 === 0 && currentMonth === 1){
+        totalNumberDays= 29;
+    }
+
     $("#month").html(currentMonthString + " " + currentYear);
 
     currentMonthValue = currentMonth;
@@ -394,6 +402,10 @@ function getPrevMonth(){
     }
     else{
         totalNumberDays = 31;
+    }
+
+    if(currentYear%4 === 0 && currentMonth === 1){
+        totalNumberDays= 29;
     }
 
     $("#month").html(currentMonthString + " " + currentYear);
