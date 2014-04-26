@@ -74,7 +74,7 @@ table{
 .canceledCalendar{
     position: absolute;
     -webkit-transform: rotate(-9deg);
-    width:50%;
-    margin-top: 2%;
-    margin-bottom:2%;
+    width: 63%;
+    margin-top: 7%;
+    margin-left: 17%;
 }
