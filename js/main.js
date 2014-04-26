@@ -73,6 +73,7 @@ $(document).ready(function() {
     $(document).on('click', ".closeCalendarEventsInfo", hideCalendarInfo);
 
     $(document).on('change', "#eventDate", updateEndDate);
+    $(document).on('change', "#eventTimeStart", updateEndTime);
 
 
 
@@ -1538,6 +1539,10 @@ function hideCalendarInfo(){
 
 function updateEndDate(){
     $("#eventDateEnd").val($("#eventDate").val());
+}
+
+function updateEndTime(){
+    $("#eventTimeEnd").val($("#eventTimeStart").val());
 }
 
 function closeEverything(){
