@@ -117,218 +117,217 @@
                 </div>
             </section>
         </main>
-            <div id="blackScreenofDeath">
-                <div id="popUp">
-                    <div id="friendSearch">
-                        <form id = "friendSearchForm" name="Add a Friend" action="#" method="post">
-                            <img src="img/close.png" class="closePopUp cancelSearch"alt="Close" title="Close">
-                            <h2>Add a Friend</h2>
-                            <hr>
-                            <h3>Please enter the exact username.</h3>
-                            <input type="text" id="friendsUsername" placeholder="Username" name="username" title ="Enter the username of the person you want to add." required>
-                            <input type="submit" class="button" id ="searchUsers" value="Search">   
-                            <input type="button" class="button cancelSearch" value="Cancel">   
-                        </form>
-                        <div id="foundFriend">
-                            <img src="img/close.png" class="closeFriendRequest closePopUp" alt="Close" title="Close">
-                            <h2>Add a Friend</h2>
-                            <hr>
-                            <h3>BlueBird was found!</h3>
-                            <img id="friendPicture" src="img/FlockLogo1.png" alt="Flock Logo" title="Flock">
-                            <h3>Add BlueBird as a friend?</h3>
-                            <button id="sendFriendRequest">Yes</button>
-                            <button class="closeFriendRequest">No</button>                   
-                        </div> 
-                    </div>  
+            <div id="blackScreenofDeath"></div>
+            <div id="popUp">
+                <div id="friendSearch">
+                    <form id = "friendSearchForm" name="Add a Friend" action="#" method="post">
+                        <img src="img/close.png" class="closePopUp cancelSearch"alt="Close" title="Close">
+                        <h2>Add a Friend</h2>
+                        <hr>
+                        <h3>Please enter the exact username.</h3>
+                        <input type="text" id="friendsUsername" placeholder="Username" name="username" title ="Enter the username of the person you want to add." required>
+                        <input type="submit" class="button" id ="searchUsers" value="Search">   
+                        <input type="button" class="button cancelSearch" value="Cancel">   
+                    </form>
+                    <div id="foundFriend">
+                        <img src="img/close.png" class="closeFriendRequest closePopUp" alt="Close" title="Close">
+                        <h2>Add a Friend</h2>
+                        <hr>
+                        <h3>BlueBird was found!</h3>
+                        <img id="friendPicture" src="img/FlockLogo1.png" alt="Flock Logo" title="Flock">
+                        <h3>Add BlueBird as a friend?</h3>
+                        <button id="sendFriendRequest">Yes</button>
+                        <button class="closeFriendRequest">No</button>                   
+                    </div> 
+                </div>  
+                
+                <div id="enterEvent">
+                    <img src="img/close.png" class="closePopUp cancelEvent" alt="Close" title="Close">
+                    <h2>Event Creator</h2>
                     
-                    <div id="enterEvent">
-                        <img src="img/close.png" class="closePopUp cancelEvent" alt="Close" title="Close">
-                        <h2>Event Creator</h2>
-                        
-                        <hr>
-                        <form id = "eventCreator" name="Create An Account" action="#" method="post">
-                            <label for="eventTitle">Title:</label>
-                            <input type="text" id="eventTitle" name="title" title ="Enter the title of the event." required>
-                            <br>
-                            <label for="eventDescription">Description:</label>
-                            <textarea wrap="hard" name="description" rows="5%" cols="55%" title ="Enter the description of the event." id="eventDescription" form="eventCreator"></textarea>
-                            <br>
-                            <label for="eventDate">Start Date:</label>
-                            <input type="date" id="eventDate" name="date" title ="Enter the start date of the event." required>
-                            <label for="eventTimeStart">Start Time:</label>
-                            <input type="time" id="eventTimeStart" name="timeStart" title ="Enter the start time of the event." required>
-                            <br>
-                            <label for="eventDateEnd">End Date:</label>
-                            <input type="date" id="eventDateEnd" name="dateEnd" title ="Enter the end date of the event." required>
-                            <label for="eventTimeEnd">End Time:</label>
-                            <input type="time" id="eventTimeEnd" name="timeEnd" title ="Enter the end time of the event." required>
-                            <br>
-                            <label for="eventGuestList">Invited:</label>
-                            <div id="eventGuestList" name="guestList" title="Add people to the event."></div>
-
-                            
-                            <input type="button" class="button" id ="addFriendsEvent" value="Add Friends">   
-                            <input type="button" class="button" id ="addGroupsEvent" value="Add Groups">  
-                            <br>
-                            <input type="checkbox" id ="allowShareEvent" title="Share Events">
-                            <label for="allowShareEvent">Allow friends to share event.</label>
-                            <br>
-                            <input type="submit" class="button" id ="createThisEvent" value="Create Event">   
-                            <input type="button" class="button cancelEvent" value="Cancel">  
-                        </form>
-
-                    </div>   
-
-                    <!--Maybe use the auto complete instead of the pop ups. -->
-                    <div id="addFriendsOptions">
-                        <img src="img/close.png" class="closePopUp cancelFriends" alt="Close" title="Close">
-                        <h2>Add Friends</h2>
-                        
-                        <hr>
-                        <form id = "friendAdder" name="Create An Account" action="#" method="post">
-                            <div id="friendAdderList">
-                            </div> 
-                            <input type="submit" class="button" id ="addTheseFriends" value="Add">   
-                            <input type="button" class="button cancelFriends" value="Cancel"> 
-                        </form>
-
+                    <hr>
+                    <form id = "eventCreator" name="Create An Account" action="#" method="post">
+                        <label for="eventTitle">Title:</label>
+                        <input type="text" id="eventTitle" name="title" title ="Enter the title of the event." required>
+                        <br>
+                        <label for="eventDescription">Description:</label>
+                        <textarea wrap="hard" name="description" rows="5%" cols="55%" title ="Enter the description of the event." id="eventDescription" form="eventCreator"></textarea>
+                        <br>
+                        <label for="eventDate">Start Date:</label>
+                        <input type="date" id="eventDate" name="date" title ="Enter the start date of the event." required>
+                        <label for="eventTimeStart">Start Time:</label>
+                        <input type="time" id="eventTimeStart" name="timeStart" title ="Enter the start time of the event." required>
+                        <br>
+                        <label for="eventDateEnd">End Date:</label>
+                        <input type="date" id="eventDateEnd" name="dateEnd" title ="Enter the end date of the event." required>
+                        <label for="eventTimeEnd">End Time:</label>
+                        <input type="time" id="eventTimeEnd" name="timeEnd" title ="Enter the end time of the event." required>
+                        <br>
+                        <label for="eventGuestList">Invited:</label>
+                        <div id="eventGuestList" name="guestList" title="Add people to the event."></div>
 
                         
-                    </div> 
-                    <div id="addGroupsOptions">
-                        <img src="img/close.png" class="closePopUp cancelGroups" alt="Close" title="Close">
-                        <h2>Add Groups</h2>
-                        <hr>
-                        <form id = "groupAdder" name="Create An Account" action="#" method="post">
-                            <div id="groupAdderList">
-                            </div>
-                            <input type="submit" class="button" id ="addTheseGroups" value="Add">   
-                            <input type="button" class="button cancelGroups" value="Cancel">   
-                        </form>
+                        <input type="button" class="button" id ="addFriendsEvent" value="Add Friends">   
+                        <input type="button" class="button" id ="addGroupsEvent" value="Add Groups">  
+                        <br>
+                        <input type="checkbox" id ="allowShareEvent" title="Share Events">
+                        <label for="allowShareEvent">Allow friends to share event.</label>
+                        <br>
+                        <input type="submit" class="button" id ="createThisEvent" value="Create Event">   
+                        <input type="button" class="button cancelEvent" value="Cancel">  
+                    </form>
 
-                    </div>
-                    <div id="eventInformation">
-                    </div>  
+                </div>   
 
-                    <div id="editEvent">
-                        <img src="img/close.png" class="closePopUp cancelEditEvent" alt="Close" title="Close">
-                        <h2>Event Editor</h2>
-                        <hr>
-                        <form id = "eventEditor" name="Create An Account" action="#" method="post">
-                            <h4 id="editTitle">Title: Horseback Riding</h4>
-                            <h4>Description:</h4>
-                            <textarea wrap="hard" name="description" rows="5%" cols="55%" title ="Enter the description of the event." id="editDescription" form="eventEditor"></textarea>
-                            <br>
-                            <h4 id="editStart">Start: 4/12/14 3:00PM</h4>
-                            <h4 id="editEnd">End: 4/12/14 3:00PM</h4>
-                            <h4>Invite More Guests:</h4>
-                            <div id="editGuestList" name="guestList" title="Add people to the event."></div>
-
-                            
-                            <input type="button" class="button" id ="addFriendsEditEvent" value="Add Friends">   
-                            <input type="button" class="button" id ="addGroupsEditEvent" value="Add Groups">  
-                            <br>
-                            <input type="submit" class="button" id ="editThisEvent" value="Submit">   
-                            <input type="button" class="button cancelEditEvent" value="Cancel">  
-                        </form>
-
-                    </div> 
-                    <div id="editFriendsOptions">
-                        <img src="img/close.png" class="closePopUp cancelEditFriends" alt="Close" title="Close">
-                        <h2>Add Friends</h2>
-                        
-                        <hr>
-                        <form id = "friendEditor" name="Create An Account" action="#" method="post">
-                            <div id="friendEditorList">
-                            </div> 
-                            <input type="submit" class="button" id ="editTheseFriends" value="Add">   
-                            <input type="button" class="button cancelEditFriends" value="Cancel"> 
-                        </form>
+                <!--Maybe use the auto complete instead of the pop ups. -->
+                <div id="addFriendsOptions">
+                    <img src="img/close.png" class="closePopUp cancelFriends" alt="Close" title="Close">
+                    <h2>Add Friends</h2>
+                    
+                    <hr>
+                    <form id = "friendAdder" name="Create An Account" action="#" method="post">
+                        <div id="friendAdderList">
+                        </div> 
+                        <input type="submit" class="button" id ="addTheseFriends" value="Add">   
+                        <input type="button" class="button cancelFriends" value="Cancel"> 
+                    </form>
 
 
-                        
-                    </div> 
-                    <div id="editGroupsOptions">
-                        <img src="img/close.png" class="closePopUp cancelEditGroups" alt="Close" title="Close">
-                        <h2>Add Groups</h2>
-                        <hr>
-                        <form id = "groupEditor" name="Create An Account" action="#" method="post">
-                            <div id="groupEditorList">
-                            </div>
-                            <input type="submit" class="button" id ="editTheseGroups" value="Add">   
-                            <input type="button" class="button cancelEditGroups" value="Cancel">   
-                        </form>
-
-                    </div>    
-
-                    <div id="shareEvent">
-                        <img src="img/close.png" class="closePopUp cancelShareEvent" alt="Close" title="Close">
-                        <h2>Share Event</h2>
-                        <hr>
-                        <form id = "eventShare" name="Create An Account" action="#" method="post">
-                            <h4 id="shareTitle">Title: Horseback Riding</h4>
-                            <h4>Description:</h4>
-                            <textarea wrap="hard" name="description" rows="5%" cols="55%" title ="Enter the description of the event." id="shareDescription" form="eventShare" disabled></textarea>
-                            <br>
-                            <h4 id="shareStart">Start: 4/12/14 3:00PM</h4>
-                            <h4 id="shareEnd">End: 4/12/14 3:00PM</h4>
-                            <h4>Invite More Guests:</h4>
-                            <div id="shareGuestList" name="guestList" title="Add people to the event."></div>
-
-                            
-                            <input type="button" class="button" id ="addFriendsShareEvent" value="Add Friends">   
-                            <input type="button" class="button" id ="addGroupsShareEvent" value="Add Groups">  
-                            <br>
-                            <input type="submit" class="button" id ="shareThisEvent" value="Submit">   
-                            <input type="button" class="button cancelShareEvent" value="Cancel">  
-                        </form>
-
-                    </div> 
-                    <div id="shareFriendsOptions">
-                        <img src="img/close.png" class="closePopUp cancelShareFriends" alt="Close" title="Close">
-                        <h2>Add Friends</h2>
-                        
-                        <hr>
-                        <form id = "friendShare" name="Create An Account" action="#" method="post">
-                            <div id="friendShareList">
-                            </div> 
-                            <input type="submit" class="button" id ="shareTheseFriends" value="Add">   
-                            <input type="button" class="button cancelShareFriends" value="Cancel"> 
-                        </form>
-
-
-                        
-                    </div> 
-                    <div id="shareGroupsOptions">
-                        <img src="img/close.png" class="closePopUp cancelShareGroups" alt="Close" title="Close">
-                        <h2>Add Groups</h2>
-                        <hr>
-                        <form id = "groupShare" name="Create An Account" action="#" method="post">
-                            <div id="groupShareList">
-                            </div>
-                            <input type="submit" class="button" id ="shareTheseGroups" value="Add">   
-                            <input type="button" class="button cancelShareGroups" value="Cancel">   
-                        </form>
-
-                    </div>    
-
-                    <div id="requestedFriendInfo">
-                        <img src="img/close.png" class="closeRequestInfo closePopUp" alt="Close" title="Close">
-                        <h2>Request From:</h2>
-                        <hr>
-                        
-                        <img id="requestedFriendPicture" src="img/FlockLogo1.png" alt="Flock Logo" title="Flock">     
-                        <h3>BlueBird wants to be your friend!</h3>           
-                    </div>     
-
-                    <div id="calendarEventsInfo">
-                        <img src="img/close.png" class="closeCalendarEventsInfo closePopUp" alt="Close" title="Close">
-                        <h2>Event Information</h2>
-                        <hr>    
-                        <div id="currentEvents">
-                        </div>        
-                    </div>                          
+                    
                 </div> 
-            </div>
+                <div id="addGroupsOptions">
+                    <img src="img/close.png" class="closePopUp cancelGroups" alt="Close" title="Close">
+                    <h2>Add Groups</h2>
+                    <hr>
+                    <form id = "groupAdder" name="Create An Account" action="#" method="post">
+                        <div id="groupAdderList">
+                        </div>
+                        <input type="submit" class="button" id ="addTheseGroups" value="Add">   
+                        <input type="button" class="button cancelGroups" value="Cancel">   
+                    </form>
+
+                </div>
+                <div id="eventInformation">
+                </div>  
+
+                <div id="editEvent">
+                    <img src="img/close.png" class="closePopUp cancelEditEvent" alt="Close" title="Close">
+                    <h2>Event Editor</h2>
+                    <hr>
+                    <form id = "eventEditor" name="Create An Account" action="#" method="post">
+                        <h4 id="editTitle">Title: Horseback Riding</h4>
+                        <h4>Description:</h4>
+                        <textarea wrap="hard" name="description" rows="5%" cols="55%" title ="Enter the description of the event." id="editDescription" form="eventEditor"></textarea>
+                        <br>
+                        <h4 id="editStart">Start: 4/12/14 3:00PM</h4>
+                        <h4 id="editEnd">End: 4/12/14 3:00PM</h4>
+                        <h4>Invite More Guests:</h4>
+                        <div id="editGuestList" name="guestList" title="Add people to the event."></div>
+
+                        
+                        <input type="button" class="button" id ="addFriendsEditEvent" value="Add Friends">   
+                        <input type="button" class="button" id ="addGroupsEditEvent" value="Add Groups">  
+                        <br>
+                        <input type="submit" class="button" id ="editThisEvent" value="Submit">   
+                        <input type="button" class="button cancelEditEvent" value="Cancel">  
+                    </form>
+
+                </div> 
+                <div id="editFriendsOptions">
+                    <img src="img/close.png" class="closePopUp cancelEditFriends" alt="Close" title="Close">
+                    <h2>Add Friends</h2>
+                    
+                    <hr>
+                    <form id = "friendEditor" name="Create An Account" action="#" method="post">
+                        <div id="friendEditorList">
+                        </div> 
+                        <input type="submit" class="button" id ="editTheseFriends" value="Add">   
+                        <input type="button" class="button cancelEditFriends" value="Cancel"> 
+                    </form>
+
+
+                    
+                </div> 
+                <div id="editGroupsOptions">
+                    <img src="img/close.png" class="closePopUp cancelEditGroups" alt="Close" title="Close">
+                    <h2>Add Groups</h2>
+                    <hr>
+                    <form id = "groupEditor" name="Create An Account" action="#" method="post">
+                        <div id="groupEditorList">
+                        </div>
+                        <input type="submit" class="button" id ="editTheseGroups" value="Add">   
+                        <input type="button" class="button cancelEditGroups" value="Cancel">   
+                    </form>
+
+                </div>    
+
+                <div id="shareEvent">
+                    <img src="img/close.png" class="closePopUp cancelShareEvent" alt="Close" title="Close">
+                    <h2>Share Event</h2>
+                    <hr>
+                    <form id = "eventShare" name="Create An Account" action="#" method="post">
+                        <h4 id="shareTitle">Title: Horseback Riding</h4>
+                        <h4>Description:</h4>
+                        <textarea wrap="hard" name="description" rows="5%" cols="55%" title ="Enter the description of the event." id="shareDescription" form="eventShare" disabled></textarea>
+                        <br>
+                        <h4 id="shareStart">Start: 4/12/14 3:00PM</h4>
+                        <h4 id="shareEnd">End: 4/12/14 3:00PM</h4>
+                        <h4>Invite More Guests:</h4>
+                        <div id="shareGuestList" name="guestList" title="Add people to the event."></div>
+
+                        
+                        <input type="button" class="button" id ="addFriendsShareEvent" value="Add Friends">   
+                        <input type="button" class="button" id ="addGroupsShareEvent" value="Add Groups">  
+                        <br>
+                        <input type="submit" class="button" id ="shareThisEvent" value="Submit">   
+                        <input type="button" class="button cancelShareEvent" value="Cancel">  
+                    </form>
+
+                </div> 
+                <div id="shareFriendsOptions">
+                    <img src="img/close.png" class="closePopUp cancelShareFriends" alt="Close" title="Close">
+                    <h2>Add Friends</h2>
+                    
+                    <hr>
+                    <form id = "friendShare" name="Create An Account" action="#" method="post">
+                        <div id="friendShareList">
+                        </div> 
+                        <input type="submit" class="button" id ="shareTheseFriends" value="Add">   
+                        <input type="button" class="button cancelShareFriends" value="Cancel"> 
+                    </form>
+
+
+                    
+                </div> 
+                <div id="shareGroupsOptions">
+                    <img src="img/close.png" class="closePopUp cancelShareGroups" alt="Close" title="Close">
+                    <h2>Add Groups</h2>
+                    <hr>
+                    <form id = "groupShare" name="Create An Account" action="#" method="post">
+                        <div id="groupShareList">
+                        </div>
+                        <input type="submit" class="button" id ="shareTheseGroups" value="Add">   
+                        <input type="button" class="button cancelShareGroups" value="Cancel">   
+                    </form>
+
+                </div>    
+
+                <div id="requestedFriendInfo">
+                    <img src="img/close.png" class="closeRequestInfo closePopUp" alt="Close" title="Close">
+                    <h2>Request From:</h2>
+                    <hr>
+                    
+                    <img id="requestedFriendPicture" src="img/FlockLogo1.png" alt="Flock Logo" title="Flock">     
+                    <h3>BlueBird wants to be your friend!</h3>           
+                </div>     
+
+                <div id="calendarEventsInfo">
+                    <img src="img/close.png" class="closeCalendarEventsInfo closePopUp" alt="Close" title="Close">
+                    <h2>Event Information</h2>
+                    <hr>    
+                    <div id="currentEvents">
+                    </div>        
+                </div>                          
+            </div> 
     </body>
 </html>

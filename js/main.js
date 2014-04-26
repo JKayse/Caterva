@@ -1547,8 +1547,7 @@ function updateEndTime(){
     $("#eventTimeEnd").val($("#eventTimeStart").val());
 }
 
-function closeEverything(e){
-    e.stopPropagation();
+function closeEverything(){
     $("#calendarEventsInfo").hide(); 
     $("#popUp").hide(); 
     $("#blackScreenofDeath").hide();

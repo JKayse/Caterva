@@ -351,6 +351,7 @@ main div div div button:hover{
     top:170px;
     left:50%;
     margin-left: -200px;
+    z-index: 55;
 }
 
 textarea{
