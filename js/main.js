@@ -75,6 +75,8 @@ $(document).ready(function() {
     $(document).on('change', "#eventDate", updateEndDate);
     $(document).on('change', "#eventTimeStart", updateEndTime);
 
+    $(document).on('click', "#blackScreenofDeath", closeEverything);
+
 
 
     
@@ -1545,7 +1547,8 @@ function updateEndTime(){
     $("#eventTimeEnd").val($("#eventTimeStart").val());
 }
 
-function closeEverything(){
+function closeEverything(e){
+    e.stopPropagation();
     $("#calendarEventsInfo").hide(); 
     $("#popUp").hide(); 
     $("#blackScreenofDeath").hide();
