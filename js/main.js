@@ -1112,6 +1112,7 @@ function addEditedEvent(e){
 
 
 function getEvents(){
+    var currentEvent=0;
     $.ajax({url:"api/Events", success: function(json){
         json = JSON.parse(json);
         var events = json.Events;
