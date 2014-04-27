@@ -9,7 +9,11 @@ $(document).ready(function() {
     $(document).on('click', ".groupie", editGroupPopUp);
     $(document).on('click', ".cancelEdit", closeEditGroupPopUp);
     $(document).on('submit', "#groupEditForm", editGroup);
-    $(document).on('click', "#blackScreenofDeath", closeEverything);
+
+    $(document).on('click', "#finalizeDeleteFriend", submitDeleteFriend);
+    $(document).on('click', "#finalizeDeleteGroup", submitDeleteGroup);
+    $(document).on('click', ".cancelDeleteFriend", cancelDeleteFriend);
+    $(document).on('click', ".cancelDeleteGroup", cancelDeleteGroup);
 
     $('.mouseover').slimScroll({
         height: '83%'
@@ -208,35 +212,26 @@ function updateGroupList(){
 }
 
 function deleteFriend(){
-    var friendId;
-    var thing = this;
+    var friendId = $(this).parent().attr("friendId");
+    var friendName = $(this).next().html();
+    $("#deleteFriendName").html("Are you sure you want to delete " + friendName + " ?");
+    $("#deleteFriendName").attr("friendId", friendId);
+    $("#deleteFriendPopUp").show();
 
-    $.ajax({
-            type: "POST",
-            url: "api/DeleteFriend", async: false,
-            data: {
-                friendId: $(this).parent().attr("friendId")
-            },
-            success:function(json){
-                updateFriendList();
-            }
-    });
+
+    
 }
 
 function deleteGroup(e) {
     e.stopPropagation();
-    var groupId;
+    var groupId = $(this).parent().attr("groupId");
+    var groupName = $(this).next().html();
+    $("#deleteGroupName").html("Are you sure you want to delete the group " + groupName + " ?");
+    $("#deleteGroupName").attr("groupId", groupId);
+    $("#deleteFriendPopUp").show();
 
-    $.ajax({
-            type: "POST",
-            url: "api/DeleteGroup", async: false,
-            data: {
-                groupId: $(this).parent().attr("groupId")
-            },
-            success: function(json){
-                updateGroupList();
-            }
-    });
+
+    
 }
 
 function editGroup() {
@@ -329,4 +324,47 @@ function closeEverything(){
     $(".friendList").prop('checked', false);
     $("#editedGroupName").val("");
     $(".friendList").prop('checked', false);
+    $("#deleteFriendPopUp").hide();
+    $("#deleteGroupPopUp").hide();
+}
+
+function submitDeleteFriend(){
+
+    $.ajax({
+            type: "POST",
+            url: "api/DeleteFriend", async: false,
+            data: {
+                friendId: $("#deleteFriendName").attr("friendId")
+            },
+            success:function(json){
+                updateFriendList();
+            }
+    });
+
+}
+
+function submitDeleteGroup(){
+
+    $.ajax({
+            type: "POST",
+            url: "api/DeleteGroup", async: false,
+            data: {
+                groupId: $("#deleteGroupName").attr("groupId")
+            },
+            success: function(json){
+                updateGroupList();
+            }
+    });
+}
+
+function cancelDeleteFriend(){
+    $("#deleteFriendPopUp").hide();
+    $("#blackScreenofDeath").hide();
+    $("#popUp").hide();
+}
+
+function cancelDeleteGroup(){
+    $("#deleteGroupPopUp").hide();
+    $("#blackScreenofDeath").hide();
+    $("#popUp").hide();
 }

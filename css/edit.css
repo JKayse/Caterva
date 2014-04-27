@@ -98,7 +98,7 @@ img, .groupie, .friendie{
     z-index: 50;
 }
 
-#popUp, #editPopUp {
+#popUp, #editAndCreateGroups, #editPopUp, #deleteGroupPopUp, #deleteFriendPopUp {
     display: none;
     position: fixed;
     background: linear-gradient(rgb(173, 239, 255), rgb(153, 186, 255));
