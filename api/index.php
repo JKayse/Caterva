@@ -364,7 +364,7 @@ function viewFriends(){
 */
 function getUserInfo($userId)
 {
-    $sql = "SELECT UserId, Username, Firstname, Lastname, Description, PictureName FROM Users WHERE UserId =:userId";
+    $sql = "SELECT UserId, Username, Firstname, Lastname, Email, Description, PictureName FROM Users WHERE UserId =:userId";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
