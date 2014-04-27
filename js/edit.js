@@ -9,6 +9,7 @@ $(document).ready(function() {
     $(document).on('click', ".groupie", editGroupPopUp);
     $(document).on('click', ".cancelEdit", closeEditGroupPopUp);
     $(document).on('submit', "#groupEditForm", editGroup);
+    $(document).on('click', "#blackScreenofDeath", closeEverything);
 
     $(document).on('click', "#finalizeDeleteFriend", submitDeleteFriend);
     $(document).on('click', "#finalizeDeleteGroup", submitDeleteGroup);
