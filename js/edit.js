@@ -37,12 +37,12 @@ $(document).ready(function() {
         }
     }});
     
-    $.ajax({url:"api/ViewFriends", success: function(json2){
+    $.ajax({url:"api/ViewFriends", async:false, success: function(json2){
         json2 = JSON.parse(json2);
         var friends = json2.FriendsList;
         for(var i = 0; i < friends.length ; i++){
             var friendId = friends[i].FriendId;
-            $.ajax({url:"api/UserInfo/" + friendId, success: function(json){
+            $.ajax({url:"api/UserInfo/" + friendId, async:false, success: function(json){
                 json = JSON.parse(json);
                 var friendInfo = json.User;
                 var firstname = friendInfo[0].Firstname;
@@ -60,7 +60,7 @@ $(document).ready(function() {
     }});
 
 
-    $.ajax({url:"api/Groups", success: function(json2){
+    $.ajax({url:"api/Groups", async:false, success: function(json2){
         json2 = JSON.parse(json2);
         var groups = json2.Groups;
         for(var i = 0; i < groups.length ; i++){
@@ -296,12 +296,12 @@ function updateFriendList() {
     $("#listOfFriends").empty();
     $("#editedListOfFriends").empty();
 
-   $.ajax({url:"api/ViewFriends", success: function(json2){
+   $.ajax({url:"api/ViewFriends", async:false, success: function(json2){
         json2 = JSON.parse(json2);
         var friends = json2.FriendsList;
         for(var i = 0; i < friends.length ; i++){
             var friendId = friends[i].FriendId;
-            $.ajax({url:"api/UserInfo/" + friendId, success: function(json){
+            $.ajax({url:"api/UserInfo/" + friendId, async:false, success: function(json){
                 json = JSON.parse(json);
                 var friendInfo = json.User;
                 var firstname = friendInfo[0].Firstname;
