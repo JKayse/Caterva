@@ -345,7 +345,7 @@ function logout() {
 */
 function viewFriends(){
     $userId = $_SESSION['userId'];
-    $sql = "SELECT FriendId FROM FriendsList WHERE UserId = :userId";
+    $sql = "SELECT fl.FriendId FROM FriendsList fl INNER JOIN Users u ON fl.FriendId=u.UserId WHERE fl.UserId=:userId ORDER BY u.Lastname";
     try {
             $db = getConnection();
             $stmt = $db->prepare($sql);
@@ -1016,7 +1016,7 @@ function viewGroupMembers($groupId) {
     try {
         $db = getConnection();      
 
-        $sql = "SELECT UserId FROM GroupList WHERE GroupId=:groupId";
+        $sql = "SELECT gl.UserId FROM GroupList gl INNER JOIN Users u ON gl.UserId=u.UserId WHERE gl.GroupId=:groupId ORDER BY u.Lastname";
         $stmt = $db->prepare($sql);
         $stmt->bindParam('groupId', $groupId);
         $stmt->execute();
