@@ -919,7 +919,7 @@ function viewGroups() {
     try {
         $db = getConnection();
 
-        $sql = "SELECT GroupId, GroupName FROM Groups WHERE UserId=:userId";
+        $sql = "SELECT GroupId, GroupName FROM Groups WHERE UserId=:userId ORDER BY GroupName";
         $stmt = $db->prepare($sql);
         $stmt->bindParam('userId', $userId);
         $stmt->execute();
@@ -1172,7 +1172,7 @@ function addPicture()
 */
 function androidViewFriends(){
     $userId = Slim::getInstance()->request()->post('id');   
-    $sql = "SELECT fl.FriendId, u.Firstname, u.Lastname FROM FriendsList fl INNER JOIN Users u ON fl.FriendId=u.UserId WHERE fl.UserId = :userId";
+    $sql = "SELECT fl.FriendId, u.Firstname, u.Lastname FROM FriendsList fl INNER JOIN Users u ON fl.FriendId=u.UserId WHERE fl.UserId=:userId ORDER BY u.Lastname";
     try {
             $db = getConnection();
             $stmt = $db->prepare($sql);
@@ -1419,7 +1419,7 @@ function androidViewGroups() {
     try {
         $db = getConnection();
 
-        $sql = "SELECT GroupId, GroupName FROM Groups WHERE UserId=:userId";
+        $sql = "SELECT GroupId, GroupName FROM Groups WHERE UserId=:userId ORDER BY GroupName";
         $stmt = $db->prepare($sql);
         $stmt->bindParam('userId', $userId);
         $stmt->execute();
