@@ -556,10 +556,6 @@ function addCreatedEvent(event){
                 $("#allowShareEvent").prop('checked', false);
                 eventList = [];
                 $("#eventList").empty();
-                $("#nextEvents").css('opacity', '0');
-                $("#nextEvents").css('cursor', 'pointer');
-                $("#prevEvents").css('opacity', '1');
-                $("#prevEvents").css('cursor', 'auto');
                 getEvents();
             }
     });
@@ -650,10 +646,6 @@ function updateEventRequest(e){
             success: function(json){
                 eventList = [];
                 $("#eventList").empty();
-                $("#nextEvents").css('opacity', '0');
-                $("#nextEvents").css('cursor', 'pointer');
-                $("#prevEvents").css('opacity', '1');
-                $("#prevEvents").css('cursor', 'auto');
                 getEvents();
             }
     });
@@ -1112,10 +1104,6 @@ function addEditedEvent(e){
                 //update event list.
                 eventList = [];
                 $("#eventList").empty();
-                $("#nextEvents").css('opacity', '0');
-                $("#nextEvents").css('cursor', 'pointer');
-                $("#prevEvents").css('opacity', '1');
-                $("#prevEvents").css('cursor', 'auto');
                 getEvents();
             }
     });
@@ -1280,9 +1268,16 @@ function getEvents(){
             ;
         }
         $(".eventImage").width($(".eventImage").height());
+        
+        $("#prevEvents").css('opacity', '0');
+        $("#prevEvents").css('cursor', 'auto');
         if(eventList.length <= 3){
             $("#nextEvents").css('opacity', '0');
             $("#nextEvents").css('cursor', 'auto');
+        }
+        else{
+            $("#nextEvents").css('opacity', '1');
+            $("#nextEvents").css('cursor', 'pointer');
         }
 
         addEventstoCalendar();
@@ -1460,10 +1455,6 @@ function cancelEvent(e){
             success: function(json){         
                 eventList = [];
                 $("#eventList").empty();
-                $("#nextEvents").css('opacity', '0');
-                $("#nextEvents").css('cursor', 'pointer');
-                $("#prevEvents").css('opacity', '1');
-                $("#prevEvents").css('cursor', 'auto');
                 getEvents();
             }
         });
@@ -1480,10 +1471,6 @@ function cancelEvent(e){
             success: function(json){         
                 eventList = [];
                 $("#eventList").empty();
-                $("#nextEvents").css('opacity', '0');
-                $("#nextEvents").css('cursor', 'pointer');
-                $("#prevEvents").css('opacity', '1');
-                $("#prevEvents").css('cursor', 'auto');
                 getEvents();
             }
         });
