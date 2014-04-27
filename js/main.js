@@ -490,9 +490,6 @@ function deleteInvitedGuest(){
 
 function addCreatedEvent(event){
     event.preventDefault();
-    $("#blackScreenofDeath").hide();
-    $("#popUp").hide();
-    $("#enterEvent").hide();
 
     var invitedList = [];
     var event = {};
@@ -504,6 +501,17 @@ function addCreatedEvent(event){
     event.startTime = $("#eventTimeStart").val();
     event.endDate = $("#eventDateEnd").val();
     event.endTime = $("#eventTimeEnd").val();
+
+    var start = new Date(event.startDate + " " + event.startTime);
+    var end = new Date(event.endDate + " " + event.endTime);
+    console.log(start);
+    console.log(end);
+    if(start > end){
+        alert("The end date must be after the start date Please try again.");
+        return;
+    }
+
+
     
     var invited = $(".invitedGuest");
     for(var i = 0; i < invited.size(); i++){
@@ -530,7 +538,10 @@ function addCreatedEvent(event){
             data: {
                 event: event
             },
-            success: function(json){         
+            success: function(json){     
+                $("#blackScreenofDeath").hide();
+                $("#popUp").hide();
+                $("#enterEvent").hide();    
                 $("#eventTitle").val("");
                 $("#eventDescription").val("");
                 $("#eventDate").val("");
