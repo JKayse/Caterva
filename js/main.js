@@ -1112,7 +1112,6 @@ function addEditedEvent(e){
 
 
 function getEvents(){
-    var currentEvent=0;
     $.ajax({url:"api/Events", success: function(json){
         json = JSON.parse(json);
         var events = json.Events;
@@ -1268,6 +1267,7 @@ function getEvents(){
         else{
             ;
         }
+        currentEvent=0;
         $(".eventImage").width($(".eventImage").height());
         
         $("#prevEvents").css('opacity', '0');
