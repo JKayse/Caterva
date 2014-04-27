@@ -556,10 +556,10 @@ function addCreatedEvent(event){
                 $("#allowShareEvent").prop('checked', false);
                 eventList = [];
                 $("#eventList").empty();
-                $("#nextEvents").css('opacity', '1');
+                $("#nextEvents").css('opacity', '0');
                 $("#nextEvents").css('cursor', 'pointer');
                 $("#prevEvents").css('opacity', '1');
-                $("#prevEvents").css('cursor', 'pointer');
+                $("#prevEvents").css('cursor', 'auto');
                 getEvents();
             }
     });
@@ -650,10 +650,10 @@ function updateEventRequest(e){
             success: function(json){
                 eventList = [];
                 $("#eventList").empty();
-                $("#nextEvents").css('opacity', '1');
+                $("#nextEvents").css('opacity', '0');
                 $("#nextEvents").css('cursor', 'pointer');
                 $("#prevEvents").css('opacity', '1');
-                $("#prevEvents").css('cursor', 'pointer');
+                $("#prevEvents").css('cursor', 'auto');
                 getEvents();
             }
     });
@@ -1112,10 +1112,10 @@ function addEditedEvent(e){
                 //update event list.
                 eventList = [];
                 $("#eventList").empty();
-                $("#nextEvents").css('opacity', '1');
+                $("#nextEvents").css('opacity', '0');
                 $("#nextEvents").css('cursor', 'pointer');
                 $("#prevEvents").css('opacity', '1');
-                $("#prevEvents").css('cursor', 'pointer');
+                $("#prevEvents").css('cursor', 'auto');
                 getEvents();
             }
     });
@@ -1460,10 +1460,10 @@ function cancelEvent(e){
             success: function(json){         
                 eventList = [];
                 $("#eventList").empty();
-                $("#nextEvents").css('opacity', '1');
+                $("#nextEvents").css('opacity', '0');
                 $("#nextEvents").css('cursor', 'pointer');
                 $("#prevEvents").css('opacity', '1');
-                $("#prevEvents").css('cursor', 'pointer');
+                $("#prevEvents").css('cursor', 'auto');
                 getEvents();
             }
         });
@@ -1480,10 +1480,10 @@ function cancelEvent(e){
             success: function(json){         
                 eventList = [];
                 $("#eventList").empty();
-                $("#nextEvents").css('opacity', '1');
+                $("#nextEvents").css('opacity', '0');
                 $("#nextEvents").css('cursor', 'pointer');
                 $("#prevEvents").css('opacity', '1');
-                $("#prevEvents").css('cursor', 'pointer');
+                $("#prevEvents").css('cursor', 'auto');
                 getEvents();
             }
         });
