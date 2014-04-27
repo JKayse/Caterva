@@ -174,7 +174,7 @@ function addCreatedGroup(){
                 else{          
                     $("#blackScreenofDeath").hide();
                     $("#popUp").hide();
-                    
+                    $("#editAndCreateGroups").hide();
                     $("#groupName").val("");
                     $(".friendList").prop('checked', false);
                     updateGroupList();
@@ -214,7 +214,7 @@ function updateGroupList(){
 function deleteFriend(){
     var friendId = $(this).parent().attr("friendId");
     var friendName = $(this).next().html();
-    $("#deleteFriendName").html("Are you sure you want to delete " + friendName + " ?");
+    $("#deleteFriendName").html("Are you sure you want to delete " + friendName + "?");
     $("#deleteFriendName").attr("friendId", friendId);
     $("#deleteFriendPopUp").show();
     $("#popUp").show();
@@ -228,9 +228,9 @@ function deleteGroup(e) {
     e.stopPropagation();
     var groupId = $(this).parent().attr("groupId");
     var groupName = $(this).next().html();
-    $("#deleteGroupName").html("Are you sure you want to delete the group " + groupName + " ?");
+    $("#deleteGroupName").html("Are you sure you want to delete the group " + groupName + "?");
     $("#deleteGroupName").attr("groupId", groupId);
-    $("#deleteFriendPopUp").show();
+    $("#deleteGroupPopUp").show();
     $("#popUp").show();
     $("#blackScreenofDeath").show();
 
@@ -341,6 +341,9 @@ function submitDeleteFriend(){
                 friendId: $("#deleteFriendName").attr("friendId")
             },
             success:function(json){
+                $("#deleteFriendPopUp").hide();
+                $("#blackScreenofDeath").hide();
+                $("#popUp").hide();
                 updateFriendList();
             }
     });
@@ -356,6 +359,9 @@ function submitDeleteGroup(){
                 groupId: $("#deleteGroupName").attr("groupId")
             },
             success: function(json){
+                $("#deleteGroupPopUp").hide();
+                $("#blackScreenofDeath").hide();
+                $("#popUp").hide();
                 updateGroupList();
             }
     });
