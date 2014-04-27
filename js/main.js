@@ -554,9 +554,22 @@ function addCreatedEvent(event){
                 $("#eventTimeEnd").val("");
                 $("#eventGuestList").empty();
                 $("#allowShareEvent").prop('checked', false);
+                
+                $("#switch").addClass('switch-selection-left');
+                $("#switch").removeClass('switch-selection-right');
+
+                $("#list").next().addClass('selected');
+                $("#list").next().removeClass('notSelected');
+
+                $("#calendar").next().removeClass('selected');
+                $("#calendar").next().addClass('notSelected');
+                $("#totalEventList").show();
+                $("#eventCalendarList").hide();
+                
                 eventList = [];
                 $("#eventList").empty();
                 getEvents();
+                
             }
     });
 
