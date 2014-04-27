@@ -217,7 +217,7 @@ function deleteFriend(){
     $("#deleteFriendName").html("Are you sure you want to delete " + friendName + " ?");
     $("#deleteFriendName").attr("friendId", friendId);
     $("#deleteFriendPopUp").show();
-    $("#deleteFriendPopUp").show();
+    $("#popUp").show();
     $("#blackScreenofDeath").show();
 
 
@@ -231,7 +231,7 @@ function deleteGroup(e) {
     $("#deleteGroupName").html("Are you sure you want to delete the group " + groupName + " ?");
     $("#deleteGroupName").attr("groupId", groupId);
     $("#deleteFriendPopUp").show();
-    $("#deleteFriendPopUp").show();
+    $("#popUp").show();
     $("#blackScreenofDeath").show();
 
 
