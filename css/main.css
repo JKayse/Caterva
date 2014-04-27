@@ -564,6 +564,10 @@ textarea{
 
 #calendarEventsInfo{
   display: none;
-  max-height: 350px;
+  
+}
+
+#currentEvents{
   overflow: hidden;
+  max-height: 350px;
 }
