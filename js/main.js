@@ -507,7 +507,11 @@ function addCreatedEvent(event){
     console.log(start);
     console.log(end);
     if(start > end){
-        alert("The end date must be after the start date Please try again.");
+        alert("The end date must be after the start date. Please try again.");
+        return;
+    }
+    if(Date.now() >= start){
+        alert("The start date must happen after the current date. Please try again.");
         return;
     }
 
