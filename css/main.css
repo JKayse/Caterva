@@ -572,3 +572,11 @@ textarea{
   overflow: hidden;
   max-height: 350px;
 }
+
+
+#loadImage{
+    margin-left: 43%;
+    width: 65px;
+    height: 65px;
+    margin-top: 29%;
+}

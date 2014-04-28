@@ -1125,6 +1125,7 @@ function addEditedEvent(e){
 
 
 function getEvents(){
+    $("#loadImage").show();
     $.ajax({url:"api/Events", success: function(json){
         json = JSON.parse(json);
         var events = json.Events;
@@ -1294,6 +1295,7 @@ function getEvents(){
             $("#nextEvents").css('cursor', 'pointer');
         }
 
+        $("#loadImage").hide();
         addEventstoCalendar();
 
     }}); 
