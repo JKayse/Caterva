@@ -132,11 +132,6 @@ $app->get('/Groups', 'viewGroups');
 $app->get('/Events', 'viewEvents');
 
 /**
-* View Events for Android
-*/
-$app->post('/AndroidEvents', 'viewEvents_Android');
-
-/**
 * View Event Requests
 */
 $app->get('/EventRequests', 'viewEventRequests');
@@ -181,6 +176,7 @@ $app->post('/AndroidViewFriendRequest', 'androidGetFriendRequest');
 $app->post('/AndroidCreateEvent', 'androidCreateEvent');
 $app->post('/AndroidCreateGroup', 'androidCreateGroup');
 $app->post('/AndroidGroups', 'androidViewGroups');
+$app->post('/AndroidEvents', 'viewEvents_Android');
 
 $app->run();
 
@@ -966,27 +962,7 @@ function viewEvents() {
     	}	
 }
 
-/*
-* A function to view events for android
-*/
-function viewEvents_Android() {
-	$userId = Slim::getInstance()->request()->post('userId');
 
-	try {	
-		$db = getConnection();
-	
-		$sql = "SELECT EventId, EventName, UserId as OwnerId, StartTime, EndTime, EventDescription, Share, Cancel FROM Events WHERE UserId=:userId UNION (SELECT e.EventId, e.EventName, e.UserId as OwnerId, e.StartTime, e.EndTime, e.EventDescription, e.Share, e.Cancel FROM Events e INNER JOIN GuestList g ON e.EventId=g.EventId WHERE g.UserId=:userId) ORDER BY StartTime";
-		$stmt = $db->prepare($sql);
-		$stmt->bindParam('userId', $userId);
-		$stmt->execute();
-		$events = $stmt->fetchAll(PDO::FETCH_OBJ);
-		$db = null;
-
-		echo '{"Events": ' . json_encode($events) . '}';
-	} catch(PDOExection $e) {
-       		echo '{"error":{"text":'. $e->getMessage() .'}}';
-    	}	
-}
 
 /*
 * A function to get all event invitations
@@ -1444,6 +1420,30 @@ function androidViewGroups() {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 }
+
+/*
+* A function to view events for android
+*/
+function viewEvents_Android() {
+	$userId = Slim::getInstance()->request()->post('userId');
+
+	try {	
+		$db = getConnection();
+	
+		$sql = "SELECT EventId, EventName, UserId as OwnerId, StartTime, EndTime, EventDescription, Share, Cancel FROM Events WHERE UserId=:userId UNION (SELECT e.EventId, e.EventName, e.UserId as OwnerId, e.StartTime, e.EndTime, e.EventDescription, e.Share, e.Cancel FROM Events e INNER JOIN GuestList g ON e.EventId=g.EventId WHERE g.UserId=:userId) ORDER BY StartTime";
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam('userId', $userId);
+		$stmt->execute();
+		$events = $stmt->fetchAll(PDO::FETCH_OBJ);
+		$db = null;
+
+		echo '{"Events": ' . json_encode($events) . '}';
+	} catch(PDOExection $e) {
+       		echo '{"error":{"text":'. $e->getMessage() .'}}';
+    	}	
+}
+/********************************************************************************/
+
 /**
 * a function to send emails notifying users on the upcoming events
 */
@@ -1461,8 +1461,8 @@ function sendEmails()
 		
 		foreach($events['Events'] as $e){
 			$eventId = $e['EventId'];
-			$startTime = $e['StartTime'];
-			$endTime = $e['EndTime'];
+			$startTime = strtotime($e['StartTime']);
+			$endTime = strtotime($e['EndTime']);
 			$GuestQuery = "SELECT u.Firstname, u.Lastname, u.Email FROM Users u INNER JOIN
 			GuestList gl ON u.UserId = gl.UserId AND gl.EventId = :eventId UNION SELECT
 			u2.Firstname, u2.Lastname, u2.Email FROM Users u2 INNER JOIN Events e2 ON
@@ -1479,8 +1479,8 @@ function sendEmails()
  				$body = "Hi " .  $g['Firstname'] .  " " . $g['Lastname'] .  
 					",\nYou have an event to go to: \n" .
 					$e['EventName'] . "\n" . 
-					$e['StartTime'] . "\n" .
-					$e['EndTime'] . "\n" .
+					date("F j, Y, g:i a", $startTime) . "\n" .
+					date("F j, Y, g:i a", $endTime) . "\n" .
 					"Thank you for using Flock";
 				echo "</br>" . $to . "</br>" . $subject;
 				echo "</br>" . $body . "</br>";
