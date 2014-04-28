@@ -596,7 +596,8 @@ textarea{
   overflow-x: hidden;
   text-overflow: ellipsis;
   width: 100%;
-  display: block;
+  display: inline-block;
+  margin-bottom: -1%;
 }
 
 #currentEvents h2 {
