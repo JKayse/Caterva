@@ -591,12 +591,12 @@ textarea{
 }
 
 
-#eventInfoName{
+#eventInformation #eventInfoName{
   white-space: nowrap;
   overflow-x: hidden;
   text-overflow: ellipsis;
   width: 100%;
-  display: inline-block;
+  display: block;
 }
 
 #currentEvents h2 {
