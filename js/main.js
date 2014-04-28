@@ -1,5 +1,6 @@
 var eventList =[];
 var currentEvent=0;
+$("#loadImage").show();
 
 $(document).ready(function() {
     $("header").load("header.html");
@@ -79,7 +80,6 @@ $(document).ready(function() {
 
 
 
-    $("#loadImage").show();
     getEvents();
     
 
