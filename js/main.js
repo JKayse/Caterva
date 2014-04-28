@@ -79,7 +79,7 @@ $(document).ready(function() {
 
 
 
-    
+    $("#loadImage").show();
     getEvents();
     
 
@@ -568,6 +568,7 @@ function addCreatedEvent(event){
                 
                 eventList = [];
                 $("#eventList").empty();
+                $("#loadImage").show();
                 getEvents();
                 
             }
@@ -659,6 +660,7 @@ function updateEventRequest(e){
             success: function(json){
                 eventList = [];
                 $("#eventList").empty();
+                $("#loadImage").show();
                 getEvents();
             }
     });
@@ -1117,6 +1119,7 @@ function addEditedEvent(e){
                 //update event list.
                 eventList = [];
                 $("#eventList").empty();
+                $("#loadImage").show();
                 getEvents();
             }
     });
@@ -1125,7 +1128,6 @@ function addEditedEvent(e){
 
 
 function getEvents(){
-    $("#loadImage").show();
     $.ajax({url:"api/Events", success: function(json){
         json = JSON.parse(json);
         var events = json.Events;
@@ -1471,6 +1473,7 @@ function cancelEvent(e){
             success: function(json){         
                 eventList = [];
                 $("#eventList").empty();
+                $("#loadImage").show();
                 getEvents();
             }
         });
@@ -1487,6 +1490,7 @@ function cancelEvent(e){
             success: function(json){         
                 eventList = [];
                 $("#eventList").empty();
+                $("#loadImage").show();
                 getEvents();
             }
         });
