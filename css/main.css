@@ -267,6 +267,10 @@ main div div div button:hover{
     margin-left: 14%;
     display: inline-block;
     width: 60%;
+    height: 25%;
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
   }
 
   .right .eventInfo .eventTitle{
@@ -274,6 +278,10 @@ main div div div button:hover{
     margin-left: 4%;
     display: inline-block;
     width: 60%;
+    height: 25%;
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
   }
 
   .left .eventInfo .startDate{
@@ -579,4 +587,19 @@ textarea{
 #currentEvents{
   overflow: hidden;
   max-height: 350px;
+}
+
+
+#eventInfoName{
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+#currentEvents h2 {
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 }

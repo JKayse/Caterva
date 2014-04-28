@@ -281,8 +281,8 @@ function editGroup() {
         success: function(json){
         
             $("#blackScreenofDeath").hide();
+            $("#popUp").hide();
             $("#editPopUp").hide();
-            
             $("#groupName").val("");
             $(".friendList").prop('checked', false);
             updateGroupList();
