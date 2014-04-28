@@ -1,6 +1,5 @@
 var eventList =[];
 var currentEvent=0;
-$("#loadImage").show();
 
 $(document).ready(function() {
     $("header").load("header.html");
@@ -568,7 +567,6 @@ function addCreatedEvent(event){
                 
                 eventList = [];
                 $("#eventList").empty();
-                $("#loadImage").show();
                 getEvents();
                 
             }
@@ -660,7 +658,6 @@ function updateEventRequest(e){
             success: function(json){
                 eventList = [];
                 $("#eventList").empty();
-                $("#loadImage").show();
                 getEvents();
             }
     });
@@ -1119,7 +1116,6 @@ function addEditedEvent(e){
                 //update event list.
                 eventList = [];
                 $("#eventList").empty();
-                $("#loadImage").show();
                 getEvents();
             }
     });
@@ -1297,7 +1293,6 @@ function getEvents(){
             $("#nextEvents").css('cursor', 'pointer');
         }
 
-        $("#loadImage").hide();
         addEventstoCalendar();
 
     }}); 
@@ -1473,7 +1468,6 @@ function cancelEvent(e){
             success: function(json){         
                 eventList = [];
                 $("#eventList").empty();
-                $("#loadImage").show();
                 getEvents();
             }
         });
@@ -1490,7 +1484,6 @@ function cancelEvent(e){
             success: function(json){         
                 eventList = [];
                 $("#eventList").empty();
-                $("#loadImage").show();
                 getEvents();
             }
         });

@@ -32,6 +32,7 @@ main .button{
     margin-bottom: 3%;
     height: 10%;
     font-size: 20px;
+
 }
 
 h2, h3, hr {
@@ -97,6 +98,9 @@ main div div div button{
     border-color: rgba(255, 255, 255, 0.86);
     border-width: 2px;
     border-radius: 7px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 main div div div button:hover{
@@ -327,6 +331,10 @@ main div div div button:hover{
         padding-left: 2px;
         padding-bottom: 8px;
         font-size: 13px;
+        max-width: 63%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
   }
 
   #blackScreenofDeath {
@@ -571,12 +579,4 @@ textarea{
 #currentEvents{
   overflow: hidden;
   max-height: 350px;
-}
-
-
-#loadImage{
-    margin-left: 43%;
-    width: 65px;
-    height: 65px;
-    margin-top: 29%;
 }
