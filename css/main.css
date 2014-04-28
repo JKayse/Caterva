@@ -439,6 +439,7 @@ textarea{
 
 #eventInformation{
     display: none;
+    overflow-x: hidden;
 }
 
 #eventInformation h4, #eventInformation h3, #currentEvents h3, #currentEvents h4, #currentEvents h2{
@@ -595,6 +596,7 @@ textarea{
   overflow-x: hidden;
   text-overflow: ellipsis;
   width: 100%;
+  display: inline-block;
 }
 
 #currentEvents h2 {
