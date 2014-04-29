@@ -37,3 +37,10 @@ button{
 form{
     height: 84%;
 }
+
+#chooseFile{
+    display: inline;
+    position: absolute;
+    margin-left: 6%;
+    margin-top: -2%;
+}

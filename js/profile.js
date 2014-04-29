@@ -4,7 +4,8 @@ $(document).ready(function() {
     $("main img").width($("main img").height());
 
     $(document).on('submit', "#imageUpload", editEverything);
-    $(document).on('click', "#editProfile", editProfile)
+    $(document).on('click', "#editProfile", editProfile);
+    $(document).on('click', "#cancelChanges", cancelEdit);
 
     $.ajax({url:"api/LoginStatus", success: function(json){
         if(json !== 'null'){
@@ -133,4 +134,12 @@ function editEverything(e){
 
 function editProfile(){
     $("input").show();
+    $("textarea").attr('disabled', false);
+    $("#editProfile").hide();
+}
+
+function cancelEdit(){
+
+    $("input").hide();
+    $("#editProfile").show();
 }

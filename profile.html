@@ -21,14 +21,16 @@
         <main>
             <form id="imageUpload" action="api/AddPicture" method="POST" enctype="multipart/form-data">
                 <img src="img/FlockLogo1.png" alt="Flock Logo" title="Flock">
-                <input type='file' name='image' accept="image/x-png, image/gif, image/jpeg, image/jpg" id="imgInp" />
+                
                 <h1 id = "name">Amy Sherwood's Profile</h1>
                 <h2 id = "userName">Username: BlueBird</h2>
                 <h3 id = "email">Email: ASherwood@smu.edu</h3>
                 <!-- should only be visible when viewing own profile page -->
                 <h2>About Me:</h2>
+                <input type='file' id="chooseFile" name='image' accept="image/x-png, image/gif, image/jpeg, image/jpg" id="imgInp" />
                 <textarea wrap="hard" rows="12%" cols="100%" id ="aboutMe" disabled>None</textarea>
                 <button class="button" id="editProfile" type="button">Edit Profile</button>
+                <input type="button" id="cancelChanges" class="button" value="Cancel Changes" />
                 <input type="submit" id="submitChanges" class="button" value="Submit Changes" />
 
                 <!-- this should be a paragraph with a description of the user. Change to text area when editing this description <textarea wrap="hard" name="profile" rows="5%" cols="45%" title ="Profile" id="aboutMe">Here lies a description.</textarea> -->
