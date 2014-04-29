@@ -140,4 +140,5 @@ function cancelEdit(){
 
     $("input").hide();
     $("#editProfile").show();
+    $("textarea").attr('disabled', true);
 }
