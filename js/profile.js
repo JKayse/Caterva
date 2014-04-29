@@ -110,13 +110,11 @@ function editEverything(e){
         data: formData,
         contentType: false,
         processData: false,
-        success: function () {
-            alert("The image was successfully uploaded!");
-        }
     });
 
-    var newDescription = "Test";
-    var newEmail = "JKayse.smu.edu";
+    var newDescription = $("#aboutMe").val();
+    var newEmail = $("#email").html();
+    newEmail = newEmail.substring(7);
 
      $.ajax({
         url: 'api/EditProfile',
@@ -126,7 +124,7 @@ function editEverything(e){
             description: newDescription,
         },
         success: function () {
-            //alert("The image was successfully uploaded!");
+            window.location ="profile.html";
         }
     });
 

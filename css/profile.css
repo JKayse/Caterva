@@ -39,8 +39,12 @@ form{
 }
 
 #chooseFile{
-    display: inline;
     position: absolute;
     margin-left: 6%;
     margin-top: -2%;
+    display: none;
+}
+
+#cancelChanges{
+    margin-left: 26%;
 }
