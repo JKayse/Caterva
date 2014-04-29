@@ -1,11 +1,14 @@
+var currentImage;
 
 $(document).ready(function() {
     $("header").load("header.html");
     $("main img").width($("main img").height());
+    currentImage = $("main img").attr('src');
 
     $(document).on('submit', "#imageUpload", editEverything);
     $(document).on('click', "#editProfile", editProfile);
     $(document).on('click', "#cancelChanges", cancelEdit);
+
 
     $.ajax({url:"api/LoginStatus", success: function(json){
         if(json !== 'null'){
@@ -16,7 +19,7 @@ $(document).ready(function() {
         }
     }});
 
-    $("#imgInp").change(function(){
+    $("main img").change(function(){
             readURL(this);
     });
 
@@ -141,4 +144,5 @@ function cancelEdit(){
     $("input").hide();
     $("#editProfile").show();
     $("textarea").attr('disabled', true);
+    $("main img").attr('src', currentImage);
 }
