@@ -1,4 +1,4 @@
-main img{
+main form img{
     height: 40%;
     border-radius: 100%;
     margin-top: 2%;
@@ -7,14 +7,14 @@ main img{
     float: left;
 }
 
-main h1{
+main form h1{
     margin: 0px;
     padding-left: 26%;
     padding-top: 4%;
     font-size: 70px;
 }
 
-main h2, main h3{
+main form h2, main form h3{
     margin: 0px;
     padding-left: 26%;
     font-size: 30px;
