@@ -140,6 +140,10 @@ function addCreatedGroup(){
     var group = {}; 
 
     group.name = $("#groupName").val();
+    if(group.name.length >= 40){
+        alert("Please add a group name less than 40 characters.");
+        return;
+    }
 
     var numFriends =0;
     var friends = $(".friendList");
@@ -245,6 +249,10 @@ function editGroup() {
     var editGroupId = $("#editedGroupName").attr("editGroupId");
     var groupName = $("#editedGroupName").val();
     var friendsList = $(".friendList");
+    if(groupName.length >= 40){
+        alert("Please add a group name less than 40 characters.");
+        return;
+    }
 
     for(var i = 0; i < friendsList.size(); i++){
         var friendId = $(".friendList").eq(i).attr("friendId");

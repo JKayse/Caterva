@@ -28,10 +28,10 @@ function goToCorrectPage(){
     $.ajax({url:"api/LoginStatus", success: function(json){
         //Check what login status returns if not logged in.
         if(json !== 'null'){
-             //window.location = "main.html";
+             window.location = "main.html";
         }
         else{
-            //window.location = "index.html";
+            window.location = "index.html";
         }
     }});  
 
