@@ -606,11 +606,3 @@ textarea{
   text-overflow: ellipsis;
   width: 100%;
 }
-
-#viewProfile:visited, #signOut:visited{
-  color: rgb(0, 41, 255);
-}
-
-#viewProfile, #signOut{
-  color: rgb(0, 41, 255);
-}

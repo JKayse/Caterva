@@ -87,5 +87,13 @@ button:hover, input[class~=button]:hover {
 }
 
 a {
-    /*margin-right:5px;*/
+    margin-right:5px;
+}
+
+#viewProfile:visited, #signOut:visited{
+  color: rgb(0, 41, 255);
+}
+
+#viewProfile, #signOut{
+  color: rgb(0, 41, 255);
 }
