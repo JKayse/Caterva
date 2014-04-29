@@ -22,7 +22,7 @@ main h2, main h3{
 
 
 #editProfile, #imageUpload{
-	visibility: none;
+	display: none;
 }
 
 textarea{

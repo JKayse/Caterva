@@ -98,7 +98,26 @@ function getQueryVariable(variable) {
     var pair = query.split("=");
       
     if (pair[0] == variable) {
-        populatePage(pair[1]);
+        var profileId = pair[1];
+        var properId = false;
+        $.ajax({url:"api/ViewFriends",  async:false, success: function(json2){
+            json2 = JSON.parse(json2);
+            var friends = json2.FriendsList;
+            for(var i = 0; i < friends.length ; i++){
+                var friendId = friends[i].FriendId;
+                if(profileId === friendId){
+                    properId = true;
+                }
+            }
+        }}); 
+        if(properId === true){
+            populatePage(pair[1]);
+        }
+        else{
+            alert("You are not a friend of this person!");
+            window.location = "main.html";
+        }
+        
     }
     else{
         $.ajax({url:"api/LoginStatus", success: function(json){
@@ -106,9 +125,7 @@ function getQueryVariable(variable) {
                 json = JSON.parse(json);
                 userId = json.ID;
                 populatePage(userId);
-            }
-            else{
-                window.location = "index.html";
+                $("#editProfile").show();
             }
         }});
     }
