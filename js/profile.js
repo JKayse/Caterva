@@ -3,7 +3,6 @@ var currentImage;
 $(document).ready(function() {
     $("header").load("header.html");
     $("main img").width($("main img").height());
-    currentImage = $("main img").attr('src');
 
     $(document).on('submit', "#imageUpload", editEverything);
     $(document).on('click', "#editProfile", editProfile);
@@ -29,7 +28,7 @@ function readURL(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();            
         reader.onload = function (e) {
-            $('img').attr('src', e.target.result);
+            $('main img').attr('src', e.target.result);
         }
         reader.readAsDataURL(input.files[0]);
     }
@@ -53,6 +52,7 @@ function populatePage (userId) {
                 if(pictureName === null){
                     pictureName = "FlockLogo1.png";
                 }
+                currentImage = pictureName;
                 document.getElementById('name').innerHTML = firstname + " " + lastname + "'s Profile";
                 document.getElementById('userName').innerHTML = "Username: " + userName;
                 document.getElementById('email').innerHTML = "Email: " + email;
