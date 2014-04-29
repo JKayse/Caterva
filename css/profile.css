@@ -21,7 +21,7 @@ main h2, main h3{
 }
 
 
-#editProfile, #imageUpload{
+#editProfile, input{
 	display: none;
 }
 

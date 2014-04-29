@@ -2,8 +2,9 @@
 $(document).ready(function() {
     $("header").load("header.html");
     $("main img").width($("main img").height());
-    $(document).on('submit', "#imageUpload", uploadImage);
-    //$(document).on('click', "#editProfile", editProfile)
+
+    $(document).on('submit', "#imageUpload", editEverything);
+    $(document).on('click', "#editProfile", editProfile)
 
     $.ajax({url:"api/LoginStatus", success: function(json){
         if(json !== 'null'){
@@ -30,43 +31,7 @@ function readURL(input) {
     }
 }
 
-function uploadImage(e){
-    e.preventDefault();
 
-    //grab all form data  
-    var formData = new FormData($(this)[0]);
-
-    $.ajax({
-        url: 'api/AddPicture',
-        type: 'POST',
-        data: formData,
-        contentType: false,
-        processData: false,
-        success: function () {
-            alert("The image was successfully uploaded!");
-        }
-    });
-
-}
-
-function editProfile () {
-    var newDescription;
-    var newEmail;
-
-     $.ajax({
-        url: 'api/EditProfile',
-        type: 'POST',
-        data: {
-            email: newEmail,
-            description: newDescription,
-        },
-        contentType: false,
-        processData: false,
-        success: function () {
-            //alert("The image was successfully uploaded!");
-        }
-    });
-}
 
 function populatePage (userId) {
     $.ajax({url:"api/UserInfo/" + userId, async:false, success: function(json){
@@ -129,4 +94,43 @@ function getQueryVariable(variable) {
             }
         }});
     }
+}
+
+
+function editEverything(e){
+    e.preventDefault();
+
+    //grab all form data  
+    var formData = new FormData($(this)[0]);
+
+    $.ajax({
+        url: 'api/AddPicture',
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function () {
+            alert("The image was successfully uploaded!");
+        }
+    });
+
+    var newDescription = "Test";
+    var newEmail = "JKayse.smu.edu";
+
+     $.ajax({
+        url: 'api/EditProfile',
+        type: 'POST',
+        data: {
+            email: newEmail,
+            description: newDescription,
+        },
+        success: function () {
+            //alert("The image was successfully uploaded!");
+        }
+    });
+
+}
+
+function editProfile(){
+    $("input").show();
 }
