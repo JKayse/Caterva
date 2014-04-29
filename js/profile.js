@@ -99,17 +99,17 @@ function getQueryVariable(variable) {
       
     if (pair[0] == variable) {
         populatePage(pair[1]);
-        }
-
-    $.ajax({url:"api/LoginStatus", success: function(json){
-        if(json !== 'null'){
-            var json = JSON.parse(json);
-            var userId = json.ID;
-            populatePage(userId);
-        }
-        else{
-            window.location = "index.html";
-        }
-    }});
-    populatePage()
+    }
+    else{
+        $.ajax({url:"api/LoginStatus", success: function(json){
+            if(json !== 'null'){
+                json = JSON.parse(json);
+                userId = json.ID;
+                populatePage(userId);
+            }
+            else{
+                window.location = "index.html";
+            }
+        }});
+    }
 }

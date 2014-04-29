@@ -27,4 +27,9 @@ main h2, main h3{
 
 textarea{
     margin-left: 26%;
+    resize: none;
+}
+
+button{
+    margin-left: 26%;
 }
