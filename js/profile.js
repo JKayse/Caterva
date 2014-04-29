@@ -18,7 +18,7 @@ $(document).ready(function() {
         }
     }});
 
-    $("main img").change(function(){
+    $("#imgInp").change(function(){
             readURL(this);
     });
 
@@ -144,5 +144,5 @@ function cancelEdit(){
     $("input").hide();
     $("#editProfile").show();
     $("textarea").attr('disabled', true);
-    $("main img").attr('src', currentImage);
+    $("main img").attr('src', "img/" + currentImage);
 }
