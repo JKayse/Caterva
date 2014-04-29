@@ -8,11 +8,23 @@ main img{
 }
 
 main h1{
-    padding-top: 2%;
     margin: 0px;
-    margin-left: 5%;
+    padding-left: 26%;
+    padding-top: 4%;
+    font-size: 70px;
 }
+
+main h2, main h3{
+    margin: 0px;
+    padding-left: 26%;
+    font-size: 30px;
+}
+
 
 #editProfile, #imageUpload{
 	visibility: none;
+}
+
+textarea{
+    margin-left: 3%;
 }

@@ -76,13 +76,20 @@ function populatePage (userId) {
                 var lastname = info[0].Lastname;
                 var userName = info[0].Username;
                 var email = info[0].Email;
+                var description = info[0].Description;
                 var pictureName = info[0].PictureName;
+                if(description === null){
+                    description = "None"
+                }
                 if(pictureName === null){
                     pictureName = "FlockLogo1.png";
                 }
                 document.getElementById('name').innerHTML = firstname + " " + lastname + "'s Profile";
                 document.getElementById('userName').innerHTML = "Username: " + userName;
                 document.getElementById('email').innerHTML = "Email: " + email;
+                $("#aboutMe").val(description);
+                $("main img").attr("src", "img/" + pictureName);
+
             }});
 }
 
