@@ -18,7 +18,7 @@ $(document).ready(function() {
         }
     }});
 
-    $("#imgInp").change(function(){
+    $("#chooseFile").change(function(){
             readURL(this);
     });
 
