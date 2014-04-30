@@ -313,18 +313,17 @@ function editGroup() {
                 if(json === "error_groupName"){
                         $("#editGroupError").html("That name already exists. Try again.");
                         $("#editGroupError").show();
-                }
-                else{
-                    $("#blackScreenofDeath").hide();
-                    $("#popUp").hide();
-                    $("#editPopUp").hide();
-                    $("#groupName").val("");
-                    $(".friendList").prop('checked', false);
-                    updateGroupList();
+                        return;
                 }
             }
         });
     }
+    $("#blackScreenofDeath").hide();
+    $("#popUp").hide();
+    $("#editPopUp").hide();
+    $("#groupName").val("");
+    $(".friendList").prop('checked', false);
+    updateGroupList();
 
 }
 
