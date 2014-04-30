@@ -182,13 +182,19 @@ main div div div button:hover{
     margin-top: -1%;
     margin-bottom: 2%;
     display: none;
-    width: 97%;
+    width: 90%;
+    margin-left: 9px;
+    padding-left: 5px;
+    background: rgb(13, 81, 255);
   }
+
 
   .groupMembers button{
     margin-top:0px;
     margin-bottom: 0px;
     width: 100%;
+    border-color: rgba(255, 255, 255, 0.41);
+    background: rgb(179, 219, 250);
     border-radius: 0px;
     background: linear-gradient(rgb(153, 231, 255), rgb(181, 219, 255));
   }
