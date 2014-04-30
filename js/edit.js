@@ -306,13 +306,18 @@ function editGroup() {
             groupId:  editGroupId
         },
         success: function(json){
-        
-            $("#blackScreenofDeath").hide();
-            $("#popUp").hide();
-            $("#editPopUp").hide();
-            $("#groupName").val("");
-            $(".friendList").prop('checked', false);
-            updateGroupList();
+            if(json === "error_groupName"){
+                    $("#editGroupError").html("That name already exists. Try again.");
+                    $("#editGroupError").show();
+            }
+            else{
+                $("#blackScreenofDeath").hide();
+                $("#popUp").hide();
+                $("#editPopUp").hide();
+                $("#groupName").val("");
+                $(".friendList").prop('checked', false);
+                updateGroupList();
+            }
         }
     });
 

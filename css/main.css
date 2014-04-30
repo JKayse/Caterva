@@ -609,7 +609,7 @@ textarea{
 }
 
 
-#eventEditor, #eventEditor, #eventShare, {
+#eventEditor, #eventCreator, #eventShare {
   padding-left: 3px;
   padding-bottom: 3px;
 }
