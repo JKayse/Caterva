@@ -357,7 +357,7 @@ function cancelCreateEventPopUp(){
 
 function openList(){
     $(this).toggleClass("clickedGroup");
-    $(this).next().toggle();
+    $(this).next().slideToggle();
 }
 
 
