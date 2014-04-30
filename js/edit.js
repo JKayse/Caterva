@@ -2,19 +2,19 @@
 $(document).ready(function() {
     $("header").load("header.html");
     $(document).on('click', "#addGroup", addGroupPopUp);
-    $(document).on('click', ".cancelSearch", closeGroupPopUp);
+    $(document).on('click', ".cancelSearch", closeEverything);
     $(document).on('submit', "#groupForm", addCreatedGroup);
     $(document).on('click', ".deleteFriend", deleteFriend);
     $(document).on('click', ".deleteGroup", deleteGroup);
     $(document).on('click', ".groupie", editGroupPopUp);
-    $(document).on('click', ".cancelEdit", closeEditGroupPopUp);
+    $(document).on('click', ".cancelEdit", closeEverything);
     $(document).on('submit', "#groupEditForm", editGroup);
     $(document).on('click', "#blackScreenofDeath", closeEverything);
 
     $(document).on('click', "#finalizeDeleteFriend", submitDeleteFriend);
     $(document).on('click', "#finalizeDeleteGroup", submitDeleteGroup);
-    $(document).on('click', ".cancelDeleteFriend", cancelDeleteFriend);
-    $(document).on('click', ".cancelDeleteGroup", cancelDeleteGroup);
+    $(document).on('click', ".cancelDeleteFriend", closeEverything);
+    $(document).on('click', ".cancelDeleteGroup", closeEverything);
 
     $('.mouseover').slimScroll({
         height: '83%'
@@ -114,26 +114,8 @@ function editGroupPopUp() {
     $("#editAndCreateGroups").hide();
 }
 
-function closeGroupPopUp(){
-    $("#blackScreenofDeath").hide();
-    $("#popUp").hide();
-    $("editAndCreateGroups").hide();
-    $("#createGroupError").html("");
-    $("#createGroupError").hide();   
-    $("#groupName").val("");
-    $(".friendList").prop('checked', false);
-}
 
-function closeEditGroupPopUp(){
-    $("#blackScreenofDeath").hide();
-    $("#popUp").hide();
-    $("#editPopUp").hide();
-    $("#editGroupError").html("");
-    $("#editGroupError").hide(); 
-    $("#editedGroupName").val("");
-    $(".friendList").prop('checked', false);
 
-}
 
 function addCreatedGroup(){
 
@@ -397,16 +379,4 @@ function submitDeleteGroup(){
                 updateGroupList();
             }
     });
-}
-
-function cancelDeleteFriend(){
-    $("#deleteFriendPopUp").hide();
-    $("#blackScreenofDeath").hide();
-    $("#popUp").hide();
-}
-
-function cancelDeleteGroup(){
-    $("#deleteGroupPopUp").hide();
-    $("#blackScreenofDeath").hide();
-    $("#popUp").hide();
 }
