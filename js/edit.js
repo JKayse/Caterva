@@ -327,7 +327,7 @@ function updateFriendList() {
                 var friend = "<div class='friendie' friendId=" + userId+ "><img src='img/close2.png' class='deleteFriend' alt='Delete' title='Delete'><h3>" + firstname +" "+ lastname + "</h3></div>";
                 $("#friendList").append(friend);
                 var friendAdder = "<input type='checkbox' class='friendList' friendId=" + userId + " id='" + userId + "friend' title='Add Friend' name='Add Friends'><label for='" + userId + "friend'>"+ firstname +" "+ lastname + "</label><br>";
-                var friendAdder = "<input type='checkbox' class='friendList' friendId=" + userId + " id='" + userId + "friendEdit' title='Add Friend' name='Add Friends'><label for='" + userId + "friend'>"+ firstname +" "+ lastname + "</label><br>";
+                var friendEditAdder = "<input type='checkbox' class='friendList' friendId=" + userId + " id='" + userId + "friendEdit' title='Add Friend' name='Add Friends'><label for='" + userId + "friend'>"+ firstname +" "+ lastname + "</label><br>";
                 $("#listOfFriends").append(friendAdder);
                 $("#editedListOfFriends").append(friendEditAdder);
             }});    
