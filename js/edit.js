@@ -272,8 +272,6 @@ function editGroup() {
     }
 
 
-    $("#editGroupError").html("");
-    $("#editGroupError").hide(); 
     for(var i = 0; i < friendsList.size(); i++){
         var friendId = $(".friendList").eq(i).attr("friendId");
         if(($(".friendList").eq(i).prop('checked') === true) && ($(".friendList").eq(i).attr('original') === "1")){    
@@ -300,6 +298,7 @@ function editGroup() {
         }
     }
 
+    var stop=false;
     if(editGroupName !== groupName)
     {
         $.ajax({
@@ -313,17 +312,21 @@ function editGroup() {
                 if(json === "error_groupName"){
                         $("#editGroupError").html("That name already exists. Try again.");
                         $("#editGroupError").show();
-                        return;
+                        stop = true;
                 }
             }
         });
     }
-    $("#blackScreenofDeath").hide();
-    $("#popUp").hide();
-    $("#editPopUp").hide();
-    $("#groupName").val("");
-    $(".friendList").prop('checked', false);
-    updateGroupList();
+    if(stop === false){
+        $("#blackScreenofDeath").hide();
+        $("#popUp").hide();
+        $("#editPopUp").hide();
+        $("#groupName").val("");
+        $(".friendList").prop('checked', false);
+        $("#editGroupError").html("");
+        $("#editGroupError").hide(); 
+        updateGroupList();
+    }
 
 }
 
