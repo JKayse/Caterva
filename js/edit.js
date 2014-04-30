@@ -264,8 +264,8 @@ function editGroup() {
 
     var checkedFriends = $(".friendList:checked");
     if(checkedFriends.size() === 0){
-        $("#createGroupError").html("Please add at least one friend.");
-        $("#createGroupError").show();
+        $("#editGroupError").html("Please add at least one friend.");
+        $("#editGroupError").show();
         return;
     }
 
@@ -287,6 +287,7 @@ function editGroup() {
             }});  
         }
         else if(($(".friendList").eq(i).prop('checked') === false) && ($(".friendList").eq(i).attr('original') === "1")){
+            $(".friendList").eq(i).attr('original','0');
             $.ajax({
             type: "POST",
             url: "api/DeleteGroupMembers",
