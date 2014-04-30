@@ -98,6 +98,7 @@ function editGroupPopUp() {
     $('#editedGroupName').val(groupName);
     var groupId = $(this).attr("groupId");
     $('#editedGroupName').attr("editGroupId", groupId);
+    $('#editedGroupName').attr("editGroupName", groupName);
 
     var friends = $(this).attr("friendIds");
     var friendList = friends.split(", ");
@@ -254,6 +255,7 @@ function editGroup() {
     event.preventDefault();
     
     var editGroupId = $("#editedGroupName").attr("editGroupId");
+    var editGroupName = $('#editedGroupName').attr("editGroupName");
     var groupName = $("#editedGroupName").val();
     var friendsList = $(".friendList");
     if(groupName.length >= 40){
@@ -298,28 +300,31 @@ function editGroup() {
         }
     }
 
-    $.ajax({
-        type: "POST",
-        url: "api/ChangeGroupName",
-        data: {
-            groupname: groupName,
-            groupId:  editGroupId
-        },
-        success: function(json){
-            if(json === "error_groupName"){
-                    $("#editGroupError").html("That name already exists. Try again.");
-                    $("#editGroupError").show();
+    if(editGroupName !== groupName)
+    {
+        $.ajax({
+            type: "POST",
+            url: "api/ChangeGroupName",
+            data: {
+                groupname: groupName,
+                groupId:  editGroupId
+            },
+            success: function(json){
+                if(json === "error_groupName"){
+                        $("#editGroupError").html("That name already exists. Try again.");
+                        $("#editGroupError").show();
+                }
+                else{
+                    $("#blackScreenofDeath").hide();
+                    $("#popUp").hide();
+                    $("#editPopUp").hide();
+                    $("#groupName").val("");
+                    $(".friendList").prop('checked', false);
+                    updateGroupList();
+                }
             }
-            else{
-                $("#blackScreenofDeath").hide();
-                $("#popUp").hide();
-                $("#editPopUp").hide();
-                $("#groupName").val("");
-                $(".friendList").prop('checked', false);
-                updateGroupList();
-            }
-        }
-    });
+        });
+    }
 
 }
 
