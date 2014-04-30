@@ -143,3 +143,16 @@ h4{
 .slimScrollRail, .slimScrollBar{
 right: 15px;
 }
+
+
+#groupForm label,#groupForm h4, #groupForm div{
+    padding-left: 3px;
+}
+
+#groupEditForm label,#groupEditForm h4, #groupEditForm div{
+    padding-left: 3px;
+}
+
+#deleteGroupPopUp h4, #deleteFriendPopUp h4{
+    padding-left: 3px;
+}

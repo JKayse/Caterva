@@ -9,18 +9,18 @@ $(document).ready(function() {
     $(document).on('click', "#editFriends", goToEditPage);
     $(document).on('click', "#addFriend", addFriend);
     $(document).on('click', "#createEvent", addEvent);
-    $(document).on('click', ".cancelSearch", closeEverything);
-    $(document).on('click', ".cancelEvent", closeEverything);
-    $(document).on('click', ".cancelFriends", closeEverything);
-    $(document).on('click', ".cancelGroups", closeEverything);
+    $(document).on('click', ".cancelSearch", cancelFriendPopUp);
+    $(document).on('click', ".cancelEvent", cancelCreateEventPopUp);
+    $(document).on('click', ".cancelFriends", cancelAddFriendsPopUp);
+    $(document).on('click', ".cancelGroups", cancelAddGroupsPopUp);
 
     $(document).on('click', "#addFriendsEvent", showAddFriendsPopUp);
     $(document).on('click', "#addGroupsEvent", showAddGroupsPopUp);
 
     $(document).on('click', "#addFriendsEditEvent", showAddFriendsEditPopUp);
     $(document).on('click', "#addGroupsEditEvent", showAddGroupsEditPopUp);
-    $(document).on('click', ".cancelEditFriends", closeEverything);
-    $(document).on('click', ".cancelEditGroups", closeEverything);
+    $(document).on('click', ".cancelEditFriends", closeFriendsEditPopUp);
+    $(document).on('click', ".cancelEditGroups", closeGroupsEditPopUp);
     $(document).on('submit', "#friendEditor", addFriendstoEditEvent);
     $(document).on('submit', "#groupEditor", addGroupstoEditEvent); 
     $(document).on('submit', "#eventEditor", addEditedEvent);
@@ -34,18 +34,18 @@ $(document).ready(function() {
     $(document).on('click', ".friend", goToProfilePage);
 
     $(document).on('click', "#sendFriendRequest", sendFriendRequest);
-    $(document).on('click', ".closeFriendRequest", closeEverything);
+    $(document).on('click', ".closeFriendRequest", closeFriendRequest);
     
     $(document).on('click', ".friendRequest img", updateFriendRequest);
     $(document).on('click', ".eventRequest img", updateEventRequest);
 
     $(document).on('click', ".friendRequest", getFriendRequestInfo);
-    $(document).on('click', ".closeRequestInfo", closeEverything);
+    $(document).on('click', ".closeRequestInfo", closeRequestInfo);
 
     $(document).on('click', ".eventRequest", viewEventInformation);
     $(document).on('click', ".event", viewAttendingEventInformation);
 
-    $(document).on('click', ".closeEventInformation", closeEverything);
+    $(document).on('click', ".closeEventInformation", closeEventInformation);
 
     $(document).on('click', ".switch-label", toggleItem);
 
@@ -54,13 +54,13 @@ $(document).ready(function() {
 
     $(document).on('click', "#editEventButton", editEventPopUp);
     $(document).on('click', "#shareEventButton", shareEventPopUp);
-    $(document).on('click', ".cancelEditEvent", closeEverything);
-    $(document).on('click', ".cancelShareEvent", closeEverything);
+    $(document).on('click', ".cancelEditEvent", closeEditEventPopUp);
+    $(document).on('click', ".cancelShareEvent", closeShareEventPopUp);
 
     $(document).on('click', "#addFriendsShareEvent", showAddFriendsSharePopUp);
     $(document).on('click', "#addGroupsShareEvent", showAddGroupsSharePopUp);
-    $(document).on('click', ".cancelShareFriends", closeEverything);
-    $(document).on('click', ".cancelShareGroups", closeEverything);
+    $(document).on('click', ".cancelShareFriends", closeFriendsSharePopUp);
+    $(document).on('click', ".cancelShareGroups", closeGroupsSharePopUp);
     $(document).on('submit', "#friendShare", addFriendstoShareEvent);
     $(document).on('submit', "#groupShare", addGroupstoShareEvent); 
     $(document).on('submit', "#eventShare", addSharedEvent);

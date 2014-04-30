@@ -607,3 +607,13 @@ textarea{
   text-overflow: ellipsis;
   width: 100%;
 }
+
+
+#eventEditor, #eventEditor, #eventShare, {
+  padding-left: 3px;
+  padding-bottom: 3px;
+}
+
+#friendSearchForm h3, #friendSearchForm input, #friendSearchForm .error {
+  padding-left: 3px;
+}
