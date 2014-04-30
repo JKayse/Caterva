@@ -97,3 +97,10 @@ a {
 #viewProfile, #signOut{
   color: rgb(0, 41, 255);
 }
+
+.error{
+    font-size: 20px;
+    margin-left: 2px;
+    color: rgb(216, 42, 42);
+    display: none;
+}

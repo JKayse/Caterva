@@ -83,7 +83,6 @@ function getQueryVariable(variable) {
             populatePage(pair[1]);
         }
         else{
-            alert("You are not a friend of this person!");
             window.location = "main.html";
         }
         

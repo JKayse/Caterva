@@ -16,7 +16,8 @@ function signUp(event){
     var cpassword = $("#confirmPassword").val();
 
     if(password !== cpassword){
-        alert("Passwords do not match. Try again.");
+        $("#signUpError").html("Passwords do not match. Try again.");
+        $("#signUpError").show();
         return;
     }
     else{
@@ -32,13 +33,18 @@ function signUp(event){
             },
             success:function(json){
                 if(json === "error_username"){
-                    alert("This username already exists.");
+                    $("#signUpError").html("This username already exists.");
+                    $("#signUpError").show();
                     return;
                 }
                 if(json === "error_email"){
-                    alert("This email already exists.");
+                    $("#signUpError").html("This email already exists.");
+                    $("#signUpError").show();
                     return;
                 }
+
+                $("#signUpError").html("");
+                $("#signUpError").hide();
 
                 $.ajax({
                     type: "POST",
@@ -48,6 +54,7 @@ function signUp(event){
                         password: $("#password").val()
                     },
                     success: function(json){
+
                        window.location = "main.html";                       
                     }
             });

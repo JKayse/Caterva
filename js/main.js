@@ -332,6 +332,8 @@ function cancelFriendPopUp(){
     $("#blackScreenofDeath").hide();
     $("#popUp").hide();
     $("#friendSearchForm").hide();
+    $("#addFriendError").html("");
+    $("#addFriendError").hide();
     $("#friendSearch").hide();
     $("#friendsUsername").val("");
 }
@@ -340,7 +342,8 @@ function cancelCreateEventPopUp(){
     $("#blackScreenofDeath").hide();
     $("#popUp").hide();
     $("#enterEvent").hide();
-
+    $("#createEventError").html("");
+    $("#createEventError").hide();
     $("#eventTitle").val("");
     $("#eventDescription").val("");
     $("#eventDate").val("");
@@ -393,9 +396,12 @@ function searchForFriend(event){
                 json = JSON.parse(json);
                 var friend = json.Friend;
                 if(friend.length === 0){
-                    alert("That username does not exist. Please try Again.");
+                    $("#addFriendError").html("Username does not exist. Try Again.");
+                    $("#addFriendError").show();
                 }
                 else{
+                    $("#addFriendError").html("");
+                    $("#addFriendError").hide();
                     var friendId = friend[0].userId;
                     $.ajax({url:"api/UserInfo/" + friendId, success: function(json2){
                         json2 = JSON.parse(json2);
@@ -506,11 +512,13 @@ function addCreatedEvent(event){
     console.log(start);
     console.log(end);
     if(start > end){
-        alert("The end date must be after the start date. Please try again.");
+        $("#createEventError").html("The end date must be after the start date.");
+        $("#createEventError").show();
         return;
     }
     if(Date.now() >= start){
-        alert("The start date must happen after the current date. Please try again.");
+        $("#createEventError").html("The start date must be after the current date.");
+        $("#createEventError").show();
         return;
     }
 
@@ -541,7 +549,9 @@ function addCreatedEvent(event){
             data: {
                 event: event
             },
-            success: function(json){     
+            success: function(json){    
+                $("#createEventError").html("");
+                $("#createEventError").hide(); 
                 $("#blackScreenofDeath").hide();
                 $("#popUp").hide();
                 $("#enterEvent").hide();    
@@ -1590,6 +1600,10 @@ function closeEverything(){
     $("#requestedFriendInfo").hide();
     $("#enterEvent").hide();
     $("#friendSearchForm").hide();
+    $("#addFriendError").html("");
+    $("#addFriendError").hide();
+    $("#createEventError").html("");
+    $("#createEventError").hide();
     $("#friendSearch").hide();
     $("#friendsUsername").val("");
     $("#eventTitle").val("");

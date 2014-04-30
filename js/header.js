@@ -60,16 +60,20 @@ function signIn(){
             success: function(json){
                 
                 if(json === 'error_username_doesnt_exists'){
-                    alert("The username entered does not exist. Try Again.");
+                    $("#signInError").html("Username does not exist.");
+                    $("#signInError").show();
                     return;
                 }
 
                 if(json === 'null'){
-                    alert("The password entered was not correct. Try Again.");
+                    $("#signInError").html("Password is not correct.");
+                    $("#signInError").show();
                     return;
                 }
 
                 else{
+                    $("#signInError").html("");
+                    $("#signInError").hide();
                     $("#signInUsername").val("");
                     $("#signInPass").val("");
                     window.location = "main.html";

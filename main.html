@@ -128,6 +128,7 @@
                         <input type="text" id="friendsUsername" placeholder="Username" name="username" title ="Enter the username of the person you want to add." required>
                         <input type="submit" class="button" id ="searchUsers" value="Search">   
                         <input type="button" class="button cancelSearch" value="Cancel">   
+                        <div class="error" id="addFriendError"></div>
                     </form>
                     <div id="foundFriend">
                         <img src="img/close.png" class="closeFriendRequest closePopUp" alt="Close" title="Close">
@@ -163,6 +164,7 @@
                         <label for="eventTimeEnd">End Time:</label>
                         <input type="time" id="eventTimeEnd" name="timeEnd" title ="Enter the end time of the event." required>
                         <br>
+                        <div class="error" id="createEventError"></div>
                         <label for="eventGuestList">Invited:</label>
                         <div id="eventGuestList" name="guestList" title="Add people to the event."></div>
 
@@ -175,6 +177,7 @@
                         <br>
                         <input type="submit" class="button" id ="createThisEvent" value="Create Event">   
                         <input type="button" class="button cancelEvent" value="Cancel">  
+
                     </form>
 
                 </div>   

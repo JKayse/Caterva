@@ -118,7 +118,8 @@ function closeGroupPopUp(){
     $("#blackScreenofDeath").hide();
     $("#popUp").hide();
     $("editAndCreateGroups").hide();
-
+    $("#createGroupError").html("");
+    $("#createGroupError").hide();   
     $("#groupName").val("");
     $(".friendList").prop('checked', false);
 }
@@ -127,7 +128,8 @@ function closeEditGroupPopUp(){
     $("#blackScreenofDeath").hide();
     $("#popUp").hide();
     $("#editPopUp").hide();
-
+    $("#editGroupError").html("");
+    $("#editGroupError").hide(); 
     $("#editedGroupName").val("");
     $(".friendList").prop('checked', false);
 
@@ -141,7 +143,8 @@ function addCreatedGroup(){
 
     group.name = $("#groupName").val();
     if(group.name.length >= 40){
-        alert("Please add a group name less than 40 characters.");
+        $("#createGroupError").html("Group name must be less than 40 characters.");
+        $("#createGroupError").show();
         return;
     }
 
@@ -158,7 +161,8 @@ function addCreatedGroup(){
     } 
 
     if(numFriends === 0){
-        alert("Please add at least one friend.");
+        $("#createGroupError").html("Please add at least one friend.");
+        $("#createGroupError").show();
         return;
     }
 
@@ -174,9 +178,12 @@ function addCreatedGroup(){
             },
             success: function(json){
                 if(json === "error_groupName"){
-                    alert("That name already exists. Please enter a new name.");
+                    $("#createGroupError").html("That name already exists. Try again.");
+                    $("#createGroupError").show();
                 }
-                else{          
+                else{   
+                    $("#createGroupError").html("");
+                    $("#createGroupError").hide();       
                     $("#blackScreenofDeath").hide();
                     $("#popUp").hide();
                     $("#editAndCreateGroups").hide();
@@ -250,10 +257,12 @@ function editGroup() {
     var groupName = $("#editedGroupName").val();
     var friendsList = $(".friendList");
     if(groupName.length >= 40){
-        alert("Please add a group name less than 40 characters.");
+        $("#editGroupError").html("Group name must be less than 40 characters.");
+        $("#editGroupError").show();
         return;
     }
-
+    $("#editGroupError").html("");
+    $("#editGroupError").hide(); 
     for(var i = 0; i < friendsList.size(); i++){
         var friendId = $(".friendList").eq(i).attr("friendId");
         if(($(".friendList").eq(i).prop('checked') === true) && ($(".friendList").eq(i).attr('original') === "1")){    
@@ -339,6 +348,10 @@ function closeEverything(){
     $(".friendList").prop('checked', false);
     $("#deleteFriendPopUp").hide();
     $("#deleteGroupPopUp").hide();
+    $("#createGroupError").html("");
+    $("#createGroupError").hide();   
+    $("#editGroupError").html("");
+    $("#editGroupError").hide(); 
 }
 
 function submitDeleteFriend(){
