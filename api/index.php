@@ -1053,9 +1053,19 @@ function changeGroupName()
 {
 	$groupId = Slim::getInstance()->request()->post('groupId');	
 	$groupName = Slim::getInstance()->request()->post('groupname');
-	$sql = "UPDATE Groups SET GroupName = :groupName WHERE GroupId = :groupId";
 	try {
             $db = getConnection();
+	    $Checksql = "SELECT GroupId FROM Groups WHERE GroupName=:groupName AND UserId=:userId";
+            $chkstmt = $db->prepare($Checksql);
+            $chkstmt->bindParam("groupName", $groupName);
+            $chkstmt->bindParam("userId", $_SESSION['userId']);
+            $chkstmt->execute();
+            if($chkstmt->fetchObject()) {
+            	echo "error_groupName";
+            	return;
+       	    }
+	
+	    $sql = "UPDATE Groups SET GroupName = :groupName WHERE GroupId = :groupId";	
             $stmt = $db->prepare($sql);
 	    $stmt->bindParam("groupName", $groupName);
             $stmt->bindParam("groupId", $groupId);
