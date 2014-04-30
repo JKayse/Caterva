@@ -150,6 +150,14 @@ function addCreatedGroup(){
 
     var numFriends =0;
     var friends = $(".friendList");
+    var checkedFriends = $(".friendList:checked");
+    if(checkedFriends.size() === 0){
+        $("#createGroupError").html("Please add at least one friend.");
+        $("#createGroupError").show();
+        return;
+    }
+
+
 
     for(var i = 0; i < friends.size(); i++){
         var friend = {};
