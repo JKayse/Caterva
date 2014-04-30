@@ -354,10 +354,23 @@ function cancelCreateEventPopUp(){
     $("#allowShareEvent").prop('checked', false);
 }
 
-
 function openList(){
     $(this).toggleClass("clickedGroup");
-    $(this).next().slideToggle();
+    $(this).next().show();
+    var children = [];
+    $(this).next().children().each(function(){
+        children.push(this);
+    });
+    fadeThemOut(children);   
+}
+
+function fadeThemOut(children) {
+    if (children.length > 0) {
+        var currentChild = children.shift();
+        $(currentChild).slideToggle("slow", function() {
+            fadeThemOut(children);
+        });
+    }
 }
 
 
