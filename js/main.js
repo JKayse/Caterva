@@ -356,7 +356,6 @@ function cancelCreateEventPopUp(){
 
 function openList(){
     $(this).toggleClass("clickedGroup");
-    $(this).next().show();
     var children = [];
     $(this).next().children().each(function(){
         children.push(this);

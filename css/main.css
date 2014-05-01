@@ -190,6 +190,7 @@ main div div div button:hover{
 
 
   .groupMembers button{
+    display: none;
     margin-top:0px;
     margin-bottom: 0px;
     width: 100%;
