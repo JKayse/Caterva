@@ -44,7 +44,7 @@ $app->post('/Logout', 'logout');
 /**
 * View Friends
 */
-$app->get('/ViewFriends', 'viewFriends');
+$app->post('/ViewFriends', 'viewFriends');
 
 /**
 * Get User info
@@ -129,7 +129,7 @@ $app->post('/Groups', 'viewGroups');
 /**
 * View Events
 */
-$app->get('/Events', 'viewEvents');
+$app->post('/Events', 'viewEvents');
 
 /**
 * View Event Requests
@@ -491,15 +491,7 @@ function addFriendRequest()
 */
 function addFriend()
 {
-    if(empty($_SESSION['userId'])) {
-	$userId = Slim::getInstance()->request()->post('id');
-	if(empty($userId)) {
-		echo "error_nobody_is_signed_in";
-		return;
-	}
-    } else { 
-	$userId = $_SESSION['userId'];
-    }
+    $userId = $_SESSION['userId'];
 
     $friendId = Slim::getInstance()->request()->post('friendId');
     $response = Slim::getInstance()->request()->post('response');
@@ -580,15 +572,7 @@ function deleteFriend()
 */
 function getFriendRequest()
 {  
-    if(empty($_SESSION['userId'])) {
-	$userId = Slim::getInstance()->request()->post('id');
-	if(empty($userId)) {
-		echo "error_nobody_is_signed_in";
-		return;
-	}
-    } else { 
-	$userId = $_SESSION['userId'];
-    }
+    $userId = $_SESSION['userId'];
 
     $sql = "SELECT UserId, FriendId FROM FriendRequest WHERE FriendId = :userId";
     try {
@@ -600,7 +584,7 @@ function getFriendRequest()
         $db = null;
         echo '{"FriendRequest": ' . json_encode($friendRequest) . '}';
     } catch(PDOException $e) {
-    echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+    	echo '{"error":{"text":'. $e->getMessage() .'}}'; 
     }
 }
 
@@ -609,15 +593,8 @@ function getFriendRequest()
 */
 function createEvent() {
     $event = json_decode(Slim::getInstance()->request()->post('event'), true);
-    if(empty($_SESSION['userId'])) {
-	$userId = Slim::getInstance()->request()->post('id');
-	if(empty($userId)) {
-		echo "error_nobody_is_signed_in";
-		return;
-	}
-    } else { 
-	$userId = $_SESSION['userId'];
-    }
+    
+    $userId = $_SESSION['userId'];
 
     try {
         $db = getConnection();
@@ -911,15 +888,8 @@ function deleteOldEvents() {
 */
 function createGroup() {
     $group = json_decode(Slim::getInstance()->request()->post('group'), true);
-    if(empty($_SESSION['userId'])) {
-	$userId = Slim::getInstance()->request()->post('id');
-	if(empty($userId)) {
-		echo "error_nobody_is_signed_in";
-		return;
-	}
-    } else { 
-	$userId = $_SESSION['userId'];
-    }
+    
+    $userId = $_SESSION['userId'];
 
     try {
         $db = getConnection();
