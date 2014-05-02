@@ -124,7 +124,7 @@ $app->post('/ChangeGroupName', 'changeGroupName');
 /**
 * View Groups
 */
-$app->get('/Groups', 'viewGroups');
+$app->post('/Groups', 'viewGroups');
 
 /**
 * View Events
@@ -340,8 +340,18 @@ function logout() {
 * A function that shows all the user's friends
 */
 function viewFriends(){
-    $userId = $_SESSION['userId'];
-    $sql = "SELECT fl.FriendId FROM FriendsList fl INNER JOIN Users u ON fl.FriendId=u.UserId WHERE fl.UserId=:userId ORDER BY u.Lastname";
+    if(empty($_SESSION['userId'])) {
+	$userId = Slim::getInstance()->request()->post('id');
+	$sql = "SELECT fl.FriendId, u.Firstname, u.Lastname FROM FriendsList fl INNER JOIN Users u ON fl.FriendId=u.UserId WHERE fl.UserId=:userId ORDER BY u.Lastname";
+	if(empty($userId)) {
+		echo "error_nobody_is_signed_in";
+		return;
+	}
+    } else { 
+	$userId = $_SESSION['userId'];
+	$sql = "SELECT fl.FriendId FROM FriendsList fl INNER JOIN Users u ON fl.FriendId=u.UserId WHERE fl.UserId=:userId ORDER BY u.Lastname";
+    }
+    
     try {
             $db = getConnection();
             $stmt = $db->prepare($sql);
@@ -423,7 +433,16 @@ function editProfile()
 */
 function addFriendRequest()
 {
-    $userId = $_SESSION['userId'];
+    if(empty($_SESSION['userId'])) {
+	$userId = Slim::getInstance()->request()->post('id');
+	if(empty($userId)) {
+		echo "error_nobody_is_signed_in";
+		return;
+	}
+    } else { 
+	$userId = $_SESSION['userId'];
+    }
+
     $friendId = Slim::getInstance()->request()->post('friendId');
     
         try {
@@ -472,7 +491,16 @@ function addFriendRequest()
 */
 function addFriend()
 {
-    $userId = $_SESSION['userId'];
+    if(empty($_SESSION['userId'])) {
+	$userId = Slim::getInstance()->request()->post('id');
+	if(empty($userId)) {
+		echo "error_nobody_is_signed_in";
+		return;
+	}
+    } else { 
+	$userId = $_SESSION['userId'];
+    }
+
     $friendId = Slim::getInstance()->request()->post('friendId');
     $response = Slim::getInstance()->request()->post('response');
     if($response == 1){
@@ -552,7 +580,16 @@ function deleteFriend()
 */
 function getFriendRequest()
 {  
-    $userId = $_SESSION['userId'];
+    if(empty($_SESSION['userId'])) {
+	$userId = Slim::getInstance()->request()->post('id');
+	if(empty($userId)) {
+		echo "error_nobody_is_signed_in";
+		return;
+	}
+    } else { 
+	$userId = $_SESSION['userId'];
+    }
+
     $sql = "SELECT UserId, FriendId FROM FriendRequest WHERE FriendId = :userId";
     try {
         $db = getConnection();
@@ -572,6 +609,15 @@ function getFriendRequest()
 */
 function createEvent() {
     $event = json_decode(Slim::getInstance()->request()->post('event'), true);
+    if(empty($_SESSION['userId'])) {
+	$userId = Slim::getInstance()->request()->post('id');
+	if(empty($userId)) {
+		echo "error_nobody_is_signed_in";
+		return;
+	}
+    } else { 
+	$userId = $_SESSION['userId'];
+    }
 
     try {
         $db = getConnection();
@@ -582,7 +628,7 @@ function createEvent() {
         $sql = "SELECT EventId FROM Events WHERE EventName=:eventName AND UserId=:userId AND StartTime=:startTime AND EndTime=:endTime AND Share=:share";
         $stmt = $db->prepare($sql);
         $stmt->bindParam("eventName", $event['title']);
-        $stmt->bindParam("userId", $_SESSION['userId']);
+        $stmt->bindParam("userId", $userId);
         $stmt->bindParam("startTime", $startTime);
         $stmt->bindParam("endTime", $endTime);
         $stmt->bindParam("share", $event['share']);
@@ -595,7 +641,7 @@ function createEvent() {
 
         $stmt = $db->prepare($sql);
         $stmt->bindParam("eventName", $event['title']);
-        $stmt->bindParam("userId", $_SESSION['userId']);
+        $stmt->bindParam("userId", $userId);
         $stmt->bindParam("startTime", $startTime);
         $stmt->bindParam("endTime", $endTime);
         $stmt->bindParam("description", $event['description']);
@@ -605,7 +651,7 @@ function createEvent() {
         $sql = "SELECT EventId FROM Events WHERE EventName=:eventName AND UserId=:userId AND StartTime=:startTime AND EndTime=:endTime AND Share=:share";
         $stmt = $db->prepare($sql);
         $stmt->bindParam("eventName", $event['title']);
-        $stmt->bindParam("userId", $_SESSION['userId']);
+        $stmt->bindParam("userId", $userId);
         $stmt->bindParam("startTime", $startTime);
         $stmt->bindParam("endTime", $endTime);
         $stmt->bindParam("share", $event['share']);
@@ -865,6 +911,15 @@ function deleteOldEvents() {
 */
 function createGroup() {
     $group = json_decode(Slim::getInstance()->request()->post('group'), true);
+    if(empty($_SESSION['userId'])) {
+	$userId = Slim::getInstance()->request()->post('id');
+	if(empty($userId)) {
+		echo "error_nobody_is_signed_in";
+		return;
+	}
+    } else { 
+	$userId = $_SESSION['userId'];
+    }
 
     try {
         $db = getConnection();
@@ -872,7 +927,7 @@ function createGroup() {
         $sql = "SELECT GroupId FROM Groups WHERE GroupName=:groupName AND UserId=:userId";
         $stmt = $db->prepare($sql);
         $stmt->bindParam("groupName", $group['name']);
-        $stmt->bindParam("userId", $_SESSION['userId']);
+        $stmt->bindParam("userId", $userId);
         $stmt->execute();
         if($stmt->fetchObject()) {
             echo "error_groupName";
@@ -882,13 +937,13 @@ function createGroup() {
         $sql = "INSERT INTO Groups (GroupName, UserId) VALUES (:groupName, :userId)";
         $stmt = $db->prepare($sql);
         $stmt->bindParam("groupName", $group['name']);
-        $stmt->bindParam("userId", $_SESSION['userId']);
+        $stmt->bindParam("userId", $userId);
         $stmt->execute();
 
         $sql = "SELECT GroupId FROM Groups WHERE GroupName=:groupName AND UserId=:userId";
         $stmt = $db->prepare($sql);
         $stmt->bindParam("groupName", $group['name']);
-        $stmt->bindParam("userId", $_SESSION['userId']);
+        $stmt->bindParam("userId", $userId);
         $stmt->execute();
         $groupId = $stmt->fetchObject()->GroupId;
 
@@ -910,7 +965,15 @@ function createGroup() {
 * A function to view all of the user's groups
 */
 function viewGroups() {
-    $userId = $_SESSION['userId'];
+    if(empty($_SESSION['userId'])) {
+	$userId = Slim::getInstance()->request()->post('id');
+	if(empty($userId)) {
+		echo "error_nobody_is_signed_in";
+		return;
+	}
+    } else { 
+	$userId = $_SESSION['userId'];
+    }
 
     try {
         $db = getConnection();
@@ -945,7 +1008,16 @@ function viewGroups() {
 * A function to view events
 */
 function viewEvents() {
-	$userId = $_SESSION['userId'];
+	if(empty($_SESSION['userId'])) {
+		$userId = Slim::getInstance()->request()->post('id');
+		if(empty($userId)) {
+			echo "error_nobody_is_signed_in";
+			return;
+		}
+	} else { 
+		$userId = $_SESSION['userId'];
+	}
+
 	try {	
 		$db = getConnection();
 	
