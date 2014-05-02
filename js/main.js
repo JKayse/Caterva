@@ -224,7 +224,7 @@ $(document).ready(function() {
         }
     }}); 
 
-    $.ajax({url:"api/ViewFriends",  async:false, success: function(json2){
+    $.ajax({url:"api/ViewFriends", type: "POST", async:false, success: function(json2){
         json2 = JSON.parse(json2);
         var friends = json2.FriendsList;
         for(var i = 0; i < friends.length ; i++){
@@ -249,7 +249,7 @@ $(document).ready(function() {
 
     }}); 
 
-    $.ajax({url:"api/Groups", async:false, success: function(json2){
+    $.ajax({url:"api/Groups", type: "POST", async:false, success: function(json2){
         json2 = JSON.parse(json2);
         var groups = json2.Groups;
         var friendList;
@@ -763,7 +763,7 @@ function updateFriendsList(){
     $("#friendEditorList").empty();
     $("#friendShareList").empty();
 
-    $.ajax({url:"api/ViewFriends",  async:false, success: function(json2){
+    $.ajax({url:"api/ViewFriends", type: "POST", async:false, success: function(json2){
         json2 = JSON.parse(json2);
         var friends = json2.FriendsList;
         for(var i = 0; i < friends.length ; i++){
@@ -1146,7 +1146,7 @@ function addEditedEvent(e){
 
 
 function getEvents(){
-    $.ajax({url:"api/Events", success: function(json){
+    $.ajax({url:"api/Events", type: "POST", success: function(json){
         json = JSON.parse(json);
         var events = json.Events;
         for(var i =0; i < events.length; i++){

@@ -37,7 +37,7 @@ $(document).ready(function() {
         }
     }});
     
-    $.ajax({url:"api/ViewFriends", async:false, success: function(json2){
+    $.ajax({url:"api/ViewFriends", type: "POST", async:false, success: function(json2){
         json2 = JSON.parse(json2);
         var friends = json2.FriendsList;
         for(var i = 0; i < friends.length ; i++){
@@ -60,7 +60,7 @@ $(document).ready(function() {
     }});
 
 
-    $.ajax({url:"api/Groups", async:false, success: function(json2){
+    $.ajax({url:"api/Groups", type: "POST", async:false, success: function(json2){
         json2 = JSON.parse(json2);
         var groups = json2.Groups;
         for(var i = 0; i < groups.length ; i++){
@@ -199,7 +199,7 @@ function addCreatedGroup(){
 function updateGroupList(){
     $("#groupList").empty();
 
-    $.ajax({url:"api/Groups", success: function(json2){
+    $.ajax({url:"api/Groups", type: "POST", success: function(json2){
         json2 = JSON.parse(json2);
         var groups = json2.Groups;
         for(var i = 0; i < groups.length ; i++){
@@ -344,7 +344,7 @@ function updateFriendList() {
     $("#listOfFriends").empty();
     $("#editedListOfFriends").empty();
 
-   $.ajax({url:"api/ViewFriends", async:false, success: function(json2){
+   $.ajax({url:"api/ViewFriends", type: "POST", async:false, success: function(json2){
         json2 = JSON.parse(json2);
         var friends = json2.FriendsList;
         for(var i = 0; i < friends.length ; i++){
