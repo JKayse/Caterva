@@ -132,7 +132,6 @@ CREATE TABLE IF NOT EXISTS `Users` (
   `Lastname` varchar(100) NOT NULL,
   `Email` varchar(100) NOT NULL,
   `Password` varchar(100) NOT NULL,
-  `PasswordSalt` varchar(100) NOT NULL,
   `Description` varchar(500) DEFAULT NULL,
   `PictureName` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`UserId`),
