@@ -91,16 +91,16 @@ a {
 }
 
 #viewProfile:visited, #signOut:visited{
-  color: rgb(0, 41, 255);
+  color: rgb(247, 255, 213);
 }
 
 #viewProfile, #signOut{
-  color: rgb(0, 41, 255);
+  color: rgb(247, 255, 213);
 }
 
 .error{
     font-size: 20px;
     margin-left: 2px;
-    color: rgb(216, 42, 42);
+    color: rgb(247, 255, 213);
     display: none;
 }
