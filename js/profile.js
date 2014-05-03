@@ -69,7 +69,7 @@ function getQueryVariable(variable) {
     if (pair[0] == variable) {
         var profileId = pair[1];
         var properId = false;
-        $.ajax({url:"api/ViewFriends",  async:false, success: function(json2){
+        $.ajax({url:"api/ViewFriends", type: "POST", async:false, success: function(json2){
             json2 = JSON.parse(json2);
             var friends = json2.FriendsList;
             for(var i = 0; i < friends.length ; i++){
