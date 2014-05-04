@@ -623,3 +623,7 @@ textarea{
 #friendSearchForm h3, #friendSearchForm input, #friendSearchForm .error {
   padding-left: 3px;
 }
+
+.eventInfo h3 {
+text-align: left;
+}

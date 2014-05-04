@@ -1327,9 +1327,9 @@ function shareEventPopUp(){
     var description = $("#eventInfoDescription").html();
     description = description.substring(13);
 
-    $("#editTitle").html("Title: " + $("#eventInfoName").html());
-    $("#editStart").html($("#eventInfoStart").html());
-    $("#editEnd").html($("#eventInfoEnd").html());
+    $("#shareTitle").html("Title: " + $("#eventInfoName").html());
+    $("#shareStart").html($("#eventInfoStart").html());
+    $("#shareEnd").html($("#eventInfoEnd").html());
     $("#shareDescription").val(description);
 
 }
